@@ -1,4 +1,4 @@
-package Models.Users;
+package models.Users;
 
 public class Visitor implements User {
 }

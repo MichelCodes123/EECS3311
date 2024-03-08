@@ -1,4 +1,4 @@
-package Models.Items.PhysicalItems;
+package models.Items.PhysicalItems;
 
 public class Book extends PhysicalItem {
 }

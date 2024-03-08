@@ -1,4 +1,4 @@
-package Models.Items;
+package models.Items;
 
 public interface Item {
 

@@ -1,6 +1,6 @@
-package Models.Items.PhysicalItems;
+package models.Items.PhysicalItems;
 
-import Models.Items.Item;
+import models.Items.Item;
 
 import java.util.Date;
 

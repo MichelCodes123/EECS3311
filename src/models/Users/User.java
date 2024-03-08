@@ -1,6 +1,6 @@
-package Models.Users;
+package models.Users;
 
-import Models.Items.Item;
+import models.Items.Item;
 
 import java.util.ArrayList;
 
