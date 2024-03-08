@@ -1,4 +1,4 @@
-package Models;
+package Models.Users;
 
 public class NonFacultyStaff implements User {
 }
