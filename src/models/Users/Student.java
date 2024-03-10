@@ -13,9 +13,9 @@ public class Student implements User {
     Boolean can_borrow = null;
     Double overdue_charge = null;
     Boolean is_registered = null;
-    ArrayList<Item> rented_item_list = null;
+    ArrayList<String> rented_item_list = null;
 
-    public Student(String id, String name, String email, String password, Boolean can_borrow, Double overdue_charge, Boolean is_registered, ArrayList<Item> rented_item_list) {
+    public Student(String id, String name, String email, String password, Boolean can_borrow, Double overdue_charge, Boolean is_registered, ArrayList<String> rented_item_list) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -54,7 +54,7 @@ public class Student implements User {
         return is_registered;
     }
 
-    public ArrayList<Item> getRented_item_list() {
+    public ArrayList<String> getRented_item_list() {
         return rented_item_list;
     }
 }
