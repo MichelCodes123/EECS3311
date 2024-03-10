@@ -4,38 +4,21 @@ import models.Items.*;
 
 import java.util.Date;
 
-public class PhysicalItem implements Item {
+public interface PhysicalItem extends Item {
 
-    private String location;
-    private Boolean can_purchase;
-    protected Date due_date;
-    protected Double dollar_amount;
+     String location = null;
+     Boolean can_purchase = null;
+     Date due_date = null;
+     Double dollar_amount = null;
 
+    public String getLocation();
+    public Boolean getPurchasability();
+    public Date getDueDate();
+    public Double getDollarAmount();
 
-    @Override
-    public String getId() {
-        return null;
-    }
-
-    @Override
-    public String getName() {
-        return null;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public Boolean getPurchaseability() {
-        return can_purchase;
-    }
-
-    public Date getDue_date() {
-        return due_date;
-    }
-
-    public Double getDollar_amount() {
-        return dollar_amount;
-    }
+    public void setLocation(String location);
+    public void setPurchasability(Boolean can_purchase);
+    public void setDueDate(Date due_date);
+    public void setDollarAmount(Double dollar_amount);
 
 }
