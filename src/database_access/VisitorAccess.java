@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import logic.VisitorBuilder;
 import models.Users.*;
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
@@ -32,17 +33,18 @@ public class VisitorAccess {
         reader.readHeaders();
 
         while(reader.readRecord()){
-            Visitor user = new Visitor(
-                    reader.get("id"),
-                    reader.get("name"),
-                    reader.get("email"),
-                    reader.get("password"),
-                    Boolean.valueOf(reader.get("can_borrow")),
-                    Double.valueOf(reader.get("overdue_charge")),
-                    Boolean.valueOf(reader.get("is_registered")),
-                    new ArrayList<String>(Arrays.asList(reader.get("rented_item_list").split(" ")))
-            );
-            users.add(user);
+
+
+            VisitorBuilder b = new VisitorBuilder();
+            b.setId(reader.get("id"));
+            b.setName(reader.get("name"));
+            b.setEmail(reader.get("email"));
+            b.setPassword(reader.get("password"));
+            b.setCan_borrow(Boolean.valueOf(reader.get("can_borrow")));
+            b.setOverdue_charge(Double.valueOf(reader.get("overdue_charge")));
+            b.setIs_registered(Boolean.valueOf(reader.get("is_registered")));
+            b.setRented_item_list(new ArrayList<String>(Arrays.asList(reader.get("rented_item_list").split(", "))));
+            users.add( b.getUser());
         }
     }
 

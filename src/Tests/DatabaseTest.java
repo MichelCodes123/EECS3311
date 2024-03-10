@@ -114,7 +114,7 @@ public class DatabaseTest {
     @DisplayName("StudentAccess")
     void testStudent() throws Exception {
         StudentAccess db = StudentAccess.getInstance();
-        Student student = new Student("id","Name", "location", "password",  true, 0.0, true, new ArrayList<>() );
+        Student student = new Student("id","Name", "location", "password",  true, 0.0, true, new ArrayList<>());
 
         assertEquals(0, db.users.size());
 
