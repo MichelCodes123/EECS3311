@@ -11,11 +11,10 @@ import models.Items.DigitalTB.*;
 public class DigitalTBAccess {
 
     public ArrayList<Item> items = new ArrayList<>();
-    public String path;
-    public String path_prefix = "/database/";
+    public String path = "/database/digital_tb.csv";
 
-    public void load(String path) throws Exception{
-        CsvReader reader = new CsvReader(path_prefix + path);
+    public void load() throws Exception{
+        CsvReader reader = new CsvReader( path);
         reader.readHeaders();
 
         while(reader.readRecord()){
@@ -27,9 +26,9 @@ public class DigitalTBAccess {
         }
     }
 
-    public void update(String path) throws Exception {
+    public void update() throws Exception {
         try {
-            CsvWriter csvOutput = new CsvWriter(new FileWriter(path_prefix + path, false), ',');
+            CsvWriter csvOutput = new CsvWriter(new FileWriter( path, false), ',');
             //name,id,email,password
             csvOutput.write("id");
             csvOutput.write("name");

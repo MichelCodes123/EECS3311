@@ -12,11 +12,10 @@ import com.csvreader.CsvWriter;
 public class VisitorAccess {
 
     public ArrayList<Visitor> users = new ArrayList<>();
-    public String path;
-    public String path_prefix = "/database/";
+    public String path = "/database/visitor_access.csv";
 
-    public void load(String path) throws Exception{
-        CsvReader reader = new CsvReader(path_prefix + path);
+    public void load() throws Exception{
+        CsvReader reader = new CsvReader( path);
         reader.readHeaders();
 
         while(reader.readRecord()){
@@ -34,9 +33,9 @@ public class VisitorAccess {
         }
     }
 
-    public void update(String path) throws Exception {
+    public void update() throws Exception {
         try {
-            CsvWriter csvOutput = new CsvWriter(new FileWriter(path_prefix + path, false), ',');
+            CsvWriter csvOutput = new CsvWriter(new FileWriter(path, false), ',');
             //name,id,email,password
             csvOutput.write("name");
             csvOutput.write("id");
