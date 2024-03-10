@@ -1,7 +1,6 @@
 package models.Users;
 
-import models.Items.Item;
-
+import models.Items.*;
 import java.util.ArrayList;
 
 public interface User {
