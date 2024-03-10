@@ -14,7 +14,7 @@ public class BookAccess {
     public ArrayList<PhysicalItem> items = new ArrayList<>();
     public String path = "/database/books.csv";
 
-    public void load(String path) throws Exception{
+    public void load() throws Exception{
         CsvReader reader = new CsvReader( path);
         reader.readHeaders();
 
@@ -47,7 +47,7 @@ public class BookAccess {
         }
     }
 
-    public void update(String path) throws Exception {
+    public void update() throws Exception {
         try {
             CsvWriter csvOutput = new CsvWriter(new FileWriter(path, false), ',');
             //name,id,email,password
