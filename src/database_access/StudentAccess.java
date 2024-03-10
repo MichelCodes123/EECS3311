@@ -1,5 +1,4 @@
-package database;
-import java.io.File;
+package database_access;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,17 +9,18 @@ import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
 
 
-public class VisitorAccess {
+public class StudentAccess {
 
-    public ArrayList<Visitor> users = new ArrayList<>();
+    public ArrayList<Student> users = new ArrayList<>();
     public String path;
+    public String path_prefix = "/database/";
 
     public void load(String path) throws Exception{
-        CsvReader reader = new CsvReader(path);
+        CsvReader reader = new CsvReader(path_prefix + path);
         reader.readHeaders();
 
         while(reader.readRecord()){
-            Visitor user = new Visitor(
+            Student user = new Student(
                     reader.get("id"),
                     reader.get("name"),
                     reader.get("email"),
@@ -36,7 +36,7 @@ public class VisitorAccess {
 
     public void update(String path) throws Exception {
         try {
-            CsvWriter csvOutput = new CsvWriter(new FileWriter(path, false), ',');
+            CsvWriter csvOutput = new CsvWriter(new FileWriter(path_prefix + path, false), ',');
             //name,id,email,password
             csvOutput.write("name");
             csvOutput.write("id");
@@ -48,7 +48,7 @@ public class VisitorAccess {
 
             // else assume that the file already has the correct header line
             // write out a few records
-            for (Visitor u : users) {
+            for (Student u : users) {
                 csvOutput.write(u.getName());
                 csvOutput.write(String.valueOf(u.getId()));
                 csvOutput.write(u.getEmail());

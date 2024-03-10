@@ -1,29 +1,26 @@
-package database;
-import java.io.File;
+package database_access;
 import java.io.FileWriter;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
-import models.Items.*;
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
 import models.Items.PhysicalItems.*;
 import models.Items.PhysicalItems.PhysicalItem;
 
 
-public class BookAccess {
+public class CdAccess {
 
     public ArrayList<PhysicalItem> items = new ArrayList<>();
     public String path;
+    public String path_prefix = "/database/";
 
     public void load(String path) throws Exception{
-        CsvReader reader = new CsvReader(path);
+        CsvReader reader = new CsvReader(path_prefix + path);
         reader.readHeaders();
 
         while(reader.readRecord()){
-            PhysicalItem item = new Book(
+            PhysicalItem item = new Cd(
                     reader.get("id"),
                     reader.get("name"),
                     reader.get("location"),
@@ -37,9 +34,8 @@ public class BookAccess {
 
     public void update(String path) throws Exception {
         try {
-            CsvWriter csvOutput = new CsvWriter(new FileWriter(path, false), ',');
+            CsvWriter csvOutput = new CsvWriter(new FileWriter(path_prefix + path, false), ',');
             //name,id,email,password
-            csvOutput.write("type");
             csvOutput.write("id");
             csvOutput.write("name");
             csvOutput.write("location");
@@ -51,7 +47,6 @@ public class BookAccess {
             // else assume that the file already has the correct header line
             // write out a few records
             for (PhysicalItem i : items) {
-                csvOutput.write(i.getClass().toString());
                 csvOutput.write(i.getId());
                 csvOutput.write(i.getName());
                 csvOutput.write(i.getLocation());

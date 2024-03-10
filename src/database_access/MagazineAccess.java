@@ -1,29 +1,26 @@
-package database;
-import java.io.File;
+package database_access;
 import java.io.FileWriter;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
-import models.Items.*;
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
 import models.Items.PhysicalItems.*;
 import models.Items.PhysicalItems.PhysicalItem;
 
 
-public class CdAccess {
+public class MagazineAccess {
 
     public ArrayList<PhysicalItem> items = new ArrayList<>();
     public String path;
+    public String path_prefix = "/database/";
 
     public void load(String path) throws Exception{
-        CsvReader reader = new CsvReader(path);
+        CsvReader reader = new CsvReader(path_prefix + path);
         reader.readHeaders();
 
         while(reader.readRecord()){
-            PhysicalItem item = new Cd(
+            PhysicalItem item = new Magazine(
                     reader.get("id"),
                     reader.get("name"),
                     reader.get("location"),
@@ -37,7 +34,7 @@ public class CdAccess {
 
     public void update(String path) throws Exception {
         try {
-            CsvWriter csvOutput = new CsvWriter(new FileWriter(path, false), ',');
+            CsvWriter csvOutput = new CsvWriter(new FileWriter(path_prefix + path, false), ',');
             //name,id,email,password
             csvOutput.write("id");
             csvOutput.write("name");

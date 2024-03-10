@@ -1,5 +1,4 @@
-package database;
-import java.io.File;
+package database_access;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,9 +13,10 @@ public class UserAccess {
 
     public ArrayList<FacultyMember> users = new ArrayList<>();
     public String path;
+    public String path_prefix = "/database/";
 
     public void load(String path) throws Exception{
-        CsvReader reader = new CsvReader(path);
+        CsvReader reader = new CsvReader(path_prefix + path);
         reader.readHeaders();
 
         while(reader.readRecord()){
@@ -36,7 +36,7 @@ public class UserAccess {
 
     public void update(String path) throws Exception {
         try {
-            CsvWriter csvOutput = new CsvWriter(new FileWriter(path, false), ',');
+            CsvWriter csvOutput = new CsvWriter(new FileWriter(path_prefix + path, false), ',');
             //name,id,email,password
             csvOutput.write("name");
             csvOutput.write("id");
