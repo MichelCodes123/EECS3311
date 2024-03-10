@@ -3,10 +3,22 @@ package models.Items.PhysicalItems;
 import java.util.Date;
 
 public class Magazine implements PhysicalItem {
+    String id = null;
+    String name = null;
     String location = null;
     Boolean can_purchase = null;
     Date due_date = null;
     Double dollar_amount = null;
+
+
+    public Magazine(String id, String name, String location, Boolean can_purchase, Date due_date, Double dollar_amount) {
+        this.id = id;
+        this.name = name;
+        this.location = location;
+        this.can_purchase = can_purchase;
+        this.due_date = due_date;
+        this.dollar_amount = dollar_amount;
+    }
 
     @Override
     public String getId() {
