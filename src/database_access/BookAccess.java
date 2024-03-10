@@ -19,14 +19,30 @@ public class BookAccess {
         reader.readHeaders();
 
         while(reader.readRecord()){
-            PhysicalItem item = new Book(
-                    reader.get("id"),
-                    reader.get("name"),
-                    reader.get("location"),
-                    Boolean.valueOf(reader.get("can_purchase")),
-                    Date.valueOf(reader.get("due_date")),
-                    Double.valueOf(reader.get("dollar_amount"))
-            );
+            PhysicalItem item;
+
+            if (reader.get("type").equals("Textbook")) {
+                 item = new Textbook(
+                        reader.get("id"),
+                        reader.get("name"),
+                        reader.get("location"),
+                        Boolean.valueOf(reader.get("can_purchase")),
+                        Date.valueOf(reader.get("due_date")),
+                        Double.valueOf(reader.get("dollar_amount"))
+                );
+            }
+
+            else {
+                 item = new Book(
+                        reader.get("id"),
+                        reader.get("name"),
+                        reader.get("location"),
+                        Boolean.valueOf(reader.get("can_purchase")),
+                        Date.valueOf(reader.get("due_date")),
+                        Double.valueOf(reader.get("dollar_amount"))
+                );
+            }
+
             items.add(item);
         }
     }
