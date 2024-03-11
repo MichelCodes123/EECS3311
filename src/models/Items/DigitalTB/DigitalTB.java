@@ -5,8 +5,8 @@ import models.Items.Item;
 public class DigitalTB implements Item {
 
     @Override
-    public int getId() {
-        return id;
+    public String getId() {
+        return null;
     }
 
     @Override
