@@ -14,8 +14,8 @@ public class PhysicalItem implements Item {
 
 
     @Override
-    public int getId() {
-        return id;
+    public String getId() {
+        return "";
     }
 
     @Override
