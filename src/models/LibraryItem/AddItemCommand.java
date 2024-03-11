@@ -3,14 +3,14 @@ package models.LibraryItem;
 import java.util.List;
 
 public class AddItemCommand implements Command {
-    private LibraryManager manager;
-
-    public AddItemCommand(LibraryManager manager) {
-        this.manager = manager;
+    private LibraryItem item;
+    private LibraryItemRepository repository;
+    public AddItemCommand(LibraryItem item, LibraryItemRepository repository) {
+        this.item = item;
+        this.repository = repository;
     }
-
     @Override
     public void execute(LibraryItem item) {
-        manager.addItem(item);
+        repository.addItem(item);
     }
 }
