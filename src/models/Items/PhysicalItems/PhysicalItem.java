@@ -10,11 +10,12 @@ public class PhysicalItem implements Item {
     private Boolean can_purchase;
     protected Date due_date;
     protected Double dollar_amount;
+    private int id;
 
 
     @Override
-    public String getId() {
-        return null;
+    public int getId() {
+        return id;
     }
 
     @Override
@@ -36,6 +37,10 @@ public class PhysicalItem implements Item {
 
     public Double getDollar_amount() {
         return dollar_amount;
+    }
+
+    public void setCan_purchase(boolean can_purchase){
+        this.can_purchase = can_purchase;
     }
 
 }

@@ -1,5 +1,7 @@
 package models.LibraryItem;
 
+import models.Items.PhysicalItems.PhysicalItem;
+
 public interface Command {
-    void execute(LibraryItem item);
+    void execute(PhysicalItem item);
 }

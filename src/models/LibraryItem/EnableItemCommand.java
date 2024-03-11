@@ -1,5 +1,7 @@
 package models.LibraryItem;
 
+import models.Items.PhysicalItems.PhysicalItem;
+
 public class EnableItemCommand implements Command {
     private LibraryManager manager;
 
@@ -8,7 +10,7 @@ public class EnableItemCommand implements Command {
     }
 
     @Override
-    public void execute(LibraryItem item) {
+    public void execute(PhysicalItem item) {
         manager.enableItem(item);
     }
 }

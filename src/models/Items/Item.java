@@ -2,10 +2,10 @@ package models.Items;
 
 public interface Item {
 
-    static String id = null;
+    static int id = 1;
     String name = null;
 
-    public String getId();
+    public int getId();
     public String getName();
 
 }

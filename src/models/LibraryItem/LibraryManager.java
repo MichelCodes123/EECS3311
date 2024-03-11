@@ -1,35 +1,37 @@
 package models.LibraryItem;
 
+import models.Items.PhysicalItems.PhysicalItem;
+
 import java.util.HashMap;
 import java.util.Map;
 public class LibraryManager {
-    private Map<Integer, LibraryItem> libraryItems;
+    private Map<Integer, PhysicalItem> libraryItems;
 
     public LibraryManager() {
         this.libraryItems = new HashMap<>();
     }
 
-    public void addItem(LibraryItem item) {
+    public void addItem(PhysicalItem item) {
         libraryItems.put(item.getId(), item);
     }
 
-    public void enableItem(LibraryItem item) {
+    public void enableItem(PhysicalItem item) {
         if (item != null && libraryItems.containsKey(item.getId())) {
-            item.setCanBePurchased(true);
+            item.setCan_purchase(true);
         }
     }
 
-    public void disableItem(LibraryItem item) {
+    public void disableItem(PhysicalItem item) {
         if (item != null && libraryItems.containsKey(item.getId())) {
-            item.setCanBePurchased(false);
+            item.setCan_purchase(false);
         }
     }
 
     // Other methods for managing the library items
-    public LibraryItem getItemById(int id) {
+    public PhysicalItem getItemById(int id) {
         return libraryItems.get(id);
     }
-    public void removeItem(LibraryItem item) {
+    public void removeItem(PhysicalItem item) {
         if (item != null) {
             libraryItems.remove(item.getId());
         }

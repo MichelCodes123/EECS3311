@@ -1,5 +1,7 @@
 package models.LibraryItem;
 
+import models.Items.PhysicalItems.PhysicalItem;
+
 public class RemoveItemCommand implements Command {
     private LibraryManager manager;
 
@@ -7,7 +9,7 @@ public class RemoveItemCommand implements Command {
         this.manager = manager;
     }
     @Override
-    public void execute(LibraryItem item) {
+    public void execute(PhysicalItem item) {
         manager.removeItem(item);
     }
 }
