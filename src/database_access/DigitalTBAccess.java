@@ -11,7 +11,7 @@ import models.Items.DigitalTB.*;
 public class DigitalTBAccess {
 
     public ArrayList<Item> items = new ArrayList<>();
-    public String path = "/database/digital_tb.csv";
+    public String path = "src/database/digital_tb.csv";
 
     public void load() throws Exception{
         CsvReader reader = new CsvReader( path);

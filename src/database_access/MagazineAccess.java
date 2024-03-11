@@ -12,7 +12,7 @@ import models.Items.PhysicalItems.PhysicalItem;
 public class MagazineAccess {
 
     public ArrayList<PhysicalItem> items = new ArrayList<>();
-    public String path = "/database/magazines.csv";
+    public String path = "src/database/magazines.csv";
 
     public void load() throws Exception{
         CsvReader reader = new CsvReader( path);
