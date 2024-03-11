@@ -27,9 +27,14 @@ public class OverdueService {
                         applyOverdueFee(user, 0.5);
                         user_overdue_count++;
                     }
-                    if (user_overdue_count >= 3) {
+                    if (user_overdue_count > 3) {
                         toggleBorrowBlocker(user, false);
                     }
+
+                    if (current_date.getTime() > item.getDueDate().getTime() + (15*24*3600*1000) ) {
+                        //TODO: remove item
+                    }
+
                 }
             }
         }
