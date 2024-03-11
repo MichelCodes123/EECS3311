@@ -29,4 +29,9 @@ public class LibraryManager {
     public LibraryItem getItemById(int id) {
         return libraryItems.get(id);
     }
+    public void removeItem(LibraryItem item) {
+        if (item != null) {
+            libraryItems.remove(item.getId());
+        }
+    }
 }
