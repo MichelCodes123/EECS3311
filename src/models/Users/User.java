@@ -55,18 +55,13 @@ public abstract class User {
     }
 
     public ArrayList<String> getRented_item_list() {
-        if (rented_item_list != null) {
-            return new ArrayList<>(rented_item_list);
-        }
-        else {
-            return new ArrayList<>();
-        }
-
+        return new ArrayList<>(rented_item_list);
     }
 
     public void increaseOverdue_charge(Double price) {this.overdue_charge = overdue_charge + price;}
 
     public void setCan_borrow(Boolean bool) {this.can_borrow = bool;}
 
-   public void setRented_item_list(ArrayList<String> list) {this.rented_item_list = new ArrayList<>(list);}
+   public void add_item(String item_id) {this.rented_item_list.add(item_id);
+    }
 }
