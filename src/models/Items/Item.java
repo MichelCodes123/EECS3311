@@ -2,8 +2,8 @@ package models.Items;
 
 public abstract class Item {
 
-    String id = null;
-    String name = null;
+    String id;
+    String name;
 
     public  Item(String id, String name) {
         this.id = id;
@@ -11,11 +11,11 @@ public abstract class Item {
     }
 
     public String getId() {
-        return null;
+        return id;
     }
 
     public String getName() {
-        return null;
+        return name;
     }
 
 }
