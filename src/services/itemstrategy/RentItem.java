@@ -1,7 +1,6 @@
 package services.itemstrategy;
 
 import database_access.QueryUtilities;
-import models.Items.Item;
 import models.Items.PhysicalItems.PhysicalItem;
 import models.Users.User;
 
@@ -13,7 +12,7 @@ public class RentItem implements ItemStrategy{
         QueryUtilities utils = new QueryUtilities();
         User user = utils.getUser(user_id);
         if (user.getRented_item_list().size() < 10) {
-            PhysicalItem item = (PhysicalItem) utils.getItem(item_id);
+            PhysicalItem item = (PhysicalItem) utils.getPhysicalItem(item_id);
             item.setDueDate(new Date());
             user.getRented_item_list().add(item_id);
         }

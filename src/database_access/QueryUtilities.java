@@ -1,8 +1,8 @@
 package database_access;
+import models.Items.Item;
 import models.Items.PhysicalItems.PhysicalItem;
 import models.Users.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class QueryUtilities {
@@ -41,18 +41,26 @@ public class QueryUtilities {
         return itemlist;
     }
 
+    public User getUser (String id) throws Exception {
+       ArrayList<User> users = allUsers();
 
-    private void loadUsers() throws Exception{
-        visitors.load();
-        students.load();
-        non_faculty_staff.load();
-        faculty_members.load();
+       for (User user : users) {
+           if (user.getId().equals(id)) {
+               return user;
+           }
+       }
+       return null;
     }
 
-    private void loadPhysicalItems() throws Exception {
-        books.load();
-        cds.load();
-        magazines.load();
+    public PhysicalItem getPhysicalItem(String id) throws Exception {
+        ArrayList<PhysicalItem> items = allPhysicalItems();
+
+        for (PhysicalItem item : items) {
+            if (item.getId().equals(id)) {
+                return item;
+            }
+        }
+        return null;
     }
 
     public ArrayList<PhysicalItem> getUserAssociatedItems (User user) throws Exception {
@@ -68,4 +76,19 @@ public class QueryUtilities {
 
         return user_items;
     }
+
+    private void loadUsers() throws Exception{
+        visitors.load();
+        students.load();
+        non_faculty_staff.load();
+        faculty_members.load();
+    }
+
+    private void loadPhysicalItems() throws Exception {
+        books.load();
+        cds.load();
+        magazines.load();
+    }
+
+
 }
