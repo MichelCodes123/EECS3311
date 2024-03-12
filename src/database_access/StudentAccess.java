@@ -14,6 +14,14 @@ public class StudentAccess {
     public ArrayList<Student> users = new ArrayList<>();
     public String path = "src/database/students.csv";
 
+    private static StudentAccess db_instance;
+    public static StudentAccess getInstance() {
+        if (db_instance == null) {
+            db_instance = new StudentAccess();
+        }
+        return db_instance;
+    }
+
     public void load() throws Exception{
         CsvReader reader = new CsvReader( path);
         reader.readHeaders();

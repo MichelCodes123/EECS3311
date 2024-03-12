@@ -14,6 +14,14 @@ public class MagazineAccess {
     public ArrayList<PhysicalItem> items = new ArrayList<>();
     public String path = "src/database/magazines.csv";
 
+    private static MagazineAccess db_instance;
+    public static MagazineAccess getInstance() {
+        if (db_instance == null) {
+            db_instance = new MagazineAccess();
+        }
+        return db_instance;
+    }
+
     public void load() throws Exception{
         CsvReader reader = new CsvReader( path);
         reader.readHeaders();

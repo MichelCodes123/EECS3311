@@ -6,12 +6,21 @@ import models.Items.*;
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
 import models.Items.DigitalTB.*;
+import models.Items.PhysicalItems.Cd;
 
 
 public class DigitalTBAccess {
 
     public ArrayList<Item> items = new ArrayList<>();
     public String path = "src/database/digital_tb.csv";
+
+    private static DigitalTBAccess db_instance;
+    public static DigitalTBAccess getInstance() {
+        if (db_instance == null) {
+            db_instance = new DigitalTBAccess();
+        }
+        return db_instance;
+    }
 
     public void load() throws Exception{
         CsvReader reader = new CsvReader( path);

@@ -14,6 +14,14 @@ public class FacultyMemberAccess {
     public ArrayList<FacultyMember> users = new ArrayList<>();
     public String path = "src/database/faculty.csv";
 
+    private static FacultyMemberAccess db_instance;
+    public static FacultyMemberAccess getInstance() {
+        if (db_instance == null) {
+            db_instance = new FacultyMemberAccess();
+        }
+        return db_instance;
+    }
+
     public void load() throws Exception{
         CsvReader reader = new CsvReader( path);
         reader.readHeaders();

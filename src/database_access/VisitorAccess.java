@@ -14,6 +14,14 @@ public class VisitorAccess {
     public ArrayList<Visitor> users = new ArrayList<>();
     public String path = "src/database/visitor.csv";
 
+    private static VisitorAccess db_instance;
+    public static VisitorAccess getInstance() {
+        if (db_instance == null) {
+            db_instance = new VisitorAccess();
+        }
+        return db_instance;
+    }
+
     public void load() throws Exception{
         CsvReader reader = new CsvReader( path);
         reader.readHeaders();

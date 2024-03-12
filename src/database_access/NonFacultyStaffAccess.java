@@ -14,6 +14,14 @@ public class NonFacultyStaffAccess {
     public ArrayList<NonFacultyStaff> users = new ArrayList<>();
     public String path = "src/database/non_faculty_staff.csv";
 
+    private static NonFacultyStaffAccess db_instance;
+    public static NonFacultyStaffAccess getInstance() {
+        if (db_instance == null) {
+            db_instance = new NonFacultyStaffAccess();
+        }
+        return db_instance;
+    }
+
     public void load() throws Exception{
         CsvReader reader = new CsvReader( path);
         reader.readHeaders();

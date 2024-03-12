@@ -13,6 +13,14 @@ public class BookAccess {
 
     public ArrayList<PhysicalItem> items = new ArrayList<>();
     public String path = "src/database/books.csv";
+    private static BookAccess db_instance;
+    public static BookAccess getInstance() {
+        if (db_instance == null) {
+            db_instance = new BookAccess();
+        }
+        return db_instance;
+    }
+
 
     public void load() throws Exception{
         CsvReader reader = new CsvReader( path);
