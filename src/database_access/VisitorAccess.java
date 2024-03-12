@@ -15,6 +15,11 @@ public class VisitorAccess {
     public String path = "src/database/visitor.csv";
 
     private static VisitorAccess db_instance;
+
+    private VisitorAccess() {
+
+    }
+
     public static VisitorAccess getInstance() {
         if (db_instance == null) {
             db_instance = new VisitorAccess();

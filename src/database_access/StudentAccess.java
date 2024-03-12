@@ -15,6 +15,11 @@ public class StudentAccess {
     public String path = "src/database/students.csv";
 
     private static StudentAccess db_instance;
+
+    private StudentAccess() {
+
+    }
+
     public static StudentAccess getInstance() {
         if (db_instance == null) {
             db_instance = new StudentAccess();

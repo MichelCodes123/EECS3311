@@ -14,6 +14,10 @@ public class CdAccess {
     public ArrayList<PhysicalItem> items = new ArrayList<>();
     public String path = "src/database/Cd.csv";
 
+    private CdAccess() {
+
+    }
+
     private static CdAccess db_instance;
     public static CdAccess getInstance() {
         if (db_instance == null) {

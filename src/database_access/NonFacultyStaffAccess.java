@@ -15,6 +15,11 @@ public class NonFacultyStaffAccess {
     public String path = "src/database/non_faculty_staff.csv";
 
     private static NonFacultyStaffAccess db_instance;
+
+    private NonFacultyStaffAccess() {
+
+    }
+
     public static NonFacultyStaffAccess getInstance() {
         if (db_instance == null) {
             db_instance = new NonFacultyStaffAccess();

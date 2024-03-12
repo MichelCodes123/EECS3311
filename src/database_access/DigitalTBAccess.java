@@ -15,6 +15,11 @@ public class DigitalTBAccess {
     public String path = "src/database/digital_tb.csv";
 
     private static DigitalTBAccess db_instance;
+
+    private DigitalTBAccess() {
+
+    }
+
     public static DigitalTBAccess getInstance() {
         if (db_instance == null) {
             db_instance = new DigitalTBAccess();

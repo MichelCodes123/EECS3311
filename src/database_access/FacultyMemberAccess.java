@@ -15,6 +15,11 @@ public class FacultyMemberAccess {
     public String path = "src/database/faculty.csv";
 
     private static FacultyMemberAccess db_instance;
+
+    private FacultyMemberAccess() {
+
+    }
+
     public static FacultyMemberAccess getInstance() {
         if (db_instance == null) {
             db_instance = new FacultyMemberAccess();

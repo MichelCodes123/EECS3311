@@ -15,6 +15,11 @@ public class MagazineAccess {
     public String path = "src/database/magazines.csv";
 
     private static MagazineAccess db_instance;
+
+    private MagazineAccess() {
+
+    }
+
     public static MagazineAccess getInstance() {
         if (db_instance == null) {
             db_instance = new MagazineAccess();
