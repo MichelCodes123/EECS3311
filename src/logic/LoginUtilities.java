@@ -3,7 +3,7 @@ package logic;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
-public class LoginUtility {
+public class LoginUtilities {
 
 	/**
 	 * Verifies that the user has entered a strong password.
@@ -17,7 +17,6 @@ public class LoginUtility {
 		email.trim();
 		password.trim();
 		if (name.length() == 0 || email.length() == 0 || password.length() == 0) {
-
 			errorHandler.accept("Cannot have empty fields!");
 			return;
 		}
@@ -32,12 +31,6 @@ public class LoginUtility {
 			errorHandler.accept("Password must contain at least one uppercase letter");
 			return;
 		}
-
-//		Pattern e = Pattern.compile(".*[A-Z]@.*[A-Z].[com|ca]");
-//		if (!e.matcher(password).matches()) {
-//			errorHandler.accept("Invalid Email type");
-//			return;
-//		}
 
 		if (!verifyUniqueEmail(email)) {
 			errorHandler.accept("This email already exists");
