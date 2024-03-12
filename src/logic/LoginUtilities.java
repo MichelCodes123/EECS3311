@@ -8,7 +8,7 @@ public class LoginUtilities {
 	/**
 	 * Verifies that the user has entered a strong password.
 	 * 
-	 * @param s
+	 * @param
 	 * @return
 	 */
 	public void verifyRegistration(String name, String email, String password, Consumer<String> errorHandler) {
@@ -21,26 +21,51 @@ public class LoginUtilities {
 			return;
 		}
 
-		if (name.length() < 4) {
+		if (name.length() < 5) {
 			errorHandler.accept("Password length must be greater than 4");
 			return;
 		}
 
-		Pattern p = Pattern.compile("?=.*[A-Z]");
-		if (!p.matcher(password).matches()) {
-			errorHandler.accept("Password must contain at least one uppercase letter");
+		String s = verifyStrongPass(password);
+		if (s != null){
+			errorHandler.accept(s);
 			return;
 		}
-
 		if (!verifyUniqueEmail(email)) {
 			errorHandler.accept("This email already exists");
+			return;
 		}
-
+		//Add new user to database.
 	}
 
+	/**
+	 * Verifies that email entered is unique
+	 * @param email
+	 * @return
+	 */
 	public Boolean verifyUniqueEmail(String email) {
-
+		//Update this when database logic is finished
 		return false;
+	}
+
+	public String verifyStrongPass(String password){
+		Pattern p;
+		p = Pattern.compile("(?=.*[A-Z])");
+		if (!p.matcher(password).matches()) {
+			return "Password must contain at least one uppercase letter";
+		}
+		p = Pattern.compile("(?=.*[a-z])");
+		if (!p.matcher(password).matches()) {
+			return "Password must contain at least one lowercase letter";
+		}
+		p = Pattern.compile("(?=.*\\d)");
+		if (!p.matcher(password).matches()) {
+			return "Password must contain at least one digit";
+		}
+
+		return null;
+
+
 	}
 
 }
