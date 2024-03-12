@@ -6,13 +6,17 @@ import java.util.List;
 
 public class AddItemCommand implements Command {
     private PhysicalItem item;
-    private LibraryItemRepository repository;
-    public AddItemCommand(PhysicalItem item, LibraryItemRepository repository) {
+    private LibraryManager libraryManager;
+
+
+    public AddItemCommand(PhysicalItem item, LibraryManager libraryManager) {
         this.item = item;
-        this.repository = repository;
+        this.libraryManager = libraryManager;
     }
+
     @Override
-    public void execute(PhysicalItem item) {
-        repository.addItem(item);
+    public void execute(List<PhysicalItem> items, String path, LibraryManager libraryManager) {
+        items.add(item);
+        libraryManager.updateLibrary(items, path);
     }
 }

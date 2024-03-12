@@ -2,15 +2,25 @@ package models.LibraryItem;
 
 import models.Items.PhysicalItems.PhysicalItem;
 
-public class EnableItemCommand implements Command {
-    private LibraryManager manager;
+import java.util.List;
 
-    public EnableItemCommand(LibraryManager manager) {
-        this.manager = manager;
+public class EnableItemCommand implements Command {
+    private int itemId;
+    private LibraryManager libraryManager;
+
+    public EnableItemCommand(int itemId, LibraryManager libraryManager) {
+        this.itemId = itemId;
+        this.libraryManager = libraryManager;
     }
 
     @Override
-    public void execute(PhysicalItem item) {
-        manager.enableItem(item);
+    public void execute(List<PhysicalItem> items, String path, LibraryManager libraryManager) {
+        for (PhysicalItem item : items) {
+            if (item.getId() == itemId) {
+                item.setEnabled(true);
+                break;
+            }
+        }
+        libraryManager.updateLibrary(items, path);
     }
 }
