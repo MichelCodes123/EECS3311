@@ -50,8 +50,8 @@ public class FacultyMemberAccess {
             // else assume that the file already has the correct header line
             // write out a few records
             for (FacultyMember u : users) {
-                csvOutput.write(u.getName());
                 csvOutput.write(String.valueOf(u.getId()));
+                csvOutput.write(u.getName());
                 csvOutput.write(u.getEmail());
                 csvOutput.write(u.getPassword());
                 csvOutput.write(u.getCan_borrow().toString());

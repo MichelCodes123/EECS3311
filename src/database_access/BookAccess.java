@@ -27,7 +27,7 @@ public class BookAccess {
                         reader.get("name"),
                         reader.get("location"),
                         Boolean.valueOf(reader.get("can_purchase")),
-                        Date.valueOf(reader.get("due_date")),
+                        Long.valueOf(reader.get("due_date")),
                         Double.valueOf(reader.get("dollar_amount"))
                 );
             }
@@ -38,7 +38,7 @@ public class BookAccess {
                         reader.get("name"),
                         reader.get("location"),
                         Boolean.valueOf(reader.get("can_purchase")),
-                        Date.valueOf(reader.get("due_date")),
+                        Long.valueOf(reader.get("due_date")),
                         Double.valueOf(reader.get("dollar_amount"))
                 );
             }

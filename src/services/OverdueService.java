@@ -23,7 +23,7 @@ public class OverdueService {
 
                 for (PhysicalItem item : user_items) {
 
-                    if (item.getDueDate().getTime() < current_date.getTime()) {
+                    if (item.getDueDate() < current_date.getTime()) {
                         applyOverdueFee(user, 0.5);
                         user_overdue_count++;
                     }
@@ -31,7 +31,7 @@ public class OverdueService {
                         toggleBorrowBlocker(user, false);
                     }
 
-                    if (current_date.getTime() > item.getDueDate().getTime() + (15*24*3600*1000) ) {
+                    if (current_date.getTime() > item.getDueDate() + (15*24*3600*1000) ) {
                         //TODO: remove item
                     }
 

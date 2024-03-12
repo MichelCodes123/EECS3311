@@ -8,10 +8,10 @@ public abstract class PhysicalItem extends Item {
 
      String location = null;
      Boolean can_purchase = null;
-     Date due_date = null;
+     Long due_date = null;
      Double dollar_amount = null;
 
-    public PhysicalItem(String id, String name, String location, Boolean can_purchase, Date due_date, Double dollar_amount) {
+    public PhysicalItem(String id, String name, String location, Boolean can_purchase, Long due_date, Double dollar_amount) {
        super(id, name);
         this.location = location;
         this.can_purchase = can_purchase;
@@ -27,7 +27,7 @@ public abstract class PhysicalItem extends Item {
         return can_purchase;
     }
 
-    public Date getDueDate() {
+    public Long getDueDate() {
         return due_date;
     }
 
@@ -44,7 +44,7 @@ public abstract class PhysicalItem extends Item {
     }
 
     public void setDueDate(Date due_date) {
-        this.due_date = due_date;
+        this.due_date = due_date.getTime();
     }
 
     public void setDollarAmount(Double dollar_amount) {
