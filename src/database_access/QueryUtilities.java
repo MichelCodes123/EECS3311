@@ -1,21 +1,25 @@
 package database_access;
 import models.Items.Item;
+import models.Items.PhysicalItems.Book;
 import models.Items.PhysicalItems.PhysicalItem;
 import models.Users.*;
+import services.itemstrategy.ItemStrategy;
+import services.itemstrategy.RentItem;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class QueryUtilities {
 
     //REFACTOR UTILS
-    FacultyMemberAccess faculty_members = new FacultyMemberAccess();
-    NonFacultyStaffAccess non_faculty_staff = new NonFacultyStaffAccess();
-    StudentAccess students = new StudentAccess();
-    VisitorAccess visitors = new VisitorAccess();
+    FacultyMemberAccess faculty_members = FacultyMemberAccess.getInstance();
+    NonFacultyStaffAccess non_faculty_staff =NonFacultyStaffAccess.getInstance();
+    StudentAccess students = StudentAccess.getInstance();
+    VisitorAccess visitors = VisitorAccess.getInstance();
 
-    BookAccess books = new BookAccess();
-    CdAccess cds = new CdAccess();
-    MagazineAccess magazines = new MagazineAccess();
+    BookAccess books = BookAccess.getInstance();
+    CdAccess cds = CdAccess.getInstance();
+    MagazineAccess magazines = MagazineAccess.getInstance();
 
 
     public ArrayList<User> allUsers() throws Exception {
@@ -89,6 +93,4 @@ public class QueryUtilities {
         cds.load();
         magazines.load();
     }
-
-
 }
