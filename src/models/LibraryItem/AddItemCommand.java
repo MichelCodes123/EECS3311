@@ -17,6 +17,9 @@ public class AddItemCommand implements Command {
     @Override
     public void execute(List<PhysicalItem> items, String path, LibraryManager libraryManager) {
         items.add(item);
-        libraryManager.updateLibrary(items, path);
+        libraryManager.addItem(item);
+    }
+    public PhysicalItem getItem() {
+        return item;
     }
 }
