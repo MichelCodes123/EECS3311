@@ -46,7 +46,7 @@ public class NonFacultyStaffAccess {
         }
     }
 
-    public void update(String path) throws Exception {
+    public void update() throws Exception {
         try {
             CsvWriter csvOutput = new CsvWriter(new FileWriter( path, false), ',');
             //name,id,email,password
@@ -74,6 +74,8 @@ public class NonFacultyStaffAccess {
                 csvOutput.endRecord();
             }
             csvOutput.close();
+            users = new ArrayList<>();
+
 
         } catch (Exception e) {
             e.printStackTrace();

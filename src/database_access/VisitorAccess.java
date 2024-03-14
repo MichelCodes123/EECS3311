@@ -74,6 +74,8 @@ public class VisitorAccess {
                 csvOutput.endRecord();
             }
             csvOutput.close();
+            users = new ArrayList<>();
+
 
         } catch (Exception e) {
             e.printStackTrace();

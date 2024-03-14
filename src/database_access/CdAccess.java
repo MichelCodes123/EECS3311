@@ -67,6 +67,7 @@ public class CdAccess {
                 csvOutput.endRecord();
             }
             csvOutput.close();
+            items = new ArrayList<>();
 
         } catch (Exception e) {
             e.printStackTrace();

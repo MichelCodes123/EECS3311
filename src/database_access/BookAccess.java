@@ -28,7 +28,7 @@ public class BookAccess {
 
 
     public void load() throws Exception{
-        CsvReader reader = new CsvReader( path);
+        CsvReader reader = new CsvReader(path);
         reader.readHeaders();
 
         while(reader.readRecord()){
@@ -86,6 +86,7 @@ public class BookAccess {
                 csvOutput.endRecord();
             }
             csvOutput.close();
+            items = new ArrayList<>();
 
         } catch (Exception e) {
             e.printStackTrace();

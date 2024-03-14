@@ -56,6 +56,8 @@ public class DigitalTBAccess {
                 csvOutput.endRecord();
             }
             csvOutput.close();
+            items = new ArrayList<>();
+
 
         } catch (Exception e) {
             e.printStackTrace();

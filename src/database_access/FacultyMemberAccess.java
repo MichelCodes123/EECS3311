@@ -28,6 +28,7 @@ public class FacultyMemberAccess {
     }
 
     public void load() throws Exception{
+        users = new ArrayList<>();
         CsvReader reader = new CsvReader( path);
         reader.readHeaders();
 
@@ -74,6 +75,7 @@ public class FacultyMemberAccess {
                 csvOutput.endRecord();
             }
             csvOutput.close();
+            users = new ArrayList<>();
 
         } catch (Exception e) {
             e.printStackTrace();
