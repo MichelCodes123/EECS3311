@@ -8,6 +8,7 @@ import models.Users.User;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 public class RentItem implements ItemStrategy{
 
@@ -25,7 +26,7 @@ public class RentItem implements ItemStrategy{
             if (user instanceof Student) {
                 int i = 0;
                 for (Student student : db.users) {
-                    if (student.getId() == user.getId()) {
+                    if (Objects.equals(student.getId(), user.getId())) {
                         desired_student = student;
                         break;
                     }

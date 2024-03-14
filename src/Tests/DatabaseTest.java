@@ -1,4 +1,4 @@
-package Tests.Database;
+package Tests;
 import database_access.*;
 import models.Items.DigitalTB.DigitalTB;
 import models.Items.PhysicalItems.Book;
@@ -145,7 +145,4 @@ public class DatabaseTest {
         db.load();
         assertEquals(1, db.users.size());
     }
-
-
-
 }

@@ -63,14 +63,22 @@ public class NonFacultyStaffAccess {
             // else assume that the file already has the correct header line
             // write out a few records
             for (NonFacultyStaff u : users) {
-                csvOutput.write(u.getName());
                 csvOutput.write(String.valueOf(u.getId()));
+                csvOutput.write(u.getName());
                 csvOutput.write(u.getEmail());
                 csvOutput.write(u.getPassword());
                 csvOutput.write(u.getCan_borrow().toString());
                 csvOutput.write(u.getOverdue_charge().toString());
                 csvOutput.write(u.getIs_registered().toString());
-                csvOutput.write(u.getRented_item_list().stream().map(Object::toString).collect(Collectors.joining(", ")));
+
+                StringBuilder builder = new StringBuilder();
+                for (String item : u.getRented_item_list()) {
+                    builder.append(item).append(" ");
+                }
+                String submit = builder.toString().trim();
+
+                csvOutput.write(submit);
+                csvOutput.endRecord();
                 csvOutput.endRecord();
             }
             csvOutput.close();

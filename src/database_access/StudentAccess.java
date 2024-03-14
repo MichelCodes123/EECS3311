@@ -30,7 +30,6 @@ public class StudentAccess {
     public void load() throws Exception{
         CsvReader reader = new CsvReader( path);
         reader.readHeaders();
-
         while(reader.readRecord()){
             Student user = new Student(
                     reader.get("id"),
@@ -40,7 +39,7 @@ public class StudentAccess {
                     Boolean.valueOf(reader.get("can_borrow")),
                     Double.valueOf(reader.get("overdue_charge")),
                     Boolean.valueOf(reader.get("is_registered")),
-                    new ArrayList<String>(Arrays.asList(reader.get("rented_item_list").split(", ")))
+                    new ArrayList<>(Arrays.asList(reader.get("rented_item_list").split(", ")))
             );
             users.add(user);
         }
@@ -70,7 +69,14 @@ public class StudentAccess {
                 csvOutput.write(u.getCan_borrow().toString());
                 csvOutput.write(u.getOverdue_charge().toString());
                 csvOutput.write(u.getIs_registered().toString());
-                csvOutput.write(u.getRented_item_list().stream().map(Object::toString).collect(Collectors.joining(", ")));
+
+                StringBuilder builder = new StringBuilder();
+                for (String item : u.getRented_item_list()) {
+                    builder.append(item).append(" ");
+                }
+                String submit = builder.toString().trim();
+
+                csvOutput.write(submit);
                 csvOutput.endRecord();
             }
             csvOutput.close();

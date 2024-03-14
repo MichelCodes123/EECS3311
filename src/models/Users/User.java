@@ -22,7 +22,13 @@ public abstract class User {
         this.can_borrow = can_borrow;
         this.overdue_charge = overdue_charge;
         this.is_registered = is_registered;
-        this.rented_item_list = new ArrayList<>();
+
+        if (rented_item_list != null && !rented_item_list.isEmpty()) {
+            this.rented_item_list = new ArrayList<>(rented_item_list);
+        }
+        else  {
+            this.rented_item_list = new ArrayList<>();
+        }
     }
 
 

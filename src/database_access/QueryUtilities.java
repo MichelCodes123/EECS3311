@@ -7,6 +7,7 @@ import services.itemstrategy.ItemStrategy;
 import services.itemstrategy.RentItem;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 public class QueryUtilities {
@@ -30,7 +31,6 @@ public class QueryUtilities {
         userlist.addAll(students.users);
         userlist.addAll(non_faculty_staff.users);
         userlist.addAll(faculty_members.users);
-
         return userlist;
     }
 
@@ -47,7 +47,6 @@ public class QueryUtilities {
 
     public User getUser (String id) throws Exception {
        ArrayList<User> users = allUsers();
-
        for (User user : users) {
            if (user.getId().equals(id)) {
                return user;
@@ -92,5 +91,34 @@ public class QueryUtilities {
         books.load();
         cds.load();
         magazines.load();
+    }
+
+    public static void main(String[] args) throws Exception {
+        Student student = new Student("1","Jimmy", "email", "1234", true, 0.0, true, null);
+        FacultyMember prof = new FacultyMember("2","Tommy", "email", "1234", true, 0.0, true, new ArrayList<String>());
+        Book book = new Book("0", "Game of Thrones", "RM 125", true, new Date().getTime(), 0.0);
+        Book book1 = new Book("1", "Game of Thrones", "RM 125", true, new Date().getTime(), 0.0);
+
+
+        StudentAccess studentdb = StudentAccess.getInstance();
+        studentdb.users.add(student);
+        studentdb.update();
+
+        FacultyMemberAccess profdb = FacultyMemberAccess.getInstance();
+        profdb.users.add(prof);
+        profdb.update();
+
+        BookAccess bookdb = BookAccess.getInstance();
+        bookdb.items.add(book);
+        bookdb.items.add(book1);
+        bookdb.update();
+
+
+        ItemStrategy strat = new RentItem();
+        strat.execute(book.getId(), student.getId());
+        strat.execute(book1.getId(), student.getId());
+
+        studentdb.load();
+        System.out.println(studentdb.users.get(0).getRented_item_list());
     }
 }
