@@ -7,23 +7,24 @@ import java.util.List;
 
 public class RemoveItemCommand implements Command {
     private int itemId;
+    private String itemType;
     private LibraryManager libraryManager;
 
-    public RemoveItemCommand(int itemId, LibraryManager libraryManager) {
+    public RemoveItemCommand(int itemId, String itemType, LibraryManager libraryManager) {
         this.itemId = itemId;
+        this.itemType = itemType;
         this.libraryManager = libraryManager;
     }
 
     @Override
     public void execute(List<PhysicalItem> items, String path, LibraryManager libraryManager) {
-        Iterator<PhysicalItem> iterator = items.iterator();
-        while (iterator.hasNext()) {
-            PhysicalItem item = iterator.next();
-            if (item.getId() == itemId) {
-                iterator.remove();
-                break;
-            }
-        }
-        libraryManager.updateLibrary(items, path);
+        libraryManager.removeItem(itemId, itemType);
+    }
+
+    public int getItemId() {
+        return itemId;
+    }
+    public String getItemType() {
+        return itemType;
     }
 }
