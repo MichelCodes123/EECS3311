@@ -3,6 +3,7 @@ import models.Items.Item;
 import models.Items.PhysicalItems.Book;
 import models.Items.PhysicalItems.PhysicalItem;
 import models.Users.*;
+import services.OverdueService;
 import services.itemstrategy.ItemStrategy;
 import services.itemstrategy.RentItem;
 
@@ -41,7 +42,6 @@ public class QueryUtilities {
         itemlist.addAll(books.items);
         itemlist.addAll(magazines.items);
         itemlist.addAll(cds.items);
-
         return itemlist;
     }
 
@@ -73,14 +73,19 @@ public class QueryUtilities {
 
         for (PhysicalItem item : physical_items) {
             if (user.getRented_item_list().contains(item.getId())) {
-                physical_items.add(item);
+                user_items.add(item);
             }
         }
-
         return user_items;
     }
 
     private void loadUsers() throws Exception{
+        visitors.users = new ArrayList<>();
+        students.users = new ArrayList<>();
+        non_faculty_staff.users = new ArrayList<>();
+        faculty_members.users = new ArrayList<>();
+
+
         visitors.load();
         students.load();
         non_faculty_staff.load();
@@ -88,37 +93,12 @@ public class QueryUtilities {
     }
 
     private void loadPhysicalItems() throws Exception {
+        books.items = new ArrayList<>();
+        cds.items = new ArrayList<>();
+        magazines.items = new ArrayList<>();
+
         books.load();
         cds.load();
         magazines.load();
-    }
-
-    public static void main(String[] args) throws Exception {
-        Student student = new Student("1","Jimmy", "email", "1234", true, 0.0, true, null);
-        FacultyMember prof = new FacultyMember("2","Tommy", "email", "1234", true, 0.0, true, new ArrayList<String>());
-        Book book = new Book("0", "Game of Thrones", "RM 125", true, new Date().getTime(), 0.0);
-        Book book1 = new Book("1", "Game of Thrones", "RM 125", true, new Date().getTime(), 0.0);
-
-
-        StudentAccess studentdb = StudentAccess.getInstance();
-        studentdb.users.add(student);
-        studentdb.update();
-
-        FacultyMemberAccess profdb = FacultyMemberAccess.getInstance();
-        profdb.users.add(prof);
-        profdb.update();
-
-        BookAccess bookdb = BookAccess.getInstance();
-        bookdb.items.add(book);
-        bookdb.items.add(book1);
-        bookdb.update();
-
-
-        ItemStrategy strat = new RentItem();
-        strat.execute(book.getId(), student.getId());
-        strat.execute(book1.getId(), student.getId());
-
-        studentdb.load();
-        System.out.println(studentdb.users.get(0).getRented_item_list());
     }
 }

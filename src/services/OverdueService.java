@@ -20,9 +20,7 @@ public class OverdueService {
             {
                 int user_overdue_count = 0;
                 ArrayList<PhysicalItem> user_items = utils.getUserAssociatedItems(user);
-
                 for (PhysicalItem item : user_items) {
-
                     if (item.getDueDate() < current_date.getTime()) {
                         applyOverdueFee(user, 0.5);
                         user_overdue_count++;
@@ -40,11 +38,56 @@ public class OverdueService {
         }
     }
 
-    private void applyOverdueFee(User user, Double price) {
+    private void applyOverdueFee(User user, Double price) throws Exception {
+
         user.increaseOverdue_charge(price);
+        if (user instanceof FacultyMember) {
+            FacultyMemberAccess db = FacultyMemberAccess.getInstance();
+            db.users.add((FacultyMember) user);
+            db.update();
+        }
+        else if (user instanceof  Student) {
+            StudentAccess db = StudentAccess.getInstance();
+            db.users.add((Student) user);
+            db.update();
+        }
+        else if (user instanceof NonFacultyStaff) {
+            NonFacultyStaffAccess db = NonFacultyStaffAccess.getInstance();
+            db.users.add((NonFacultyStaff) user);
+            db.update();
+        }
+
+        else if (user instanceof  Visitor) {
+            VisitorAccess db = VisitorAccess.getInstance();
+            db.users.add((Visitor) user);
+            db.update();
+        }
+
     }
 
-    private void toggleBorrowBlocker (User user, Boolean blocker) {
+    private void toggleBorrowBlocker (User user, Boolean blocker) throws Exception {
         user.setCan_borrow(blocker);
+
+        if (user instanceof FacultyMember) {
+            FacultyMemberAccess db = FacultyMemberAccess.getInstance();
+            db.users.add((FacultyMember) user);
+            db.update();
+        }
+        else if (user instanceof  Student) {
+            StudentAccess db = StudentAccess.getInstance();
+            db.users.add((Student) user);
+            db.update();
+        }
+        else if (user instanceof NonFacultyStaff) {
+            NonFacultyStaffAccess db = NonFacultyStaffAccess.getInstance();
+            db.users.add((NonFacultyStaff) user);
+            db.update();
+        }
+
+        else if (user instanceof  Visitor) {
+            VisitorAccess db = VisitorAccess.getInstance();
+            db.users.add((Visitor) user);
+            db.update();
+        }
     }
 }

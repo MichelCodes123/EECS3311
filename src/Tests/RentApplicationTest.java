@@ -49,9 +49,6 @@ public class RentApplicationTest {
 
         QueryUtilities utils = new QueryUtilities();
         ArrayList<User> users = utils.allUsers();
-        for (User u : users) {
-            System.out.println(u.getId());
-        }
         assertEquals(2, users.size());
     }
 }
