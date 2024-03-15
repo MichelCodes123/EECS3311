@@ -41,7 +41,7 @@ public class FacultyMemberAccess {
                     Boolean.valueOf(reader.get("can_borrow")),
                     Double.valueOf(reader.get("overdue_charge")),
                     Boolean.valueOf(reader.get("is_registered")),
-                    new ArrayList<String>(Arrays.asList(reader.get("rented_item_list").split(", ")))
+                    new ArrayList<String>(Arrays.asList(reader.get("rented_item_list").split(" ")))
                     );
             users.add(user);
         }
@@ -79,7 +79,6 @@ public class FacultyMemberAccess {
                 String submit = builder.toString().trim();
 
                 csvOutput.write(submit);
-                csvOutput.endRecord();
                 csvOutput.endRecord();
             }
             csvOutput.close();
