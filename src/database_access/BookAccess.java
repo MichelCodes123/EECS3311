@@ -6,16 +6,29 @@ import java.util.ArrayList;
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
 import models.Items.PhysicalItems.*;
-import models.Items.PhysicalItems.PhysicalItem;
+
 
 
 public class BookAccess {
 
     public ArrayList<PhysicalItem> items = new ArrayList<>();
-    public String path = "/database/books.csv";
+    public String path = "src/database/books.csv";
+    private static BookAccess db_instance;
+
+    private BookAccess() {
+
+    }
+
+    public static BookAccess getInstance() {
+        if (db_instance == null) {
+            db_instance = new BookAccess();
+        }
+        return db_instance;
+    }
+
 
     public void load() throws Exception{
-        CsvReader reader = new CsvReader( path);
+        CsvReader reader = new CsvReader(path);
         reader.readHeaders();
 
         while(reader.readRecord()){
@@ -27,7 +40,7 @@ public class BookAccess {
                         reader.get("name"),
                         reader.get("location"),
                         Boolean.valueOf(reader.get("can_purchase")),
-                        Date.valueOf(reader.get("due_date")),
+                        Long.valueOf(reader.get("due_date")),
                         Double.valueOf(reader.get("dollar_amount"))
                 );
             }
@@ -38,7 +51,7 @@ public class BookAccess {
                         reader.get("name"),
                         reader.get("location"),
                         Boolean.valueOf(reader.get("can_purchase")),
-                        Date.valueOf(reader.get("due_date")),
+                        Long.valueOf(reader.get("due_date")),
                         Double.valueOf(reader.get("dollar_amount"))
                 );
             }
@@ -73,6 +86,7 @@ public class BookAccess {
                 csvOutput.endRecord();
             }
             csvOutput.close();
+            items = new ArrayList<>();
 
         } catch (Exception e) {
             e.printStackTrace();

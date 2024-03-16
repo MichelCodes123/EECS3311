@@ -1,11 +1,21 @@
 package models.Items;
 
-public interface Item {
+public abstract class Item {
 
-    static String id = null;
-    String name = null;
+    String id;
+    String name;
 
-    public String getId();
-    public String getName();
+    public  Item(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
 
 }

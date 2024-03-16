@@ -12,7 +12,20 @@ import models.Items.PhysicalItems.PhysicalItem;
 public class MagazineAccess {
 
     public ArrayList<PhysicalItem> items = new ArrayList<>();
-    public String path = "/database/magazines.csv";
+    public String path = "src/database/magazines.csv";
+
+    private static MagazineAccess db_instance;
+
+    private MagazineAccess() {
+
+    }
+
+    public static MagazineAccess getInstance() {
+        if (db_instance == null) {
+            db_instance = new MagazineAccess();
+        }
+        return db_instance;
+    }
 
     public void load() throws Exception{
         CsvReader reader = new CsvReader( path);
@@ -24,7 +37,7 @@ public class MagazineAccess {
                     reader.get("name"),
                     reader.get("location"),
                     Boolean.valueOf(reader.get("can_purchase")),
-                    Date.valueOf(reader.get("due_date")),
+                    Long.valueOf(reader.get("due_date")),
                     Double.valueOf(reader.get("dollar_amount"))
             );
             items.add(item);
@@ -55,6 +68,8 @@ public class MagazineAccess {
                 csvOutput.endRecord();
             }
             csvOutput.close();
+            items = new ArrayList<>();
+
 
         } catch (Exception e) {
             e.printStackTrace();
