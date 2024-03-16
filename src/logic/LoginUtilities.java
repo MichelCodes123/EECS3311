@@ -1,5 +1,7 @@
 package logic;
 
+import models.Users.User;
+
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
@@ -11,7 +13,7 @@ public class LoginUtilities {
 	 * @param
 	 * @return
 	 */
-	public void verifyRegistration(String name, String email, String password, Consumer<String> errorHandler) {
+	public void verifyRegistration(String type, String name, String email, String password, Consumer<String> errorHandler) {
 
 		name.trim();
 		email.trim();
@@ -33,6 +35,9 @@ public class LoginUtilities {
 			errorHandler.accept("This email already exists");
 			return;
 		}
+
+		UserFactory f = new UserFactory();
+		User newUser = f.CreateUser(type, "5", name, email, password, true, 0.0, true, null);
 		//Add new user to database.
 	}
 

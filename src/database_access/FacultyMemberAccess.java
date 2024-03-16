@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import logic.FacultyMemberBuilder;
+import logic.UserFactory;
 import models.Users.*;
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
@@ -12,7 +13,7 @@ import com.csvreader.CsvWriter;
 
 public class FacultyMemberAccess {
 
-    public ArrayList<FacultyMember> users = new ArrayList<>();
+    public ArrayList<User> users = new ArrayList<>();
     public String path = "src/database/faculty.csv";
 
     private static FacultyMemberAccess db_instance;
@@ -34,16 +35,17 @@ public class FacultyMemberAccess {
         reader.readHeaders();
 
         while(reader.readRecord()){
-            FacultyMemberBuilder b = new FacultyMemberBuilder();
-                    b.setId(reader.get("id"));
-                    b.setName(reader.get("name"));
-                    b.setEmail(reader.get("email"));
-                    b.setPassword(reader.get("password"));
-                    b.setCan_borrow(Boolean.valueOf(reader.get("can_borrow")));
-                    b.setOverdue_charge(Double.valueOf(reader.get("overdue_charge")));
-                    b.setIs_registered(Boolean.valueOf(reader.get("is_registered")));
-                    b.setRented_item_list(new ArrayList<String>(Arrays.asList(reader.get("rented_item_list").split(", "))));
-            users.add( b.getUser());
+            UserFactory f = new UserFactory();
+            User u = f.CreateUser("FacultyMember",
+                    reader.get("id"),
+                    reader.get("name"),
+                    reader.get("email"),
+                    reader.get("password"),
+                    Boolean.valueOf(reader.get("can_borrow")),
+                    Double.valueOf(reader.get("overdue_charge")),
+                    Boolean.valueOf(reader.get("is_registered")),
+                    new ArrayList<String>(Arrays.asList(reader.get("rented_item_list").split(", ")))
+            );
         }
     }
 
@@ -63,7 +65,7 @@ public class FacultyMemberAccess {
 
             // else assume that the file already has the correct header line
             // write out a few records
-            for (FacultyMember u : users) {
+            for (User u : users) {
                 csvOutput.write(String.valueOf(u.getId()));
                 csvOutput.write(u.getName());
                 csvOutput.write(u.getEmail());
