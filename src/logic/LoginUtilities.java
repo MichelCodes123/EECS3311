@@ -20,12 +20,10 @@ public class LoginUtilities {
 			errorHandler.accept("Cannot have empty fields!");
 			return;
 		}
-
 		if (name.length() < 5) {
 			errorHandler.accept("Password length must be greater than 4");
 			return;
 		}
-
 		String s = verifyStrongPass(password);
 		if (s != null){
 			errorHandler.accept(s);
