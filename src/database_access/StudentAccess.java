@@ -2,6 +2,7 @@ package database_access;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 import models.Users.*;
@@ -31,6 +32,8 @@ public class StudentAccess {
         CsvReader reader = new CsvReader( path);
         reader.readHeaders();
         while(reader.readRecord()){
+           ArrayList<String>  sub_links =  new ArrayList<>(Arrays.asList(reader.get("newsletter_subscriptions").split(" ")));
+           sub_links.removeAll(Collections.singleton(""));
             Student user = new Student(
                     reader.get("id"),
                     reader.get("name"),
@@ -39,7 +42,9 @@ public class StudentAccess {
                     Boolean.valueOf(reader.get("can_borrow")),
                     Double.valueOf(reader.get("overdue_charge")),
                     Boolean.valueOf(reader.get("is_registered")),
-                    new ArrayList<>(Arrays.asList(reader.get("rented_item_list").split(" ")))
+                    new ArrayList<>(Arrays.asList(reader.get("rented_item_list").split(" "))),
+                    sub_links
+
             );
             users.add(user);
         }
@@ -57,6 +62,7 @@ public class StudentAccess {
             csvOutput.write("overdue_charge");
             csvOutput.write("is_registered");
             csvOutput.write("rented_item_list");
+            csvOutput.write("newsletter_subscriptions");
             csvOutput.endRecord();
 
             // else assume that the file already has the correct header line
@@ -75,6 +81,14 @@ public class StudentAccess {
                     builder.append(item).append(" ");
                 }
                 String submit = builder.toString().trim();
+
+                csvOutput.write(submit);
+
+                builder = new StringBuilder();
+                for (String item : u.getSubscribed_newsletters()) {
+                    builder.append(item).append(" ");
+                }
+                submit = builder.toString().trim();
 
                 csvOutput.write(submit);
                 csvOutput.endRecord();

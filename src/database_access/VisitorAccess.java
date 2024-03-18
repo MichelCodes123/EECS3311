@@ -40,7 +40,8 @@ public class VisitorAccess {
                     Boolean.valueOf(reader.get("can_borrow")),
                     Double.valueOf(reader.get("overdue_charge")),
                     Boolean.valueOf(reader.get("is_registered")),
-                    new ArrayList<String>(Arrays.asList(reader.get("rented_item_list").split(" ")))
+                    new ArrayList<String>(Arrays.asList(reader.get("rented_item_list").split(" "))),
+                    new ArrayList<String>(Arrays.asList(reader.get("newsletter_subscriptions").split(" ")))
             );
             users.add(user);
         }
@@ -58,6 +59,7 @@ public class VisitorAccess {
             csvOutput.write("overdue_charge");
             csvOutput.write("is_registered");
             csvOutput.write("rented_item_list");
+            csvOutput.write("newsletter_subscriptions");
             csvOutput.endRecord();
 
             // else assume that the file already has the correct header line
@@ -76,6 +78,14 @@ public class VisitorAccess {
                     builder.append(item).append(" ");
                 }
                 String submit = builder.toString().trim();
+
+                csvOutput.write(submit);
+
+                builder = new StringBuilder();
+                for (String item : u.getSubscribed_newsletters()) {
+                    builder.append(item).append(" ");
+                }
+                submit = builder.toString().trim();
 
                 csvOutput.write(submit);
                 csvOutput.endRecord();
