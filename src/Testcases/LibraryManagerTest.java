@@ -61,7 +61,7 @@ public class LibraryManagerTest {
     @Test
     public void addItemTest() {
         // Create a LibraryManager instance
-        LibraryManager libraryManager = new LibraryManager("src/database_access");
+        LibraryManager libraryManager = new LibraryManager("src/test");
         ItemIdGenerator idGenerator = ItemIdGenerator.getInstance();
 //        System.out.println("ItemIdGenerator instance hashCode: " + idGenerator.hashCode());
         long currentTime = System.currentTimeMillis();
