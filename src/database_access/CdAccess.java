@@ -15,20 +15,18 @@ import java.util.Objects;
 
 
 public class CdAccess {
-    private List<PhysicalItem> items = new ArrayList<>();
+    public ArrayList<PhysicalItem> items = new ArrayList<>();
     private String path = "src/database/Cd.csv";
-
-    // Singleton instance
-    private static CdAccess instance;
 
     private CdAccess() {
     }
 
+    private static CdAccess db_instance;
     public static CdAccess getInstance() {
-        if (instance == null) {
-            instance = new CdAccess();
+        if (db_instance == null) {
+            db_instance = new CdAccess();
         }
-        return instance;
+        return db_instance;
     }
 
     public void addItem(Cd cd) {
@@ -132,5 +130,35 @@ public class CdAccess {
         }
     }
 
+    public void update() throws Exception {
+        try {
+            CsvWriter csvOutput = new CsvWriter(new FileWriter( path, false), ',');
+            //name,id,email,password
+            csvOutput.write("id");
+            csvOutput.write("name");
+            csvOutput.write("location");
+            csvOutput.write("can_purchase");
+            csvOutput.write("due_date");
+            csvOutput.write("dollar_amount");
+            csvOutput.endRecord();
+
+            // else assume that the file already has the correct header line
+            // write out a few records
+            for (PhysicalItem i : items) {
+                csvOutput.write(i.getId());
+                csvOutput.write(i.getName());
+                csvOutput.write(i.getLocation());
+                csvOutput.write(i.getPurchasability().toString());
+                csvOutput.write(i.getDueDate().toString());
+                csvOutput.write(i.getDollarAmount().toString());
+                csvOutput.endRecord();
+            }
+            csvOutput.close();
+            items = new ArrayList<>();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
 

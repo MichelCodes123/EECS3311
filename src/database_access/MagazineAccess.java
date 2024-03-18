@@ -12,9 +12,8 @@ import java.util.Date;
 import java.util.List;
 
 public class MagazineAccess {
-    //    private List<Magazine> magazines = new ArrayList<>();
-    private List<PhysicalItem> items = new ArrayList<>();
-    private String path = "src/database/magazines.csv";
+    public ArrayList<PhysicalItem> items = new ArrayList<>();
+    public String path = "src/database/magazines.csv";
 
     private static MagazineAccess instance;
 
@@ -22,10 +21,10 @@ public class MagazineAccess {
     }
 
     public static MagazineAccess getInstance() {
-        if (instance == null) {
-            instance = new MagazineAccess();
+        if (db_instance == null) {
+            db_instance = new MagazineAccess();
         }
-        return instance;
+        return db_instance;
     }
 
     public void addItem(Magazine magazine) {
@@ -129,4 +128,35 @@ public class MagazineAccess {
         }
     }
 
+    public void update() throws Exception {
+        try {
+            CsvWriter csvOutput = new CsvWriter(new FileWriter( path, false), ',');
+            //name,id,email,password
+            csvOutput.write("id");
+            csvOutput.write("name");
+            csvOutput.write("location");
+            csvOutput.write("can_purchase");
+            csvOutput.write("due_date");
+            csvOutput.write("dollar_amount");
+            csvOutput.endRecord();
+
+            // else assume that the file already has the correct header line
+            // write out a few records
+            for (PhysicalItem i : items) {
+                csvOutput.write(i.getId());
+                csvOutput.write(i.getName());
+                csvOutput.write(i.getLocation());
+                csvOutput.write(i.getPurchasability().toString());
+                csvOutput.write(i.getDueDate().toString());
+                csvOutput.write(i.getDollarAmount().toString());
+                csvOutput.endRecord();
+            }
+            csvOutput.close();
+            items = new ArrayList<>();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

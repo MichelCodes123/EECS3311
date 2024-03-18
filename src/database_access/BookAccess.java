@@ -17,13 +17,12 @@ import java.util.List;
 
     public class BookAccess{
 
-    public List<PhysicalItem> items = new ArrayList<>();
-    private String path = "src/database/books.csv";
-
-    // Singleton instance
+    public ArrayList<PhysicalItem> items = new ArrayList<>();
+    public String path = "src/database/books.csv";
     private static BookAccess db_instance;
 
     private BookAccess() {
+
     }
 
     public static BookAccess getInstance() {
@@ -161,6 +160,9 @@ import java.util.List;
                 csvOutput.write("due_date");
                 csvOutput.write("dollar_amount");
                 csvOutput.endRecord();
+            }
+            csvOutput.close();
+            items = new ArrayList<>();
 
                 // else assume that the file already has the correct header line
                 // write out a few records
