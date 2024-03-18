@@ -16,7 +16,7 @@ public class LoginUtilities {
 	 * @param
 	 * @return
 	 */
-	public void verifyRegistration(String type, String name, String email, String password, Consumer<String> errorHandler) {
+	public static void verifyRegistration(String type, String name, String email, String password, Consumer<String> errorHandler) {
 
 		name.trim();
 		email.trim();
@@ -25,7 +25,7 @@ public class LoginUtilities {
 			errorHandler.accept("Cannot have empty fields!");
 			return;
 		}
-		if (name.length() < 5) {
+		if (password.length() < 5) {
 			errorHandler.accept("Password length must be greater than 4");
 			return;
 		}
@@ -34,6 +34,7 @@ public class LoginUtilities {
 			errorHandler.accept(s);
 			return;
 		}
+
 		if (!verifyUniqueEmail(email)) {
 			errorHandler.accept("This email already exists");
 			return;
@@ -53,7 +54,7 @@ public class LoginUtilities {
 	 * @param email
 	 * @return True if email is unique, false otherwise
 	 */
-	public Boolean verifyUniqueEmail(String email) {
+	public static Boolean verifyUniqueEmail(String email) {
 		QueryUtilities q = new QueryUtilities();
 
 		try{
@@ -73,18 +74,32 @@ public class LoginUtilities {
 		return false;
 	}
 
-	public String verifyStrongPass(String password){
+	public static String verifyStrongPass(String password){
 		Pattern p;
-		p = Pattern.compile("(?=.*[A-Z])");
-		if (!p.matcher(password).matches()) {
+
+		Boolean caps = false;
+		boolean lower = false;
+		boolean digit = false;
+
+		for (int i = 0; i < password.length(); i++){
+			char c = password.charAt(i);
+			if (caps == false && Character.isUpperCase(c)){
+				caps = true;
+			}
+			if (lower == false && Character.isLowerCase(c)){
+				lower = true;
+			}
+			if (digit == false && Character.isDigit(c)){
+				digit = true;
+			}
+		}
+		if (!caps) {
 			return "Password must contain at least one uppercase letter";
 		}
-		p = Pattern.compile("(?=.*[a-z])");
-		if (!p.matcher(password).matches()) {
+		if (!lower) {
 			return "Password must contain at least one lowercase letter";
 		}
-		p = Pattern.compile("(?=.*\\d)");
-		if (!p.matcher(password).matches()) {
+		if (!digit) {
 			return "Password must contain at least one digit";
 		}
 		return null;
