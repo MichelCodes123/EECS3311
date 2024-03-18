@@ -22,9 +22,9 @@ public class RentItem implements ItemStrategy{
 
             if (user instanceof Student) {
                 StudentAccess db = StudentAccess.getInstance();
-                Student desired_user = null;
+                User desired_user = null;
                 int i = 0;
-                for (Student student : db.users) {
+                for (User student : db.users) {
                     if (Objects.equals(student.getId(), user.getId())) {
                         desired_user = student;
                         break;
@@ -37,9 +37,9 @@ public class RentItem implements ItemStrategy{
 
             else if (user instanceof FacultyMember) {
                 FacultyMemberAccess db = FacultyMemberAccess.getInstance();
-                FacultyMember desired_user = null;
+                User desired_user = null;
                 int i = 0;
-                for (FacultyMember prof : db.users) {
+                for (User prof : db.users) {
                     if (Objects.equals(prof.getId(), user.getId())) {
                         desired_user = prof;
                         break;
@@ -52,9 +52,9 @@ public class RentItem implements ItemStrategy{
 
             else if (user instanceof Visitor) {
                 VisitorAccess db = VisitorAccess.getInstance();
-                Visitor desired_user = null;
+                User desired_user = null;
                 int i = 0;
-                for (Visitor visit : db.users) {
+                for (User visit : db.users) {
                     if (Objects.equals(visit.getId(), user.getId())) {
                         desired_user = visit;
                         break;
@@ -67,9 +67,9 @@ public class RentItem implements ItemStrategy{
 
             else {
                 NonFacultyStaffAccess db = NonFacultyStaffAccess.getInstance();
-                NonFacultyStaff desired_user = null;
+                User desired_user = null;
                 int i = 0;
-                for (NonFacultyStaff staff : db.users) {
+                for (User staff : db.users) {
                     if (Objects.equals(staff.getId(), user.getId())) {
                         desired_user = staff;
                         break;

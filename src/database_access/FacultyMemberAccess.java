@@ -2,9 +2,7 @@ package database_access;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
-import logic.FacultyMemberBuilder;
 import logic.UserFactory;
 import models.Users.*;
 import com.csvreader.CsvReader;

@@ -1,7 +1,10 @@
 package logic;
 
+import database_access.QueryUtilities;
 import models.Users.User;
 
+import javax.management.Query;
+import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
@@ -36,18 +39,37 @@ public class LoginUtilities {
 			return;
 		}
 
+		if (type.equals("Student") || type.equals("FacultyMember") || type.equals("NonFacultyStaff")){
+			//Further validation?? By Req 1, bit ambiguous
+		}
+
 		UserFactory f = new UserFactory();
+		//Need to properly add ID's with Christinas Code
 		User newUser = f.CreateUser(type, "5", name, email, password, true, 0.0, true, null);
-		//Add new user to database.
 	}
 
 	/**
 	 * Verifies that email entered is unique
 	 * @param email
-	 * @return
+	 * @return True if email is unique, false otherwise
 	 */
 	public Boolean verifyUniqueEmail(String email) {
-		//Update this when database logic is finished
+		QueryUtilities q = new QueryUtilities();
+
+		try{
+			ArrayList<User> arr = q.allUsers();
+			for (User u : arr){
+				if (u.getEmail() == email){
+					return false;
+				}
+			}
+			return true;
+		}
+		catch (Exception e){
+
+		}
+
+
 		return false;
 	}
 
@@ -65,7 +87,6 @@ public class LoginUtilities {
 		if (!p.matcher(password).matches()) {
 			return "Password must contain at least one digit";
 		}
-
 		return null;
 
 
