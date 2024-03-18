@@ -26,6 +26,7 @@ import java.util.Date;
 
 public class ItemManagerPage {
     
+    //Student student = new Student("1", "John", "email", "password", true, 0.0, true, new java.util.ArrayList<String>());
     Student student = SessionManager.getCurrentUser();
     BookAccess bookdb = BookAccess.getInstance();
     StudentAccess studentdb = StudentAccess.getInstance();
@@ -103,6 +104,8 @@ public class ItemManagerPage {
                 JOptionPane.showMessageDialog(null, "Item Rented Successfully");
                 System.out.println("STudentDB:"+studentdb.users.size());
                 System.out.println("BookDB:"+bookdb.items.size());
+                System.out.println("Rented Items:"+student.getRented_item_list());
+                System.out.println("StudentID:"+student.getId());
                 
             } catch (Exception e1) {
                 
@@ -120,13 +123,6 @@ public class ItemManagerPage {
     ItemManagerPage() {
         Border border = BorderFactory.createLineBorder(Color.white, 5);
         Border border1 = BorderFactory.createLineBorder(Color.black, 5);
-
-        try {
-            bookdb.load();
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
         data = GuiUtilities.convertItemsToRentArray(bookdb.items);
 
 
@@ -219,7 +215,7 @@ public class ItemManagerPage {
         userProfilePage.setForeground(Color.black);
         userProfilePage.setBounds(90, 15, 300, 20);
 
-        JLabel loggedInAs = new JLabel("Logged in as: "+ student.getName());
+        JLabel loggedInAs = new JLabel("Logged in as: "+student.getName());
         loggedInAs.setOpaque(true); //displays background color
         loggedInAs.setBackground(Color.white);
         loggedInAs.setForeground(Color.black);
