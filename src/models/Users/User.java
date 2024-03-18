@@ -1,18 +1,20 @@
 package models.Users;
-
-import models.Items.*;
 import java.util.ArrayList;
+
+import models.Items.Item;
 
 public abstract class User {
 
-    String id = null;
-    String name = null;
-    String email = null;
-    String password = null;
-    Boolean can_borrow = null;
-    Double overdue_charge = null;
-    Boolean is_registered = null;
-    ArrayList<String> rented_item_list = null;
+	String id = null;
+	String name = null;
+	String email = null;
+	String password = null;
+	Boolean can_borrow = null;
+	Double overdue_charge = null;
+	Boolean is_registered = null;
+	ArrayList<String> rented_item_list = null;
+
+
 
     public User(String id, String name, String email, String password, Boolean can_borrow, Double overdue_charge, Boolean is_registered, ArrayList<String> rented_item_list) {
         this.id = id;
@@ -70,4 +72,5 @@ public abstract class User {
 
    public void add_item(String item_id) {this.rented_item_list.add(item_id);
     }
+
 }
