@@ -23,7 +23,6 @@ public class QueryUtilsTest {
         BookAccess db = BookAccess.getInstance();
         Long current_date = new Date().getTime();
 
-        System.out.println(current_date);
 
         Book book = new Book("id","Name", "location", true,  current_date + (long) 1000000000, 0.0 );
         Book book2 = new Book("id2","Name1", "location", true,  (long) (24*60*60*1000), 0.0 );

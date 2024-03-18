@@ -25,11 +25,18 @@ public abstract class User {
         this.overdue_charge = overdue_charge;
         this.is_registered = is_registered;
 
-        if (rented_item_list != null && !rented_item_list.isEmpty()) {
+        if (rented_item_list != null && !rented_item_list.isEmpty() && !rented_item_list.contains("")) {
             this.rented_item_list = new ArrayList<>(rented_item_list);
         }
         else  {
             this.rented_item_list = new ArrayList<>();
+        }
+
+        if (subscribed_newsletters != null && !subscribed_newsletters.isEmpty() && !subscribed_newsletters.contains("")) {
+            this.subscribed_newsletters = new ArrayList<>(subscribed_newsletters);
+        }
+        else  {
+            this.subscribed_newsletters = new ArrayList<>();
         }
     }
 
@@ -75,4 +82,8 @@ public abstract class User {
 
     public void add_subscription(String link) {this.subscribed_newsletters.add(link);}
     public void remove_subscription(String link) {this.subscribed_newsletters.remove(link);}
+
+    public ArrayList<String> getSubscribed_newsletters() {
+        return new ArrayList<>(subscribed_newsletters);
+    }
 }
