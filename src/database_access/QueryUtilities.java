@@ -79,6 +79,22 @@ public class QueryUtilities {
         return user_items;
     }
 
+    public ArrayList<PhysicalItem> getExpiringItems (String user_id) throws Exception {
+       User user = getUser(user_id);
+        Long current_date = new Date().getTime();
+        ArrayList<PhysicalItem> near_overdue_items = new ArrayList<>();
+        System.out.println(user.getRented_item_list());
+
+        for (String item_id : user.getRented_item_list()) {
+            PhysicalItem item = getPhysicalItem(item_id);
+            if ((item.getDueDate() - (24*60*60*1000)) < current_date) {
+                near_overdue_items.add(item);
+            }
+
+        }
+        return near_overdue_items;
+    }
+
     private void loadUsers() throws Exception{
         visitors.users = new ArrayList<>();
         students.users = new ArrayList<>();
