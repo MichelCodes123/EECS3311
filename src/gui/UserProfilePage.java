@@ -2,18 +2,46 @@ package gui;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+
+import database_access.QueryUtilities;
+import database_access.StudentAccess;
+import models.Items.PhysicalItems.PhysicalItem;
+import models.Users.Student;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class UserProfilePage {
     private JFrame frame;
     private JPanel panel1, panel2, panel3, panel4;
     private JTable table1; //table1 relies on panel2
+    Student student = SessionManager.getCurrentUser();
+    QueryUtilities queryUtilities = new QueryUtilities();
+    StudentAccess studentAccess = StudentAccess.getInstance();
+    Object[][] bookesRented;
+    ArrayList<PhysicalItem> items;
+    
+    
+   
+    
+    
+    
 
     //private SystemManager systemManager;
     final String path = "../library/database/itemsCurrentlyRenting.csv";
     UserProfilePage(){
+        
+        try {
+            studentAccess.load();
+            items = queryUtilities.getUserAssociatedItems(student);
+            System.out.println(items.size());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        bookesRented = GuiUtilities.convertItemsToViewArray(items);
 
 
         panel1 = new JPanel();
@@ -75,7 +103,7 @@ public class UserProfilePage {
         userProfilePage.setForeground(Color.black);
         userProfilePage.setBounds(90, 15, 300, 20);
 
-        JLabel loggedInAs = new JLabel("Logged in as: ");
+        JLabel loggedInAs = new JLabel("Logged in as: "+student.getName());
         loggedInAs.setOpaque(true); //displays background color
         loggedInAs.setBackground(Color.white);
         loggedInAs.setForeground(Color.black);

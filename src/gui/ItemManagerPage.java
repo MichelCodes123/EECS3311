@@ -2,19 +2,136 @@ package gui;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
+
+import database_access.BookAccess;
+import database_access.StudentAccess;
+import models.Items.PhysicalItems.Book;
+import models.Items.PhysicalItems.PhysicalItem;
+import models.Users.Student;
+import services.itemstrategy.ItemStrategy;
+import services.itemstrategy.RentItem;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
 
 public class ItemManagerPage {
-
+    
+    Student student = SessionManager.getCurrentUser();
+    BookAccess bookdb = BookAccess.getInstance();
+    StudentAccess studentdb = StudentAccess.getInstance();
+    ItemStrategy strat = new RentItem();
+    Book book = new Book("0", "Game of Thrones", "RM 125", true, new Date().getTime(), 0.0);
+    Book book2 = new Book("1", "Game of Thrones2", "RM 125", true, new Date().getTime(), 0.0);
+    Book book3 = new Book("3", "Game of Thrones3", "RM 125", true, new Date().getTime(), 0.0);
+    
     private JFrame frame;
     private JPanel panel1, panel2, panel3, panel4;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    Object[][] data;
+    private Object selectedBookID;
+    
+    
+    class ButtonRendererEditor extends AbstractCellEditor implements TableCellRenderer, TableCellEditor, ActionListener {
+        JTable table;
+        JButton renderButton;
+        JButton editButton;
+        String text;
+
+        public ButtonRendererEditor(JTable table) {
+            this.table = table;
+            renderButton = new JButton("Rent");
+            editButton = new JButton("Rent");
+            editButton.setFocusPainted(false);
+            editButton.addActionListener(this);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            return renderButton;
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            text = (value == null) ? "" : value.toString();
+            editButton.setText(text);
+            return editButton;
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            return text;
+        }
+
+        @Override
+       
+    public void actionPerformed(ActionEvent e) {
+        fireEditingStopped(); 
+
+        int viewRow = table.getEditingRow();
+        if (viewRow < 0) {
+       
+            viewRow = table.getSelectedRow();
+        }
+
+        if (viewRow < 0) {
+          
+            System.out.println("No valid row selected.");
+            return;
+        }
+
+        
+        int modelRow = table.convertRowIndexToModel(viewRow);
+
+        
+        selectedBookID = table.getModel().getValueAt(modelRow, 0); 
+        System.out.println("Book ID: " + selectedBookID); 
+        ItemStrategy rentItem = new RentItem();
+       
+            try {
+                
+                rentItem.execute((String)selectedBookID, student.getId());
+                JOptionPane.showMessageDialog(null, "Item Rented Successfully");
+                System.out.println("STudentDB:"+studentdb.users.size());
+                System.out.println("BookDB:"+bookdb.items.size());
+                
+            } catch (Exception e1) {
+                
+                e1.printStackTrace();
+            }
+            
+        
+
+       
+    }
+
+    }
 
 
     ItemManagerPage() {
         Border border = BorderFactory.createLineBorder(Color.white, 5);
         Border border1 = BorderFactory.createLineBorder(Color.black, 5);
+
+        try {
+            bookdb.load();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        data = GuiUtilities.convertItemsToRentArray(bookdb.items);
+
+
+       
+        
 
         ImageIcon lms = new ImageIcon("../library/resources/images/lms2.jpg");
 
@@ -31,6 +148,8 @@ public class ItemManagerPage {
         panel3 = new JPanel();
         panel3.setBackground(new Color(183,174,169));
         panel3.setBounds(0, 30, 1000, 520);
+       
+       
 
         panel4 = new JPanel();
         panel4.setBackground(new Color(104,98,96));
@@ -54,7 +173,9 @@ public class ItemManagerPage {
         JButton SubToNews = new JButton("Subscribe to Newsletter");
         SubToNews.setBounds(680, 35, 200, 27);
         panel4.add(SubToNews);
-         SubToNews.addActionListener(sub);
+        SubToNews.addActionListener(sub);
+
+        JButton rentItems = new JButton("Rent");
 
         JLabel yuLabel = new JLabel();
         yuLabel.setIcon(lms);
@@ -87,6 +208,10 @@ public class ItemManagerPage {
         panel3.setLayout(null);
         panel4.setLayout(null);
 
+
+      
+    
+
         JLabel userProfilePage = new JLabel("Item Management Page");
         userProfilePage.setFont(new Font("Arial", Font.BOLD, 15));
         //userProfilePage.setOpaque(true); //displays background color
@@ -94,7 +219,7 @@ public class ItemManagerPage {
         userProfilePage.setForeground(Color.black);
         userProfilePage.setBounds(90, 15, 300, 20);
 
-        JLabel loggedInAs = new JLabel("Logged in as: ");
+        JLabel loggedInAs = new JLabel("Logged in as: "+ student.getName());
         loggedInAs.setOpaque(true); //displays background color
         loggedInAs.setBackground(Color.white);
         loggedInAs.setForeground(Color.black);
@@ -128,10 +253,38 @@ public class ItemManagerPage {
         userNameText.setBounds(300, 20, 350, 30);
         panel2.add(userNameText);
 
+        DefaultTableModel model = new DefaultTableModel(data, GuiUtilities.rentColumn) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // Make only the "Purchase" column editable which should contain the button.
+                return column == 5;
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return (columnIndex == 5) ? JButton.class : super.getColumnClass(columnIndex);
+            }
+        };
+        JTable jt = new JTable(model);
+        ButtonRendererEditor buttonRendererEditor = new ButtonRendererEditor(jt);
+        jt.getColumn("Purchase").setCellRenderer(buttonRendererEditor);
+        jt.getColumn("Purchase").setCellEditor(buttonRendererEditor);
+        JScrollPane sp = new JScrollPane(jt);
+        sp.setBounds(30, 175, 940, 350); // Set the size and position inside panel3
+        panel3.add(sp);
+        
+
+        
+
+        
+
+       
+
 
         frame.setVisible(true);
 
     }
+
     ActionListener cancelListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -161,4 +314,5 @@ public class ItemManagerPage {
             PaymentPage pp = new PaymentPage();
         }
     };
+    
     }
