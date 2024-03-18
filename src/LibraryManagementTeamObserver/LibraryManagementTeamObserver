@@ -1,3 +1,0 @@
-public interface LibraryManagementTeamObserver {
-    String update(Textbook textbook);
-}
