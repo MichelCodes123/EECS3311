@@ -27,6 +27,7 @@ replay_pid*
 
 .classpath
 .project
-.idea
+.DS_Store
 .idea/
+*.iml
 
