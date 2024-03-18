@@ -12,7 +12,7 @@ import com.csvreader.CsvWriter;
 public class StudentAccess {
 
     public ArrayList<Student> users = new ArrayList<>();
-    public String path = "/database/students.csv";
+    public String path = "src/database/students.csv";
 
     public void load() throws Exception{
         CsvReader reader = new CsvReader( path);
@@ -37,19 +37,21 @@ public class StudentAccess {
         try {
             CsvWriter csvOutput = new CsvWriter(new FileWriter( path, false), ',');
             //name,id,email,password
-            csvOutput.write("name");
             csvOutput.write("id");
+            csvOutput.write("name");
             csvOutput.write("email");
+            csvOutput.write("password");
             csvOutput.write("can_borrow");
             csvOutput.write("overdue_charge");
+            csvOutput.write("is_registered");
             csvOutput.write("rented_item_list");
             csvOutput.endRecord();
 
             // else assume that the file already has the correct header line
             // write out a few records
             for (Student u : users) {
-                csvOutput.write(u.getName());
                 csvOutput.write(String.valueOf(u.getId()));
+                csvOutput.write(u.getName());
                 csvOutput.write(u.getEmail());
                 csvOutput.write(u.getPassword());
                 csvOutput.write(u.getCan_borrow().toString());

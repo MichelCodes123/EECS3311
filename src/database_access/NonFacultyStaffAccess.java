@@ -12,7 +12,7 @@ import com.csvreader.CsvWriter;
 public class NonFacultyStaffAccess {
 
     public ArrayList<NonFacultyStaff> users = new ArrayList<>();
-    public String path = "/database/non_faculty_staff.csv";
+    public String path = "src/database/non_faculty_staff.csv";
 
     public void load() throws Exception{
         CsvReader reader = new CsvReader( path);
@@ -37,11 +37,13 @@ public class NonFacultyStaffAccess {
         try {
             CsvWriter csvOutput = new CsvWriter(new FileWriter( path, false), ',');
             //name,id,email,password
-            csvOutput.write("name");
             csvOutput.write("id");
+            csvOutput.write("name");
             csvOutput.write("email");
+            csvOutput.write("password");
             csvOutput.write("can_borrow");
             csvOutput.write("overdue_charge");
+            csvOutput.write("is_registered");
             csvOutput.write("rented_item_list");
             csvOutput.endRecord();
 

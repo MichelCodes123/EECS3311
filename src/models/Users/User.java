@@ -46,4 +46,8 @@ public abstract class User {
     public ArrayList<String> getRented_item_list() {
         return rented_item_list;
     }
+
+    public void increaseOverdue_charge(Double price) {this.overdue_charge = overdue_charge + price;}
+
+    public void setCan_borrow(Boolean bool) {this.can_borrow = bool;}
 }

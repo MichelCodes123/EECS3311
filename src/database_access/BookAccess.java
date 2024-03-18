@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
 import models.Items.PhysicalItems.*;
-import models.Items.PhysicalItems.PhysicalItem;
+
 
 
 public class BookAccess {
 
     public ArrayList<PhysicalItem> items = new ArrayList<>();
-    public String path = "/database/books.csv";
+    public String path = "src/database/books.csv";
 
     public void load() throws Exception{
         CsvReader reader = new CsvReader( path);
