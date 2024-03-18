@@ -15,6 +15,7 @@ public abstract class User {
     ArrayList<String> rented_item_list = null;
     ArrayList<String> subscribed_newsletters = new ArrayList<>();
 
+
     public User(String id, String name, String email, String password, Boolean can_borrow, Double overdue_charge, Boolean is_registered, ArrayList<String> rented_item_list, ArrayList<String> subscribed_newsletters) {
         this.id = id;
         this.name = name;
@@ -29,13 +30,6 @@ public abstract class User {
         }
         else  {
             this.rented_item_list = new ArrayList<>();
-        }
-
-        if (subscribed_newsletters != null && !subscribed_newsletters.isEmpty()) {
-            this.subscribed_newsletters = new ArrayList<>(subscribed_newsletters);
-        }
-        else  {
-            this.subscribed_newsletters = new ArrayList<>();
         }
     }
 
@@ -72,15 +66,12 @@ public abstract class User {
         return new ArrayList<>(rented_item_list);
     }
 
-    public ArrayList<String> getSubscribed_newsletters() {
-        return new ArrayList<>(subscribed_newsletters);
-    }
-
     public void increaseOverdue_charge(Double price) {this.overdue_charge = overdue_charge + price;}
 
     public void setCan_borrow(Boolean bool) {this.can_borrow = bool;}
 
-   public void add_item(String item_id) {this.rented_item_list.add(item_id);}
+   public void add_item(String item_id) {this.rented_item_list.add(item_id);
+    }
 
     public void add_subscription(String link) {this.subscribed_newsletters.add(link);}
     public void remove_subscription(String link) {this.subscribed_newsletters.remove(link);}

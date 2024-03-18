@@ -8,6 +8,7 @@ import database_access.StudentAccess;
 import models.Items.PhysicalItems.Book;
 import models.Users.FacultyMember;
 import models.Users.Student;
+import models.Users.User;
 import org.junit.jupiter.api.*;
 import services.OverdueService;
 import services.itemstrategy.ItemStrategy;
@@ -18,8 +19,8 @@ import java.util.Date;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class OverdueServiceTest {
-    Student student;
-    FacultyMember prof;
+    User student;
+    User prof;
     Book book;
     Book book2;
     Book book3;

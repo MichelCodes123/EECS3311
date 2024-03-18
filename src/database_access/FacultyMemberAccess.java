@@ -2,8 +2,8 @@ package database_access;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
+import logic.UserFactory;
 import models.Users.*;
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
@@ -11,7 +11,7 @@ import com.csvreader.CsvWriter;
 
 public class FacultyMemberAccess {
 
-    public ArrayList<FacultyMember> users = new ArrayList<>();
+    public ArrayList<User> users = new ArrayList<>();
     public String path = "src/database/faculty.csv";
 
     private static FacultyMemberAccess db_instance;
@@ -33,7 +33,8 @@ public class FacultyMemberAccess {
         reader.readHeaders();
 
         while(reader.readRecord()){
-            FacultyMember user = new FacultyMember(
+            UserFactory f = new UserFactory();
+            User u = f.CreateUser("FacultyMember",
                     reader.get("id"),
                     reader.get("name"),
                     reader.get("email"),
@@ -41,10 +42,8 @@ public class FacultyMemberAccess {
                     Boolean.valueOf(reader.get("can_borrow")),
                     Double.valueOf(reader.get("overdue_charge")),
                     Boolean.valueOf(reader.get("is_registered")),
-                    new ArrayList<String>(Arrays.asList(reader.get("rented_item_list").split(" "))),
-                    new ArrayList<String>(Arrays.asList(reader.get("newsletter_subscriptions").split(" ")))
-                    );
-            users.add(user);
+                    new ArrayList<String>(Arrays.asList(reader.get("rented_item_list").split(", ")))
+            );
         }
     }
 
@@ -60,12 +59,11 @@ public class FacultyMemberAccess {
             csvOutput.write("overdue_charge");
             csvOutput.write("is_registered");
             csvOutput.write("rented_item_list");
-            csvOutput.write("newsletter_subscriptions");
             csvOutput.endRecord();
 
             // else assume that the file already has the correct header line
             // write out a few records
-            for (FacultyMember u : users) {
+            for (User u : users) {
                 csvOutput.write(String.valueOf(u.getId()));
                 csvOutput.write(u.getName());
                 csvOutput.write(u.getEmail());
@@ -79,13 +77,7 @@ public class FacultyMemberAccess {
                     builder.append(item).append(" ");
                 }
                 String submit = builder.toString().trim();
-                csvOutput.write(submit);
 
-                builder = new StringBuilder();
-                for (String item : u.getSubscribed_newsletters()) {
-                    builder.append(item).append(" ");
-                }
-                submit = builder.toString().trim();
                 csvOutput.write(submit);
                 csvOutput.endRecord();
             }
