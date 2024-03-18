@@ -28,4 +28,12 @@ class LoginUtilitiesTest {
                 (error) -> assertEquals("Password must contain at least one digit", error));
 
     }
+
+    @Test
+    void emptyFields(){
+        LoginUtilities.verifyRegistration("Visitor", "", "Cheese@gmail.com", "Pencilandpaper",
+                (error) -> assertEquals("Cannot have empty fields!", error));
+    }
+
+
 }

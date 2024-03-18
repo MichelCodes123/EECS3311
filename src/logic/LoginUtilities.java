@@ -46,7 +46,7 @@ public class LoginUtilities {
 
 		UserFactory f = new UserFactory();
 		//Need to properly add ID's with Christinas Code
-		User newUser = f.CreateUser(type, "5", name, email, password, true, 0.0, true, null);
+		f.CreateUser(type, "5", name, email, password, true, 0.0, true, null);
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class LoginUtilities {
 		try{
 			ArrayList<User> arr = q.allUsers();
 			for (User u : arr){
-				if (u.getEmail() == email){
+				if (u.getEmail().equals(email)){
 					return false;
 				}
 			}
