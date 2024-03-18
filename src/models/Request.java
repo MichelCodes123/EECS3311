@@ -13,6 +13,10 @@ public class Request implements Comparator<Request> {
     //Priority is 1,2 or 3
     public User requester;
 
+    public Request(String itemId, String userId){
+        this.id = itemId;
+    }
+
     public String getId(){
         return this.id;
 
