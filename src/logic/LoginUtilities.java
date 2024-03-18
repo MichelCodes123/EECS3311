@@ -16,7 +16,7 @@ public class LoginUtilities {
 	 * @param
 	 * @return
 	 */
-	public static void verifyRegistration(String type, String name, String email, String password, Consumer<String> errorHandler) {
+	public static void verifyRegistration(String type, String name, String email, String password, Consumer<String> errorHandler, Runnable success) {
 
 		name.trim();
 		email.trim();
@@ -47,6 +47,7 @@ public class LoginUtilities {
 		UserFactory f = new UserFactory();
 		//Need to properly add ID's with Christinas Code
 		f.CreateUser(type, "5", name, email, password, true, 0.0, true, null);
+		success.run();
 	}
 
 	/**
