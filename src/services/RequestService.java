@@ -1,25 +1,26 @@
 package services;
 
-import database_access.BookAccess;
-import models.Request;
-import models.Users.User;
-
 import java.util.PriorityQueue;
+
+import models.Request;
 
 public class RequestService implements RequestMethod {
 
-    private static RequestService r;
-    private static PriorityQueue <Request> requestQueue  =  new PriorityQueue<Request>();
+	private static RequestService r;
+	private static PriorityQueue<Request> requestQueue = new PriorityQueue<Request>();
 
-    public static RequestService getInstance() {
-        if (r == null) {
-            r = new RequestService();
-        }
-        return r;
-    }
+	public static RequestService getInstance() {
+		if (r == null) {
+			r = new RequestService();
+		}
+		return r;
+	}
 
-    public void addRequest(Request r){
+	@Override
+	public void addRequest(Request r) {
 
-    }
+		requestQueue.add(r);
+
+	}
 
 }
