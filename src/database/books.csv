@@ -1,2 +1,2 @@
 type,id,name,location,can_purchase,due_date,dollar_amount
-class models.Items.PhysicalItems.Book,0,Game of Thrones,RM 125,true,1710796118910,0.0
+
