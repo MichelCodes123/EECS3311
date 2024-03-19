@@ -160,9 +160,6 @@ import java.util.List;
                 csvOutput.write("due_date");
                 csvOutput.write("dollar_amount");
                 csvOutput.endRecord();
-            }
-            csvOutput.close();
-            items = new ArrayList<>();
 
                 // else assume that the file already has the correct header line
                 // write out a few records
