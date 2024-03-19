@@ -1,15 +1,14 @@
 package models.LibraryManagementTeam;
 
-import models.Items.PhysicalItems.Textbook;
+import Prompts.SystemPrompts;
 
 public class LibraryManagementTeam implements LibraryManagementTeamObserver {
     private String lastNotification;
 
 	 @Override
-	public String update(Textbook textbook) {
-	    lastNotification = "Library Management Team Notification: Textbook '" + textbook.getName() + "' is not available.";
-	    return lastNotification;
-	}
+     public String update(SystemPrompts prompt) {
+        return lastNotification = "Library Management Team Notification: " + prompt.getMessage();
+    }
 
 	 public String getLastNotification() {
 	    return lastNotification;
