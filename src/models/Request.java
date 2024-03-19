@@ -9,8 +9,9 @@ public class Request implements Comparator<Request> {
 	public String userId;
 	public String bookId;
 	public String request_type;
+
+	// Priority is 0 or 1. 1 for courses, 0 for anything else
 	public int priority;
-	// Priority is 1,2 or 3
 	public User requester;
 
 	public Request(String itemId, String userId) {
