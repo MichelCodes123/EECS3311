@@ -23,13 +23,12 @@ public class QueryUtilsTest {
         BookAccess db = BookAccess.getInstance();
         Long current_date = new Date().getTime();
 
-        System.out.println(current_date);
 
         Book book = new Book("id","Name", "location", true,  current_date + (long) 1000000000, 0.0 );
         Book book2 = new Book("id2","Name1", "location", true,  (long) (24*60*60*1000), 0.0 );
         Book book3 = new Book("id3","Name2", "location", true,   (long) (24*60*60*1000), 0.0 );
         Book book4 = new Book("id4","Name3", "location", true,   (long) (24*60*60*1000), 0.0 );
-        FacultyMember prof = new FacultyMember("id","Name", "location", "password",  true, 0.0, true, new ArrayList<>() );
+        FacultyMember prof = new FacultyMember("id","Name", "location", "password",  true, 0.0, true, new ArrayList<>(), new ArrayList<>() );
 
         db.items.add(book);
         db.items.add(book2);
