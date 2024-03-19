@@ -20,9 +20,13 @@ public class LibraryManager {
 
     public LibraryManager(String path) {
         this.path = path;
-        this.bookAccess = new BookAccess();
-        this.magazineAccess = new MagazineAccess();
-        this.cdAccess = new CdAccess();
+        this.bookAccess = BookAccess.getInstance();
+        this.magazineAccess = MagazineAccess.getInstance();
+        this.cdAccess = CdAccess.getInstance();
+    }
+
+    public List<PhysicalItem> getItems() {
+        return items;
     }
 
     public void executeCommand(Command command) {
