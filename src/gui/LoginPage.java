@@ -4,6 +4,10 @@ import javax.swing.*;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
+
+import database_access.StudentAccess;
+import models.Items.Item;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -111,8 +115,10 @@ public class LoginPage {
     ActionListener loginListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+            
             frame.dispose();
             UserProfilePage up = new UserProfilePage();
+           
         }
     };
 }

@@ -20,7 +20,7 @@ public class UserProfilePage {
     private JTable table1; //table1 relies on panel2
     Student student = SessionManager.getCurrentUser();
     QueryUtilities queryUtilities = new QueryUtilities();
-    StudentAccess studentAccess = StudentAccess.getInstance();
+    StudentAccess studentdb = StudentAccess.getInstance();
     Object[][] bookesRented;
     ArrayList<PhysicalItem> items;
     
@@ -33,15 +33,24 @@ public class UserProfilePage {
     //private SystemManager systemManager;
     final String path = "../library/database/itemsCurrentlyRenting.csv";
     UserProfilePage(){
-        
         try {
-            studentAccess.load();
-            items = queryUtilities.getUserAssociatedItems(student);
-            System.out.println(items.size());
+            System.out.println("Student: " + studentdb.users.get(0).getName());
+            System.out.println("Student Database: "+studentdb.users.size());
         } catch (Exception e) {
-            e.printStackTrace();
+            // TODO: handle exception
         }
-        bookesRented = GuiUtilities.convertItemsToViewArray(items);
+        // if(studentdb.users.get(Integer.parseInt(student.getId())).getRented_item_list().size() > 0){
+        //     SwingUtilities.invokeLater(()->{
+        //         try {
+        //             items = queryUtilities.getUserAssociatedItems(studentdb.users.get(Integer.parseInt(student.getId())));
+        //             System.out.println("Query Util size: "+ items.size());
+        //         } catch (Exception e) {
+        //             // TODO Auto-generated catch block
+        //             e.printStackTrace();
+        //         }
+            
+        //     });
+        // }
 
 
         panel1 = new JPanel();
@@ -56,6 +65,7 @@ public class UserProfilePage {
         panel3 = new JPanel();
         panel3.setBackground(new Color(183,174,169));
         panel3.setBounds(0, 320, 1000, 240);
+        
 
         panel4 = new JPanel();
         panel4.setBackground(new Color(104,98,96));
@@ -110,7 +120,7 @@ public class UserProfilePage {
         loggedInAs.setBounds(20, 45, 300, 20);
 
 
-        JLabel numOfItems = new JLabel("Number of Items Currently Renting: ");
+        JLabel numOfItems = new JLabel("Number of Items Currently Renting: "+student.getRented_item_list().size());
         numOfItems.setOpaque(true); //displays background color
         numOfItems.setBackground(Color.white);
         numOfItems.setForeground(Color.black);
@@ -143,6 +153,17 @@ public class UserProfilePage {
         coursesTaking.setForeground(Color.black);
         coursesTaking.setBounds(350, 35, 300, 20);
         panel3.add(coursesTaking);
+        
+        
+        //TABLE
+        //bookesRented = GuiUtilities.convertItemsToViewArray(items);
+        // table1 = new JTable(bookesRented, GuiUtilities.viewColumn);
+        // JScrollPane scrollPane = new JScrollPane(table1);
+        // scrollPane.setBounds(30, 35, 940, 200); 
+        // panel2.add(scrollPane);
+        
+
+        
 
 
         JButton rentItems = new JButton("Library System Page");
@@ -156,22 +177,7 @@ public class UserProfilePage {
         subscribe.addActionListener(sub);
 
 
-//        systemManager = new SystemManager(path);
-//        Object[][] data = null;
-//        String[] columns = {"id", "name", "location", "can_purchase", "dueDate"
-//                , "dollarAmount"};
-//        try {
-//            data = systemManager.readDatabase();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-        //table1 = new JTable(data, columns);
-//        table1.setPreferredScrollableViewportSize(new Dimension(1700, 400));
-//        table1.setFillsViewportHeight(true);
-//        table1.setRowHeight(50);
-       // panel2.add(new JScrollPane(table1));
-
+       
 
 
 

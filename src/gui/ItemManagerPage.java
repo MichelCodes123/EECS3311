@@ -13,6 +13,7 @@ import database_access.StudentAccess;
 import models.Items.PhysicalItems.Book;
 import models.Items.PhysicalItems.PhysicalItem;
 import models.Users.Student;
+import services.SearchingService;
 import services.itemstrategy.ItemStrategy;
 import services.itemstrategy.RentItem;
 
@@ -27,19 +28,18 @@ import java.util.Date;
 public class ItemManagerPage {
     
     //Student student = new Student("1", "John", "email", "password", true, 0.0, true, new java.util.ArrayList<String>());
-    Student student = SessionManager.getCurrentUser();
+    Student loggedinUser = SessionManager.getCurrentUser();
     BookAccess bookdb = BookAccess.getInstance();
     StudentAccess studentdb = StudentAccess.getInstance();
     ItemStrategy strat = new RentItem();
-    Book book = new Book("0", "Game of Thrones", "RM 125", true, new Date().getTime(), 0.0);
-    Book book2 = new Book("1", "Game of Thrones2", "RM 125", true, new Date().getTime(), 0.0);
-    Book book3 = new Book("3", "Game of Thrones3", "RM 125", true, new Date().getTime(), 0.0);
-    
+    Student student = (Student) studentdb.users.get(Integer.parseInt(loggedinUser.getId()));
+       
     private JFrame frame;
     private JPanel panel1, panel2, panel3, panel4;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     Object[][] data;
     private Object selectedBookID;
+    ArrayList<Book> results = new ArrayList<Book>();
     
     
     class ButtonRendererEditor extends AbstractCellEditor implements TableCellRenderer, TableCellEditor, ActionListener {
@@ -58,6 +58,8 @@ public class ItemManagerPage {
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            boolean canRent = student.getCan_borrow();
+            renderButton.setEnabled(canRent);
             return renderButton;
         }
 
@@ -99,13 +101,42 @@ public class ItemManagerPage {
         ItemStrategy rentItem = new RentItem();
        
             try {
+                SwingUtilities.invokeLater(() -> {
+                    try {
+                        
+                        System.out.println("StudentDB:"+studentdb.users.size());
+                        if(student.getCan_borrow()){
+                            
+                            rentItem.execute((String)selectedBookID, student.getId());
+                            studentdb.load();
+                            
+                        }
+                        SwingUtilities.invokeLater(() -> {
+                            try {
+                                
+                                Thread.sleep(1000);
+                                System.out.println("Name of student"+ studentdb.users.get(0).getName());
+                                System.out.println("Rented Itemlist Size "+ studentdb.users.get(0).getRented_item_list().size());
+                                System.out.println("Rented Itemlist AFter "+  studentdb.users.get(0).getRented_item_list());
+                            } catch (InterruptedException e1) {
+                                // TODO Auto-generated catch block
+                                e1.printStackTrace();
+                            }
+                           
+                        });
+                        
+                       
+                    } catch (Exception e2) {
+                        // TODO Auto-generated catch block
+                        e2.printStackTrace();
+                    }
+                });
                 
-                rentItem.execute((String)selectedBookID, student.getId());
-                JOptionPane.showMessageDialog(null, "Item Rented Successfully");
-                System.out.println("STudentDB:"+studentdb.users.size());
-                System.out.println("BookDB:"+bookdb.items.size());
-                System.out.println("Rented Items:"+student.getRented_item_list());
-                System.out.println("StudentID:"+student.getId());
+                
+             
+                
+                
+                
                 
             } catch (Exception e1) {
                 
@@ -118,13 +149,28 @@ public class ItemManagerPage {
     }
 
     }
+    
 
 
     ItemManagerPage() {
-        Border border = BorderFactory.createLineBorder(Color.white, 5);
-        Border border1 = BorderFactory.createLineBorder(Color.black, 5);
-        data = GuiUtilities.convertItemsToRentArray(bookdb.items);
+        
+      
+            SwingUtilities.invokeLater(() -> {
 
+
+               
+                
+                System.out.println("Rented Itemlist Before "+ studentdb.users.get(0).getRented_item_list());
+                System.out.println("Rented Itemlist Size Before "+ studentdb.users.get(0).getRented_item_list().size());
+
+            });
+        
+        
+        
+        
+        
+        
+       
 
        
         
@@ -222,7 +268,7 @@ public class ItemManagerPage {
         loggedInAs.setBounds(20, 45, 300, 20);
 
 
-        JLabel numOfItems = new JLabel("Number of Items Currently Renting: ");
+        JLabel numOfItems = new JLabel("Number of Items Currently Renting: "+ studentdb.users.get(0).getRented_item_list().size());
         numOfItems.setOpaque(true); //displays background color
         numOfItems.setBackground(Color.white);
         numOfItems.setForeground(Color.black);
@@ -248,7 +294,11 @@ public class ItemManagerPage {
         userNameText.setBackground(Color.white);
         userNameText.setBounds(300, 20, 350, 30);
         panel2.add(userNameText);
-
+        
+        
+        
+        
+        
         DefaultTableModel model = new DefaultTableModel(data, GuiUtilities.rentColumn) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -269,9 +319,60 @@ public class ItemManagerPage {
         sp.setBounds(30, 175, 940, 350); // Set the size and position inside panel3
         panel3.add(sp);
         
+        searchtab.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String query = userNameText.getText().trim();
+                try {
+                    
+                    results = SearchingService.search(query); 
+        
+                    
+                    synchronized (results) {
+                        results.wait(1000); 
+                        // Update the data for the table model
+                        Object[][] updatedData = GuiUtilities.convertItemsToRentArray(results);
+                       
+                        DefaultTableModel newModel = new DefaultTableModel(updatedData, GuiUtilities.rentColumn) {
+                            @Override
+                            public boolean isCellEditable(int row, int column) {
+                                // Only the last column is editable, which contains the button.
+                                return column == this.getColumnCount() - 1;
+                            }
+                        
+                            @Override
+                            public Class<?> getColumnClass(int columnIndex) {
+                                // Ensure the last column is identified as containing a JButton.
+                                if (columnIndex == this.getColumnCount() - 1) {
+                                    return JButton.class;
+                                } else {
+                                    return super.getColumnClass(columnIndex);
+                                }
+                            }
+                        };
+                        
+        
+                        // Update the table model on the Swing thread
+                        SwingUtilities.invokeLater(() -> {
+                            jt.setModel(newModel);
+                            ButtonRendererEditor buttonRendererEditor = new ButtonRendererEditor(jt);
+                            jt.getColumnModel().getColumn(newModel.getColumnCount() - 1).setCellRenderer(buttonRendererEditor);
+                            jt.getColumnModel().getColumn(newModel.getColumnCount() - 1).setCellEditor(buttonRendererEditor);
+                            jt.revalidate();
+                            jt.repaint();
+                            
+                        });
+                    }
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+            }
 
         
-
+        });
+        
+        
+        
         
 
        
@@ -285,12 +386,14 @@ public class ItemManagerPage {
         @Override
         public void actionPerformed(ActionEvent e) {
             frame.dispose();
+           
             LoginPage lp = new LoginPage();
         }
     };
     ActionListener userProfile = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+           
             frame.dispose();
             UserProfilePage up = new UserProfilePage();
         }
