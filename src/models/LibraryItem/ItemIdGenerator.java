@@ -4,7 +4,7 @@ public class ItemIdGenerator {
     private static ItemIdGenerator instance;
     private int currentId;
     private ItemIdGenerator() {
-        currentId = 1;
+        currentId = 0;
     }
 
     public static ItemIdGenerator getInstance() {
@@ -14,7 +14,7 @@ public class ItemIdGenerator {
         return instance;
     }
 
-    public int generateId() {
-        return currentId++;
+    public String generateId() {
+        return Integer.toString(currentId++);
     }
 }

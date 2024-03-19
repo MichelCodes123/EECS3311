@@ -13,7 +13,7 @@ public class UpdateCommand implements Command{
     }
 
     @Override
-    public void execute(List<PhysicalItem> items, String path, LibraryManager libraryManager) {
+    public void execute(List<PhysicalItem> items, String path, LibraryManager libraryManager) throws Exception {
         // Find the item to be updated and replace it with the updated item
         for (int i = 0; i < items.size(); i++) {
             PhysicalItem currentItem = items.get(i);

@@ -6,7 +6,7 @@ import models.Items.PhysicalItems.Magazine;
 import models.Items.PhysicalItems.PhysicalItem;
 import models.LibraryItem.ItemIdGenerator;
 import models.LibraryItem.LibraryManager;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -16,8 +16,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-import static org.testng.Assert.assertNotEquals;
-import static org.testng.AssertJUnit.*;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 public class LibraryManagerTest {
     // Utility method to check if an item exists in a CSV file
@@ -32,19 +32,19 @@ public class LibraryManagerTest {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length == 6) {
-                    int id = Integer.parseInt(parts[0]);
+                    String id = parts[0];
                     String name = parts[1];
                     String location = parts[2];
                     boolean canPurchase = Boolean.parseBoolean(parts[3]);
-                    System.out.println("Date from CSV: " + parts[4]);
-                    Date csvDueDate = dateFormat.parse(parts[4]);
-                    System.out.println("Parsed CSV Due Date: " + dateFormat.format(csvDueDate));
+                    Long csvDueDate = Long.parseLong(parts[4]);
+
                     double dollarAmount = Double.parseDouble(parts[5]);
 
-                    String itemDueDateString = dateFormat.format(new Date(item.getDueDate()));
+                    Long itemDueDateString = item.getDueDate();
                     String csvDueDateString = dateFormat.format(csvDueDate);
 
-                        if (id == item.getId() && name.equals(item.getName()) && location.equals(item.getLocation()) && canPurchase == item.getPurchasability() && csvDueDateString.equals(itemDueDateString) && dollarAmount == item.getDollarAmount()) {
+
+                        if (id.equals(item.getId()) && name.equals(item.getName()) && location.equals(item.getLocation()) && canPurchase == item.getPurchasability() && csvDueDate.equals(itemDueDateString) && dollarAmount == item.getDollarAmount()) {
                             return true;
                         }
                 }
@@ -53,13 +53,11 @@ public class LibraryManagerTest {
             fail("Failed to read CSV file: " + e.getMessage());
         } catch (NumberFormatException e) {
             fail("Failed to parse CSV file data: " + e.getMessage());
-        } catch (ParseException e) {
-            fail("Failed to parse date from CSV file: " + e.getMessage());
         }
         return false;
     }
     @Test
-    public void addItemTest() {
+    public void addItemTest() throws Exception {
         // Create a LibraryManager instance
         LibraryManager libraryManager = new LibraryManager("src/test");
         ItemIdGenerator idGenerator = ItemIdGenerator.getInstance();
@@ -68,46 +66,46 @@ public class LibraryManagerTest {
         long dueDate1 = currentTime + TimeUnit.DAYS.toMillis(7); // 7 days from now
         long dueDate2 = currentTime + TimeUnit.DAYS.toMillis(14); // 14 days from now
         long dueDate3 = currentTime + TimeUnit.DAYS.toMillis(21);
-        int itemId1 = idGenerator.generateId();
-        int itemId2 = idGenerator.generateId();
-        int itemId3 = idGenerator.generateId();
+        String itemId1 = idGenerator.generateId();
+        String itemId2 = idGenerator.generateId();
+        String itemId3 = idGenerator.generateId();
 
         // Create a new book
-        Book book = new Book(itemId1, "Sample Book", "Shelf A", true, dueDate1, 10.99);
-        Book book1 = new Book(itemId2, "Computer Book", "Shelf B", true, dueDate2, 10.00);
-        Book book2 = new Book(itemId3, "Science Book", "Shelf B", true, dueDate3, 10.00);
+        Cd cd = new Cd(itemId1, "Sample Book", "Shelf A", true, dueDate1, 10.99);
+        Cd cd1 = new Cd(itemId2, "Computer Book", "Shelf B", true, dueDate2, 10.00);
+        Cd cd2 = new Cd(itemId3, "Science Book", "Shelf B", true, dueDate3, 10.00);
 
 
         // Add the book to the library
-        libraryManager.addItem(book);
-        libraryManager.addItem(book1);
-        libraryManager.addItem(book2);
+        libraryManager.addItem(cd);
+        libraryManager.addItem(cd1);
+        libraryManager.addItem(cd2);
 
         // Verify that the book is added to the library
-        assertTrue(libraryManager.getItems().contains(book));
-        assertTrue(libraryManager.getItems().contains(book1));
-        assertTrue(libraryManager.getItems().contains(book2));
+        assertTrue(libraryManager.getItems().contains(cd));
+        assertTrue(libraryManager.getItems().contains(cd1));
+        assertTrue(libraryManager.getItems().contains(cd2));
 
         // Check if the CSV file contains the added book
-        assertTrue(isItemInCsvFile("src/database/books.csv", book));
-        assertTrue(isItemInCsvFile("src/database/books.csv", book1));
-        assertTrue(isItemInCsvFile("src/database/books.csv", book2));
+        assertTrue(isItemInCsvFile("src/database/Cd.csv", cd));
+        assertTrue(isItemInCsvFile("src/database/Cd.csv", cd1));
+        assertTrue(isItemInCsvFile("src/database/Cd.csv", cd2));
 
         // Clean up - remove the added book from the library
-        libraryManager.removeItem(book.getId(), "Book");
-        libraryManager.removeItem(book1.getId(), "Book");
-        libraryManager.removeItem(book2.getId(), "Book");
+        libraryManager.removeItem(cd.getId(), "Book");
+        libraryManager.removeItem(cd1.getId(), "Book");
+        libraryManager.removeItem(cd2.getId(), "Book");
     }
 
     @Test
-    public void addItemTest1() {
+    public void addItemTest1() throws Exception {
         // Create a LibraryManager instance
         LibraryManager libraryManager = new LibraryManager("src/database_access/BookAccess");
 
         // Create new items
-        Book book = new Book(1, "Sample Book", "Shelf A", true, System.currentTimeMillis(), 10.99);
-        Cd cd = new Cd(1, "Sample CD", "CD Rack", true, System.currentTimeMillis(), 15.99);
-        Magazine magazine = new Magazine(1, "Sample Magazine", "Magazine Rack", true, System.currentTimeMillis(), 5.99);
+        Book book = new Book(Integer.toString(1), "Sample Book", "Shelf A", true, System.currentTimeMillis(), 10.99);
+        Cd cd = new Cd(Integer.toString(1), "Sample CD", "CD Rack", true, System.currentTimeMillis(), 15.99);
+        Magazine magazine = new Magazine(Integer.toString(1), "Sample Magazine", "Magazine Rack", true, System.currentTimeMillis(), 5.99);
 
         // Add the items to the library
         libraryManager.addItem(book);
@@ -125,13 +123,13 @@ public class LibraryManagerTest {
         libraryManager.removeItem(magazine.getId(), "Magazine");
     }
     @Test
-    public void removeItemTest() {
+    public void removeItemTest() throws Exception {
         // Create a LibraryManager instance
         LibraryManager libraryManager = new LibraryManager("src/database_access");
 
         // Create new items
-        Book book = new Book(4, "Sample Book", "Shelf A", true, System.currentTimeMillis(), 10.99);
-        Magazine magazine = new Magazine(5, "Sample Magazine", "Magazine Rack", false, System.currentTimeMillis(), 5.99);
+        Book book = new Book(Integer.toString(4), "Sample Book", "Shelf A", true, System.currentTimeMillis(), 10.99);
+        Magazine magazine = new Magazine(Integer.toString(5), "Sample Magazine", "Magazine Rack", false, System.currentTimeMillis(), 5.99);
 
 
         // Add the items to the library
@@ -148,12 +146,12 @@ public class LibraryManagerTest {
         assertFalse(libraryManager.getItems().contains(magazine));
     }
     @Test
-    public void enableItemTest() {
+    public void enableItemTest() throws Exception {
         // Create a LibraryManager instance
         LibraryManager libraryManager = new LibraryManager("src/database_access/BookAccess");
 
         // Create a new item
-        Magazine magazine = new Magazine(6, "Sample Magazine", "Magazine Rack", false, System.currentTimeMillis(), 5.99);
+        Magazine magazine = new Magazine(Integer.toString(6), "Sample Magazine", "Magazine Rack", false, System.currentTimeMillis(), 5.99);
 
         // Add the item to the library
         libraryManager.addItem(magazine);
@@ -162,15 +160,15 @@ public class LibraryManagerTest {
         libraryManager.enableItem(magazine.getId(), "Magazine");
 
         // Verify that the item is enabled in the library
-        assertTrue(magazine.getPurchasability());
+        assertTrue(libraryManager.getItems().get(0).getPurchasability());
     }
     @Test
-    public void disableItemTest() {
+    public void disableItemTest() throws Exception {
         // Create a LibraryManager instance
         LibraryManager libraryManager = new LibraryManager("src/database_access/BookAccess");
 
         // Create a new item
-        Cd cd = new Cd(1, "Sample CD", "CD Rack", true, System.currentTimeMillis(), 15.99);
+        Cd cd = new Cd(Integer.toString(1), "Sample CD", "CD Rack", true, System.currentTimeMillis(), 15.99);
 
         // Add the item to the library
         libraryManager.addItem(cd);
@@ -182,23 +180,23 @@ public class LibraryManagerTest {
         assertFalse(cd.getPurchasability());
     }
     @Test
-    public void updateItemTest() {
+    public void updateItemTest() throws Exception {
         // Create a LibraryManager instance
         LibraryManager libraryManager = new LibraryManager("src/database_access");
 
         // Create a new item
-        Book book = new Book(1, "Sample Book", "Shelf A", true, System.currentTimeMillis(), 10.99);
+        Book book = new Book(Integer.toString(1), "Sample Book", "Shelf A", true, System.currentTimeMillis(), 10.99);
 
         // Add the item to the library
         libraryManager.addItem(book);
 
         // Update the item
-        Book updatedBook = new Book(1, "Updated Book", "Shelf B", false, System.currentTimeMillis(), 15.99);
+        Book updatedBook = new Book(Integer.toString(1), "Updated Book", "Shelf B", false, System.currentTimeMillis(), 15.99);
         libraryManager.updateItem(updatedBook);
 
         // Get the updated item from the library
         List<PhysicalItem> items = libraryManager.getItems();
-        Optional<PhysicalItem> optionalItem = items.stream().filter(item -> item.getId() == updatedBook.getId()).findFirst();
+        Optional<PhysicalItem> optionalItem = items.stream().filter(item -> Objects.equals(item.getId(), updatedBook.getId())).findFirst();
 
         // Verify that the item is updated in the library
         assertTrue(optionalItem.isPresent());
@@ -209,7 +207,7 @@ public class LibraryManagerTest {
         assertEquals(15.99, retrievedItem.getDollarAmount(), 0.001);
     }
     @Test
-    public void readCsvFileTest() {
+    public void readCsvFileTest() throws Exception {
         // Create a LibraryManager instance
         LibraryManager libraryManager = new LibraryManager("src/database_access");
 
@@ -220,7 +218,7 @@ public class LibraryManagerTest {
         assertNotNull(itemsBefore);
 
         // Add a new item
-        Book newBook = new Book(4, "New Book", "Shelf B", true, System.currentTimeMillis(), 19.99);
+        Book newBook = new Book(Integer.toString(1), "New Book", "Shelf B", true, System.currentTimeMillis(), 19.99);
         libraryManager.addItem(newBook);
 
         // Read items from the CSV file again
@@ -236,29 +234,29 @@ public class LibraryManagerTest {
     @Test
     public void testGenerateId() {
         ItemIdGenerator generator = ItemIdGenerator.getInstance();
-        int id1 = generator.generateId();
-        int id2 = generator.generateId();
+        String id1 = generator.generateId();
+        String id2 = generator.generateId();
 
         assertNotEquals(id1, id2); // Ensure that generated IDs are unique
     }
 
     @Test
-    public void testUniqueItemIds() {
+    public void testUniqueItemIds() throws Exception {
         // Create a LibraryManager instance
         LibraryManager libraryManager = new LibraryManager("src/database_access");
 
         // Add multiple items to the library
         for (int i = 0; i < 10; i++) {
-            libraryManager.addItem(new Book( i, "Book", "Shelf", true, System.currentTimeMillis(), 10.99));
+            libraryManager.addItem(new Book( Integer.toString(i), "Book", "Shelf", true, System.currentTimeMillis(), 10.99));
         }
 
         // Get all items from the library
         List<PhysicalItem> items = libraryManager.getItems();
 
         // Verify that each item has a unique ID
-        Set<Integer> itemIds = new HashSet<>();
+        Set<String> itemIds = new HashSet<>();
         for (PhysicalItem item : items) {
-            assertTrue("Duplicate ID found", itemIds.add(item.getId()));
+            assertTrue(itemIds.add(item.getId()), "Duplicate ID found");
         }
     }
 

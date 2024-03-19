@@ -12,10 +12,10 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
-
-    public class BookAccess{
+public class BookAccess{
 
     public ArrayList<PhysicalItem> items = new ArrayList<>();
     public String path = "src/database/books.csv";
@@ -32,89 +32,57 @@ import java.util.List;
         return db_instance;
     }
 
-    public void addItem(Book book) {
+    public void addItem(Book book) throws Exception {
         items.add(book);
-        saveToCsv();
+        update();
+        load();
     }
 
-    public void enableItem(int itemId) {
+    public void enableItem(String itemId) throws Exception {
         for (PhysicalItem item : items) {
             if (item.getId() == itemId) {
                 item.setPurchasability(true);
-                saveToCsv();
+                update();
+                load();
                 return;
             }
         }
     }
 
-    public void disableItem(int itemId) {
+    public void disableItem(String itemId) throws Exception {
         for (PhysicalItem item : items) {
             if (item.getId() == itemId) {
                 item.setPurchasability(false);
-                saveToCsv();
+                update();
+                load();
                 return;
             }
         }
     }
 
-    public void removeItem(int itemId) {
+    public void removeItem(String itemId) throws Exception {
         for (PhysicalItem item : items) {
             if (item.getId() == itemId){
                 items.remove(item);
-                saveToCsv();
+                update();
+                load();
                 return;
             }
         }
     }
 
-    public void updateItem(Book updatedBook) {
-        for (PhysicalItem item : items) {
-            if (item.getId() == updatedBook.getId()) {
-                item.setLocation(updatedBook.getLocation());
-                item.setPurchasability(updatedBook.getPurchasability());
-                Date dueDate = new Date(updatedBook.getDueDate());
-                item.setDueDate(dueDate);
-                item.setDollarAmount(updatedBook.getDollarAmount());
-                saveToCsv();
-                return;
+    public void updateItem(Book updatedBook) throws Exception {
+        for (int i = 0; i < items.size(); i++) {
+            PhysicalItem currentItem = items.get(i);
+            if (currentItem.getId() == updatedBook.getId()) {
+                items.set(i, updatedBook);
+                break;
             }
         }
+        update();
+        load();
     }
 
-    private void saveToCsv() {
-        try {
-            CsvWriter csvWriter = new CsvWriter(new FileWriter(path), ',');
-            // Write header
-            csvWriter.write("id");
-            csvWriter.write("name");
-            csvWriter.write("location");
-            csvWriter.write("can_purchase");
-            csvWriter.write("due_date");
-            csvWriter.write("dollar_amount");
-            csvWriter.endRecord();
-
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-            // Write items
-            for (PhysicalItem item : items) {
-                if (item instanceof Book) {
-                    Book book = (Book) item;
-                    csvWriter.write(String.valueOf(book.getId()));
-                    csvWriter.write(book.getName());
-                    csvWriter.write(book.getLocation());
-                    csvWriter.write(String.valueOf(book.getPurchasability()));
-                    String formattedDueDate = dateFormat.format(new Date(book.getDueDate()));
-                    csvWriter.write(formattedDueDate);
-                    csvWriter.write(String.valueOf(book.getDollarAmount()));
-                    csvWriter.endRecord();
-                }
-            }
-
-            csvWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void load() throws Exception{
         CsvReader reader = new CsvReader(path);
@@ -125,7 +93,7 @@ import java.util.List;
 
             if (reader.get("type").equals("Textbook")) {
                 item = new Textbook(
-                        Integer.parseInt(reader.get("id")),
+                        reader.get("id"),
                         reader.get("name"),
                         reader.get("location"),
                         Boolean.valueOf(reader.get("can_purchase")),
@@ -136,7 +104,7 @@ import java.util.List;
 
             else {
                 item = new Book(
-                        Integer.parseInt(reader.get("id")),
+                        reader.get("id"),
                         reader.get("name"),
                         reader.get("location"),
                         Boolean.valueOf(reader.get("can_purchase")),

@@ -15,9 +15,8 @@ public class AddItemCommand implements Command {
     }
 
     @Override
-    public void execute(List<PhysicalItem> items, String path, LibraryManager libraryManager) {
+    public void execute(List<PhysicalItem> items, String path, LibraryManager libraryManager) throws Exception {
         items.add(item);
-        libraryManager.addItem(item);
     }
     public PhysicalItem getItem() {
         return item;

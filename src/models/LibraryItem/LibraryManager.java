@@ -9,6 +9,7 @@ import models.Items.PhysicalItems.Magazine;
 import models.Items.PhysicalItems.PhysicalItem;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class LibraryManager {
     private List<PhysicalItem> items = new ArrayList<>();
@@ -29,7 +30,7 @@ public class LibraryManager {
         return items;
     }
 
-    public void executeCommand(Command command) {
+    public void executeCommand(Command command) throws Exception {
         if (command instanceof AddItemCommand) {
             AddItemCommand addItemCommand = (AddItemCommand) command;
             PhysicalItem item = addItemCommand.getItem();
@@ -45,7 +46,7 @@ public class LibraryManager {
         } else if (command instanceof EnableItemCommand) {
             EnableItemCommand enableItemCommand = (EnableItemCommand) command;
             String itemType = enableItemCommand.getItemType();
-            int itemId = enableItemCommand.getItemId();
+            String itemId = enableItemCommand.getItemId();
             switch (itemType) {
                 case "Book":
                     bookAccess.enableItem(itemId);
@@ -62,7 +63,7 @@ public class LibraryManager {
         } else if (command instanceof DisableItemCommand) {
             DisableItemCommand disableItemCommand = (DisableItemCommand) command;
             String itemType = disableItemCommand.getItemType();
-            int itemId = disableItemCommand.getItemId();
+            String itemId = disableItemCommand.getItemId();
             switch (itemType) {
                 case "Book":
                     bookAccess.disableItem(itemId);
@@ -79,7 +80,7 @@ public class LibraryManager {
         } else if (command instanceof RemoveItemCommand) {
             RemoveItemCommand removeItemCommand = (RemoveItemCommand) command;
             String itemType = removeItemCommand.getItemType();
-            int itemId = removeItemCommand.getItemId();
+            String itemId = removeItemCommand.getItemId();
             switch (itemType) {
                 case "Book":
                     bookAccess.removeItem(itemId);
@@ -108,16 +109,22 @@ public class LibraryManager {
             }
         }
     }
-    public void addItem(PhysicalItem item) {
+    public void addItem(PhysicalItem item) throws Exception {
         items.add(item);
         executeCommand(new AddItemCommand(item, this));
     }
 
-    public void enableItem(int itemId, String itemType) {
+    public void enableItem(String itemId, String itemType) throws Exception {
         executeCommand(new EnableItemCommand(itemId, itemType, this));
+        for (PhysicalItem item : items) {
+            if (item.getId() == itemId && item.getClass().getSimpleName().equals(itemType)) {
+                item.setPurchasability(true);
+                break;
+            }
+        }
     }
 
-    public void disableItem(int itemId, String itemType) {
+    public void disableItem(String itemId, String itemType) throws Exception {
         for (PhysicalItem item : items) {
             if (item.getId() == itemId && item.getClass().getSimpleName().equals(itemType)) {
                 item.setPurchasability(false);
@@ -127,15 +134,15 @@ public class LibraryManager {
         executeCommand(new DisableItemCommand(itemId, itemType, this));
     }
 
-    public void removeItem(int itemId, String itemType) {
+    public void removeItem(String itemId, String itemType) throws Exception {
         items.removeIf(item -> item.getId() == itemId && item.getClass().getSimpleName().equals(itemType));
         executeCommand(new RemoveItemCommand(itemId, itemType, this));
     }
 
-    public void updateItem(PhysicalItem updatedItem) {
+    public void updateItem(PhysicalItem updatedItem) throws Exception {
         for (int i = 0; i < items.size(); i++) {
             PhysicalItem currentItem = items.get(i);
-            if (currentItem.getId() == updatedItem.getId()) {
+            if (Objects.equals(currentItem.getId(), updatedItem.getId())) {
                 items.set(i, updatedItem);
                 break;
             }
