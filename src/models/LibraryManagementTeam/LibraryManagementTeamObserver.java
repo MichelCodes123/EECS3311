@@ -1,7 +1,7 @@
 package models.LibraryManagementTeam;
 
-import models.Items.PhysicalItems.Textbook;
+import Prompts.SystemPrompts;
 
 public interface LibraryManagementTeamObserver {
-    String update(Textbook textbook);
+    String update(SystemPrompts prompt);
 }
