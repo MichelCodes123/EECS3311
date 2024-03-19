@@ -30,7 +30,6 @@ public class LibraryManager {
     }
 
     public void executeCommand(Command command) {
-        command.execute(items, path, this);
         if (command instanceof AddItemCommand) {
             AddItemCommand addItemCommand = (AddItemCommand) command;
             PhysicalItem item = addItemCommand.getItem();
@@ -110,6 +109,7 @@ public class LibraryManager {
         }
     }
     public void addItem(PhysicalItem item) {
+        items.add(item);
         executeCommand(new AddItemCommand(item, this));
     }
 
@@ -118,14 +118,28 @@ public class LibraryManager {
     }
 
     public void disableItem(int itemId, String itemType) {
+        for (PhysicalItem item : items) {
+            if (item.getId() == itemId && item.getClass().getSimpleName().equals(itemType)) {
+                item.setPurchasability(false);
+                break;
+            }
+        }
         executeCommand(new DisableItemCommand(itemId, itemType, this));
     }
 
     public void removeItem(int itemId, String itemType) {
+        items.removeIf(item -> item.getId() == itemId && item.getClass().getSimpleName().equals(itemType));
         executeCommand(new RemoveItemCommand(itemId, itemType, this));
     }
 
     public void updateItem(PhysicalItem updatedItem) {
+        for (int i = 0; i < items.size(); i++) {
+            PhysicalItem currentItem = items.get(i);
+            if (currentItem.getId() == updatedItem.getId()) {
+                items.set(i, updatedItem);
+                break;
+            }
+        }
         executeCommand(new UpdateCommand(updatedItem, this));
     }
 }
