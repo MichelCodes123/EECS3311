@@ -83,7 +83,7 @@ public class QueryUtilities {
        User user = getUser(user_id);
         Long current_date = new Date().getTime();
         ArrayList<PhysicalItem> near_overdue_items = new ArrayList<>();
-        System.out.println(user.getRented_item_list());
+
 
         for (String item_id : user.getRented_item_list()) {
             PhysicalItem item = getPhysicalItem(item_id);
