@@ -1,10 +1,8 @@
 package models;
 
-import java.util.Comparator;
-
 import models.Users.User;
 
-public class Request implements Comparator<Request> {
+public class Request implements Comparable<Request> {
 
 	public String userId;
 	public String bookId;
@@ -14,9 +12,10 @@ public class Request implements Comparator<Request> {
 	public int priority;
 	public User requester;
 
-	public Request(String itemId, String userId) {
+	public Request(String itemId, String userId, String type) {
 		this.userId = userId;
 		this.bookId = itemId;
+		this.request_type = type;
 	}
 
 	public String getId() {
@@ -50,9 +49,15 @@ public class Request implements Comparator<Request> {
 		this.priority = a;
 	}
 
+	public void setType(String type) {
+		this.request_type = type;
+
+	}
+
 	@Override
-	public int compare(Request o1, Request o2) {
-		return Integer.compare(o1.priority, o2.priority);
+	public int compareTo(Request o) {
+
+		return -(Integer.compare(this.priority, o.priority));
 
 	}
 }

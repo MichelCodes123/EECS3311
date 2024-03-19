@@ -19,7 +19,7 @@ public class RequestServiceProxy implements RequestMethod {
 
 		}
 
-		if (r.getType() == "Course") {
+		if (r.getType().equals("Course")) {
 			r.setPriority(1);
 		} else
 			r.setPriority(0);

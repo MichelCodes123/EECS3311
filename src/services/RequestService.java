@@ -7,7 +7,7 @@ import models.Request;
 public class RequestService implements RequestMethod {
 
 	private static RequestService r;
-	private static PriorityQueue<Request> requestQueue = new PriorityQueue<Request>();
+	public PriorityQueue<Request> requestQueue = new PriorityQueue<Request>();
 
 	public static RequestService getInstance() {
 		if (r == null) {
