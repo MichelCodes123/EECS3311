@@ -1,2 +1,2 @@
 type,id,name,location,can_purchase,due_date,dollar_amount
-class models.Items.PhysicalItems.Book,id,Name,location,true,1710882635949,0.0
+

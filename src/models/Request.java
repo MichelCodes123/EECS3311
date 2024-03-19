@@ -4,13 +4,13 @@ import models.Users.User;
 
 public class Request implements Comparable<Request> {
 
-	public String userId;
-	public String bookId;
-	public String request_type;
+	private String userId;
+	private String bookId;
+	private String request_type;
 
 	// Priority is 0 or 1. 1 for courses, 0 for anything else
-	public int priority;
-	public User requester;
+	private int priority;
+	private User requester;
 
 	public Request(String itemId, String userId, String type) {
 		this.userId = userId;
