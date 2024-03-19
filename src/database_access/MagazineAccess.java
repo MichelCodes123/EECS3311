@@ -15,7 +15,7 @@ public class MagazineAccess {
     public ArrayList<PhysicalItem> items = new ArrayList<>();
     public String path = "src/database/magazines.csv";
 
-    private static MagazineAccess instance;
+    private static MagazineAccess db_instance;
 
     private MagazineAccess() {
     }
