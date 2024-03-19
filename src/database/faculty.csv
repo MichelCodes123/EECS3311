@@ -1,0 +1,2 @@
+id,name,email,password,can_borrow,overdue_charge,is_registered,rented_item_list
+2,Tommy,email,1234,true,0.0,true,
