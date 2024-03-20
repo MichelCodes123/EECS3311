@@ -3,6 +3,8 @@ package gui;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+import database_access.CdAccess;
+import database_access.MagazineAccess;
 import database_access.QueryUtilities;
 import database_access.StudentAccess;
 import models.Items.PhysicalItems.PhysicalItem;
@@ -23,6 +25,8 @@ public class UserProfilePage {
     StudentAccess studentdb = StudentAccess.getInstance();
     Object[][] bookesRented;
     ArrayList<PhysicalItem> items;
+    CdAccess cddb = CdAccess.getInstance();
+    MagazineAccess magdb = MagazineAccess.getInstance();
     
     
    
@@ -33,24 +37,7 @@ public class UserProfilePage {
     //private SystemManager systemManager;
     final String path = "../library/database/itemsCurrentlyRenting.csv";
     UserProfilePage(){
-        try {
-            System.out.println("Student: " + studentdb.users.get(0).getName());
-            System.out.println("Student Database: "+studentdb.users.size());
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-        // if(studentdb.users.get(Integer.parseInt(student.getId())).getRented_item_list().size() > 0){
-        //     SwingUtilities.invokeLater(()->{
-        //         try {
-        //             items = queryUtilities.getUserAssociatedItems(studentdb.users.get(Integer.parseInt(student.getId())));
-        //             System.out.println("Query Util size: "+ items.size());
-        //         } catch (Exception e) {
-        //             // TODO Auto-generated catch block
-        //             e.printStackTrace();
-        //         }
-            
-        //     });
-        // }
+        
 
 
         panel1 = new JPanel();
@@ -153,10 +140,41 @@ public class UserProfilePage {
         coursesTaking.setForeground(Color.black);
         coursesTaking.setBounds(350, 35, 300, 20);
         panel3.add(coursesTaking);
+        try {
+            Thread.sleep(1000);
+            System.out.println(queryUtilities.allPhysicalItems().size());
+            System.out.println("Student: " + studentdb.users.get(0).getName());
+            System.out.println("Student Database: "+studentdb.users.size());
+            System.out.println("Student Items: "+ studentdb.users.get(0).getRented_item_list());
+            System.out.println("CD Database: "+cddb.items.size());
+            System.out.println("Magazine Database: "+magdb.items.size());
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        if(studentdb.users.get(0).getRented_item_list().size() > 0){
+            SwingUtilities.invokeLater(()->{
+                try {
+                    Thread.sleep(1000);
+                    System.out.println("Table condition met");
+                    items = queryUtilities.getUserAssociatedItems(studentdb.users.get(0));
+                    System.out.println("Items: "+items);
+                    bookesRented = GuiUtilities.convertItemsToViewArray(items);
+                    table1 = new JTable(bookesRented, GuiUtilities.viewColumn);
+                    JScrollPane scrollPane = new JScrollPane(table1);
+                    scrollPane.setBounds(30, 35, 940, 200); 
+                    panel2.add(scrollPane);
+                    
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            
+            });
+        }
         
         
         //TABLE
-        //bookesRented = GuiUtilities.convertItemsToViewArray(items);
+        // bookesRented = GuiUtilities.convertItemsToViewArray(items);
         // table1 = new JTable(bookesRented, GuiUtilities.viewColumn);
         // JScrollPane scrollPane = new JScrollPane(table1);
         // scrollPane.setBounds(30, 35, 940, 200); 

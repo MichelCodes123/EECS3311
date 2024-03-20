@@ -13,6 +13,7 @@ import database_access.StudentAccess;
 import models.Items.PhysicalItems.Book;
 import models.Items.PhysicalItems.PhysicalItem;
 import models.Users.Student;
+import models.Users.User;
 import services.SearchingService;
 import services.itemstrategy.ItemStrategy;
 import services.itemstrategy.RentItem;
@@ -28,7 +29,7 @@ import java.util.Date;
 public class ItemManagerPage {
     
     //Student student = new Student("1", "John", "email", "password", true, 0.0, true, new java.util.ArrayList<String>());
-    Student loggedinUser = SessionManager.getCurrentUser();
+    User loggedinUser = SessionManager.getCurrentUser();
     BookAccess bookdb = BookAccess.getInstance();
     StudentAccess studentdb = StudentAccess.getInstance();
     ItemStrategy strat = new RentItem();
