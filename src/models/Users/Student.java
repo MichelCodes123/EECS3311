@@ -37,9 +37,9 @@ public class Student extends User {
 		DigitalTBUtilities.addAllDigitalTB(this);
 	}
 
-	public Boolean removeCourse(Course C) {
-		if (courses.remove(C)) {
-			DigitalTBUtilities.removeDigitalTB(name, digital_textbooks);
+	public Boolean removeCourse(Course c) {
+		if (courses.remove(c)) {
+			DigitalTBUtilities.removeDigitalTB(c.getName(), digital_textbooks);
 			return true;
 		} else {
 			return false;

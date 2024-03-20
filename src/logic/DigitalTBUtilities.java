@@ -1,6 +1,7 @@
 package logic;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import models.Course;
 import models.Items.DigitalTB.DigitalTB;
@@ -30,11 +31,12 @@ public class DigitalTBUtilities {
 
 	public static void removeDigitalTB(String courseName, ArrayList<DigitalTB> d) {
 
-		for (DigitalTB Tb : d) {
-			if (Tb.getCourseName().equals(courseName)) {
-				d.remove(Tb);
+		Iterator<DigitalTB> a = d.iterator();
+		while (a.hasNext()) {
+			DigitalTB t = a.next();
+			if (t.getCourseName().equals(courseName)) {
+				a.remove();
 			}
-
 		}
 
 	}
