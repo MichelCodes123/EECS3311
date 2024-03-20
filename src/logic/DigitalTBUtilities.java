@@ -1,4 +1,5 @@
 package logic;
+
 import java.util.ArrayList;
 
 import models.Course;
@@ -15,7 +16,7 @@ public class DigitalTBUtilities {
 
 	}
 
-	public void addAllDigitalTB(User s) {
+	public static void addAllDigitalTB(User s) {
 		if (s instanceof Student) {
 			ArrayList<Course> coo = ((Student) s).getCourses();
 
@@ -27,14 +28,11 @@ public class DigitalTBUtilities {
 		}
 	}
 
-	public void removeDigitalTB(String courseName, User s) {
-		if (s instanceof Student) {
+	public static void removeDigitalTB(String courseName, ArrayList<DigitalTB> d) {
 
-			for (DigitalTB d : ((Student) s).getDigital_textbooks()) {
-				if (d.getCourseName().equals(courseName)) {
-					((Student) s).getDigital_textbooks().remove(d);
-				}
-
+		for (DigitalTB Tb : d) {
+			if (Tb.getCourseName().equals(courseName)) {
+				d.remove(Tb);
 			}
 
 		}

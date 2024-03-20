@@ -2,6 +2,7 @@ package models.Users;
 
 import java.util.ArrayList;
 
+import logic.DigitalTBUtilities;
 import models.Course;
 import models.Items.DigitalTB.DigitalTB;
 
@@ -32,6 +33,16 @@ public class Student extends User {
 
 	public void setCourses(ArrayList<Course> courses) {
 		this.courses = courses;
+	}
+
+	public Boolean removeCourse(Course C) {
+
+		if (courses.remove(C)) {
+			DigitalTBUtilities.removeDigitalTB(name, digital_textbooks);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public void addDigitalTB(DigitalTB b) {
