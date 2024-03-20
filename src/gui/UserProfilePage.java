@@ -10,6 +10,9 @@ import database_access.QueryUtilities;
 import database_access.StudentAccess;
 import models.Items.PhysicalItems.PhysicalItem;
 import models.Users.Student;
+import models.Users.User;
+import services.OverdueService;
+import services.itemstrategy.ItemStrategy;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -21,7 +24,7 @@ public class UserProfilePage {
     private JFrame frame;
     private JPanel panel1, panel2, panel3, panel4;
     private JTable table1; //table1 relies on panel2
-    Student loggedInUser = SessionManager.getCurrentUser();
+
     QueryUtilities queryUtilities = new QueryUtilities();
     StudentAccess studentdb = StudentAccess.getInstance();
     Object[][] bookesRented;
@@ -29,7 +32,30 @@ public class UserProfilePage {
     CdAccess cddb = CdAccess.getInstance();
     MagazineAccess magdb = MagazineAccess.getInstance();
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    Student student = (Student) studentdb.users.get((int) Integer.parseInt(loggedInUser.getId()));
+    User user; 
+    OverdueService overdue = new OverdueService();
+    
+    private void loadUserDataAndInitializeGUI() {
+        new Thread(() -> {
+            try {
+                User loggedInUser = SessionManager.getCurrentUser();
+                if (loggedInUser != null) {
+                    // Assuming queryUtilities.getUser() is a blocking call that fetches user data
+                    user = queryUtilities.getUser(loggedInUser.getId());
+                    
+                    // After loading user, initialize GUI on EDT
+                    SwingUtilities.invokeLater(this::initializeGUI);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    private void initializeGUI() {
+        // Initialize all your GUI components here
+        // This method is run on the EDT
+    }
     
    
     
@@ -39,10 +65,12 @@ public class UserProfilePage {
     //private SystemManager systemManager;
     final String path = "../library/database/itemsCurrentlyRenting.csv";
     UserProfilePage(){
-        
-
-
-        panel1 = new JPanel();
+        SwingUtilities.invokeLater(()->{
+            try {
+                User loggedInUser = SessionManager.getCurrentUser();
+                if(loggedInUser != null){
+                    user = queryUtilities.getUser(loggedInUser.getId());
+                    panel1 = new JPanel();
         panel1.setBackground(new Color(175,13,11));
         panel1.setBounds(0, 10, 1000, 100);
 
@@ -102,14 +130,14 @@ public class UserProfilePage {
         userProfilePage.setForeground(Color.black);
         userProfilePage.setBounds(90, 15, 300, 20);
 
-        JLabel loggedInAs = new JLabel("Logged in as: "+student.getName());
+        JLabel loggedInAs = new JLabel("Logged in as: "+ user.getName());
         loggedInAs.setOpaque(true); //displays background color
         loggedInAs.setBackground(Color.white);
         loggedInAs.setForeground(Color.black);
         loggedInAs.setBounds(20, 45, 300, 20);
 
 
-        JLabel numOfItems = new JLabel("Number of Items Currently Renting: "+student.getRented_item_list().size());
+        JLabel numOfItems = new JLabel("Number of Items Currently Renting: "+user.getRented_item_list().size());
         numOfItems.setOpaque(true); //displays background color
         numOfItems.setBackground(Color.white);
         numOfItems.setForeground(Color.black);
@@ -149,6 +177,10 @@ public class UserProfilePage {
                     System.out.println(dateFormat.format(cddb.items.get(0).getDueDate()));
                     items = queryUtilities.getUserAssociatedItems(studentdb.users.get(0));
                     System.out.println("Items: "+items);
+                    
+                    System.out.println("Overdue Charge: " + user.getOverdue_charge());
+
+
                     bookesRented = GuiUtilities.convertItemsToViewArray(items);
                     table1 = new JTable(bookesRented, GuiUtilities.viewColumn);
                     JScrollPane scrollPane = new JScrollPane(table1);
@@ -165,12 +197,6 @@ public class UserProfilePage {
         }
         
         
-        //TABLE
-        // bookesRented = GuiUtilities.convertItemsToViewArray(items);
-        // table1 = new JTable(bookesRented, GuiUtilities.viewColumn);
-        // JScrollPane scrollPane = new JScrollPane(table1);
-        // scrollPane.setBounds(30, 35, 940, 200); 
-        // panel2.add(scrollPane);
         
 
         
@@ -192,6 +218,21 @@ public class UserProfilePage {
 
 
         frame.setVisible(true);
+                    
+                }
+             
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        
+        });
+
+        
+        
+
+        
+        
 
     }
 
@@ -217,4 +258,6 @@ public class UserProfilePage {
             SubscriptionPage sp = new SubscriptionPage();
         }
     };
+
+    
 }

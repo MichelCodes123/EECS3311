@@ -178,16 +178,6 @@ public class ItemManagerPage {
 
             });
         
-        
-        
-        
-        
-        
-       
-
-       
-        
-
         ImageIcon lms = new ImageIcon("../library/resources/images/lms2.jpg");
 
 
@@ -215,9 +205,9 @@ public class ItemManagerPage {
         panel2.add(searchtab);
         // rentItems.addActionListener(cancelListener);
 
-        JButton openOnlineBookButton = new JButton("Open Online Book");
-        openOnlineBookButton.setBounds(380, 35, 200, 27);
-        panel4.add(openOnlineBookButton);
+        JButton requestBook = new JButton("Request Book");
+        requestBook.setBounds(380, 35, 200, 27);
+        panel4.add(requestBook);
         // openOnlineBookButton.addActionListener(cancelListener);
 
         JButton proceedCheckout = new JButton("Proceed to Checkout");

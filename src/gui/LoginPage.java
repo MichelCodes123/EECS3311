@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 public class LoginPage {
     private JFrame frame;
     private JPanel panel1, panel2;
+    QueryUtilities queryUtilities = new QueryUtilities();
 
     LoginPage() {
 
@@ -104,7 +105,20 @@ public class LoginPage {
            Boolean successful_login = LoginController.logIn(email_address, password);
 
            if (successful_login) {
-                frame.dispose();
+                SwingUtilities.invokeLater(() -> {
+                    try {
+                        User user = queryUtilities.getUserByEmail(email_address);
+                        System.out.println(user.getName());
+                        SessionManager.login(user);
+                        frame.dispose();
+                    } catch (Exception e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+                });
+                
+            
+                //frame.dispose();
                 UserProfilePage up = new UserProfilePage();
             }
            else {

@@ -78,7 +78,7 @@ public class SubscriptionPage {
         };
      
 
-        logOutButton.setBounds(700, 15, 200, 27);
+        logOutButton.setBounds(600, 15, 200, 27);
         panel4.add(logOutButton);
         logOutButton.addActionListener(lb);
 
@@ -88,7 +88,7 @@ public class SubscriptionPage {
         // cancelSub.addActionListener(cb);
 
         JButton backButton = new JButton("Back");
-        backButton.setBounds(400, 15, 200, 27);
+        backButton.setBounds(200, 15, 200, 27);
        
         
     
