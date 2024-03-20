@@ -1,7 +1,10 @@
 package controllers;
 
 import database_access.QueryUtilities;
+import logic.LoginUtilities;
 import models.Users.User;
+
+import javax.swing.*;
 
 public class LoginController {
 

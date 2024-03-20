@@ -24,7 +24,7 @@ import java.net.URL;
 public class SubscriptionPage {
     QueryUtilities queryUtilities = new QueryUtilities();
     StudentAccess studentdb = StudentAccess.getInstance();
-    Student loggedInUser = SessionManager.getCurrentUser();
+    Student loggedInUser = (Student) SessionManager.getCurrentUser();
     NewsletterAccess newsdb = NewsletterAccess.getInstance();
     Student student = (Student) studentdb.users.get((int) Integer.parseInt(loggedInUser.getId()));
     NewsletterStrategy sub = new NewsletterSubscription();
