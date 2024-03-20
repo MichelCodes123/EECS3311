@@ -18,7 +18,7 @@ public class NewsletterSubscriptionTest {
 	@Test
 	@DisplayName("Newsletter Subscription")
 	void subscribe() throws Exception {
-		Student student = new Student("1", "Jimmy", "email", "1234", true, 0.0, true, null, null, null);
+		Student student = new Student("1", "Jimmy", "email", "1234", true, 0.0, true, null, null, null, null);
 		Newsletter newsletter = new Newsletter("0", "NY Times", "mylink");
 
 		StudentAccess studentdb = StudentAccess.getInstance();
@@ -39,7 +39,7 @@ public class NewsletterSubscriptionTest {
 	@Test
 	@DisplayName("Newsletter Cancellation")
 	void cancel() throws Exception {
-		Student student = new Student("1", "Jimmy", "email", "1234", true, 0.0, true, null, null, null);
+		Student student = new Student("1", "Jimmy", "email", "1234", true, 0.0, true, null, null, null, null);
 		Newsletter newsletter = new Newsletter("0", "NY Times", "mylink");
 
 		StudentAccess studentdb = StudentAccess.getInstance();

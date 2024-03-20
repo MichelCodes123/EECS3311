@@ -29,7 +29,7 @@ public class OverdueServiceTest {
 
 	@BeforeEach
 	void setup() throws Exception {
-		student = new Student("1", "Jimmy", "email", "1234", true, 0.0, true, null, null, null);
+		student = new Student("1", "Jimmy", "email", "1234", true, 0.0, true, null, null, null, null);
 		prof = new FacultyMember("2", "Tommy", "email", "1234", true, 0.0, true, null, null);
 
 		StudentAccess studentdb = StudentAccess.getInstance();

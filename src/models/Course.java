@@ -10,6 +10,12 @@ public class Course {
 	private String name;
 	private ArrayList<Textbook> textbooks;
 
+	public Course(String name, ArrayList<Textbook> tb) {
+		this.name = name;
+		textbooks = tb;
+
+	}
+
 	public int getCode() {
 		return code;
 	}
@@ -32,6 +38,11 @@ public class Course {
 
 	public void setTextbook(ArrayList<Textbook> textbook) {
 		this.textbooks = textbook;
+	}
+
+	public void addTextbook(Textbook b) {
+		textbooks.add(b);
+
 	}
 
 }

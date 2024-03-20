@@ -122,7 +122,7 @@ public class DatabaseTest {
 	void testStudent() throws Exception {
 		StudentAccess db = StudentAccess.getInstance();
 		Student student = new Student("id", "Name", "location", "password", true, 0.0, true, new ArrayList<>(),
-				new ArrayList<>(), null);
+				new ArrayList<>(), null, null);
 
 		assertEquals(0, db.users.size());
 

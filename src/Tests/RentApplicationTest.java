@@ -24,7 +24,7 @@ public class RentApplicationTest {
 	@Test
 	@DisplayName("RentTest")
 	void testRentalService() throws Exception {
-		Student student = new Student("1", "Jimmy", "email", "1234", true, 0.0, true, null, null, null);
+		Student student = new Student("1", "Jimmy", "email", "1234", true, 0.0, true, null, null, null, null);
 		FacultyMember prof = new FacultyMember("2", "Tommy", "email", "1234", true, 0.0, true, new ArrayList<String>(),
 				new ArrayList<>());
 		Book book = new Book("0", "Game of Thrones", "RM 125", true, new Date().getTime(), 0.0);
