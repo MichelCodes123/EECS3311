@@ -51,16 +51,23 @@ public class ItemManagerPage {
 
         public ButtonRendererEditor(JTable table) {
             this.table = table;
-            renderButton = new JButton("Rent");
-            editButton = new JButton("Rent");
+            if(loggedinUser instanceof Student){
+                renderButton = new JButton("Rent");
+                editButton = new JButton("Rent");
+
+            }
+               
+            
             editButton.setFocusPainted(false);
             editButton.addActionListener(this);
         }
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            boolean canRent = student.getCan_borrow();
-            renderButton.setEnabled(canRent);
+            if(loggedinUser instanceof Student){
+                boolean canRent = student.getCan_borrow() && bookdb.items.get(Integer.valueOf( (String) selectedBookID)).getPurchasability();
+                renderButton.setEnabled(canRent);
+            }
             return renderButton;
         }
 
@@ -106,7 +113,7 @@ public class ItemManagerPage {
                     try {
                         
                         System.out.println("StudentDB:"+studentdb.users.size());
-                        if(student.getCan_borrow()){
+                        if(student.getCan_borrow() && bookdb.items.get(Integer.valueOf( (String) selectedBookID)).getPurchasability()){
                             
                             rentItem.execute((String)selectedBookID, student.getId());
                             studentdb.load();

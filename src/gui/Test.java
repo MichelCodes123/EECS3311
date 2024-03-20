@@ -33,7 +33,8 @@ public class Test {
 
         Student student = new Student("0", "John", "email", "password", true, 0.0, true, new ArrayList<String>());
         Student student2 = new Student("1", "Joe", "hi", "world", true, 0.0, true, new ArrayList<String>());
-        Book book = new Book("0", "Game of Thrones", "RM 125", true, new Date().getTime(), 0.0);
+        
+        Book book = new Book("0", "Game of Thrones", "RM 125", false, new Date().getTime(), 0.0);
         Book book2 = new Book("1", "Game of Thrones2", "RM 125", true, new Date().getTime(), 0.0);
         Book book3 = new Book("2", "Game of Thrones3", "RM 125", true, new Date().getTime(), 0.0);
         Cd cd = new Cd("3", "Game of Thrones", "RM 125", true, new Date().getTime(), 0.0);
