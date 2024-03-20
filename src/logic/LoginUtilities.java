@@ -1,7 +1,7 @@
 package logic;
 
-import database_access.QueryUtilities;
-import models.Users.User;
+import database_access.*;
+import models.Users.*;
 
 import javax.management.Query;
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ public class LoginUtilities {
 
 		UserFactory f = new UserFactory();
 		//Need to properly add ID's with Christinas Code
-		f.CreateUser(type, "5", name, email, password, true, 0.0, true, null, null);
+		f.CreateUser(type, "5", name, email, password, true, 0.0, false, null, null);
 		success.run();
 	}
 
@@ -106,6 +106,58 @@ public class LoginUtilities {
 		return null;
 
 
+	}
+
+	public static void validateUsers() throws Exception {
+		QueryUtilities utils = new QueryUtilities();
+
+		ArrayList<User> all_users = utils.allUsers();
+
+		for (User user : all_users) {
+			if (!user.getIs_registered()) {
+				if (user instanceof FacultyMember) {
+					FacultyMemberAccess db = FacultyMemberAccess.getInstance();
+					for (User prof : db.users) {
+						if (prof.getId().equals(user.getId())) {
+							prof.register();
+						}
+					}
+					db.update();
+					db.load();
+				}
+				else if (user instanceof Student) {
+					StudentAccess db = StudentAccess.getInstance();
+					for (User student : db.users) {
+						if (student.getId().equals(user.getId())) {
+							student.register();
+						}
+					}
+					db.update();
+					db.load();
+				}
+				else if (user instanceof NonFacultyStaff) {
+					NonFacultyStaffAccess db = NonFacultyStaffAccess.getInstance();
+					for (User staff : db.users) {
+						if (staff.getId().equals(user.getId())) {
+							staff.register();
+						}
+					}
+					db.update();
+					db.load();
+				}
+
+				else if (user instanceof Visitor) {
+					VisitorAccess db = VisitorAccess.getInstance();
+					for (User visitor : db.users) {
+						if (visitor.getId().equals(user.getId())) {
+							visitor.register();
+						}
+					}
+					db.update();
+					db.load();
+				}
+			}
+		}
 	}
 
 }

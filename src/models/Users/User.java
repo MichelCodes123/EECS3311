@@ -77,6 +77,8 @@ public abstract class User {
 
     public void setCan_borrow(Boolean bool) {this.can_borrow = bool;}
 
+	public void register() {this.is_registered = true;}
+
    public void add_item(String item_id) {this.rented_item_list.add(item_id);
     }
 
