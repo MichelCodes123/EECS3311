@@ -33,7 +33,7 @@ public class ItemManagerPage {
     BookAccess bookdb = BookAccess.getInstance();
     StudentAccess studentdb = StudentAccess.getInstance();
     ItemStrategy strat = new RentItem();
-    Student student = (Student) studentdb.users.get(Integer.parseInt(loggedinUser.getId()));
+    Student student = (Student) studentdb.users.get((int) Integer.parseInt(loggedinUser.getId()));
        
     private JFrame frame;
     private JPanel panel1, panel2, panel3, panel4;
@@ -51,16 +51,25 @@ public class ItemManagerPage {
 
         public ButtonRendererEditor(JTable table) {
             this.table = table;
-            renderButton = new JButton("Rent");
-            editButton = new JButton("Rent");
+            if(loggedinUser instanceof Student){
+                renderButton = new JButton("Rent");
+                editButton = new JButton("Rent");
+
+            }
+               
+            
             editButton.setFocusPainted(false);
             editButton.addActionListener(this);
         }
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            boolean canRent = student.getCan_borrow();
-            renderButton.setEnabled(canRent);
+            if(loggedinUser instanceof Student){
+                Object bookId = table.getModel().getValueAt(row, 0);
+                
+                boolean canRent = student.getCan_borrow() && bookdb.items.get((int) Integer.parseInt((String)bookId)).getPurchasability();
+                renderButton.setEnabled(canRent);
+            }
             return renderButton;
         }
 
@@ -144,12 +153,15 @@ public class ItemManagerPage {
                 e1.printStackTrace();
             }
             
+            
         
 
        
     }
+    
 
     }
+    
     
 
 
@@ -269,7 +281,7 @@ public class ItemManagerPage {
         loggedInAs.setBounds(20, 45, 300, 20);
 
 
-        JLabel numOfItems = new JLabel("Number of Items Currently Renting: "+ studentdb.users.get(0).getRented_item_list().size());
+        JLabel numOfItems = new JLabel("Number of Items Currently Renting: "+ student.getRented_item_list().size());
         numOfItems.setOpaque(true); //displays background color
         numOfItems.setBackground(Color.white);
         numOfItems.setForeground(Color.black);

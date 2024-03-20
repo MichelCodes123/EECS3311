@@ -12,7 +12,7 @@ import models.Items.PhysicalItems.Cd;
 public class DigitalTBAccess {
 
     public ArrayList<Item> items = new ArrayList<>();
-    public String path = "src/database/digital_tb.csv";
+    public String path = "/database/digital_tb.csv";
 
     private static DigitalTBAccess db_instance;
 
