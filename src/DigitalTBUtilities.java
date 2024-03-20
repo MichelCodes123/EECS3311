@@ -8,21 +8,20 @@ import models.Users.User;
 
 public class DigitalTBUtilities {
 
-	public static DigitalTB digitize(Textbook b) {
+	public static DigitalTB digitize(Textbook b, String courseName) {
 
-		return new DigitalTB(b.getName(), b.getId());
+		return new DigitalTB(b.getName(), b.getId(), courseName);
 
 	}
 
 	public void addAllDigitalTB(User s) {
 
 		if (s instanceof Student) {
-
 			ArrayList<Course> coo = ((Student) s).getCourses();
 
 			for (Course courses : coo) {
 				for (Textbook tb : courses.getTextbooks()) {
-					((Student) s).addDigitalTB(DigitalTBUtilities.digitize(tb));
+					((Student) s).addDigitalTB(DigitalTBUtilities.digitize(tb, courses.getName()));
 				}
 
 			}

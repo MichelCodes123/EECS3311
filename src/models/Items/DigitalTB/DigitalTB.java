@@ -4,7 +4,15 @@ import models.Items.Item;
 
 public class DigitalTB extends Item {
 
-    public  DigitalTB(String id, String name) {
-      super(id, name);
-    }
+	public String courseName;
+
+	public DigitalTB(String id, String name) {
+		super(id, name);
+	}
+
+	public DigitalTB(String id, String name, String courseName) {
+		super(id, name);
+		this.courseName = courseName;
+
+	}
 }
