@@ -36,7 +36,7 @@ public class Test {
         ItemStrategy strat = new RentItem();
         NewsletterAccess newsdb = NewsletterAccess.getInstance();
         Student student = new Student("0", "John", "e", "p", true, 0.0, true, new ArrayList<String>(),new ArrayList<String>());
-        //Student student2 = new Student("1", "John", "email", "password", true, 0.0, true, new ArrayList<String>(),new ArrayList<String>());
+        Student student2 = new Student("1", "Joe", "z", "pass", true, 0.0, true, new ArrayList<String>(),new ArrayList<String>());
         OverdueService overdue = new OverdueService();
 
         Book book = new Book("0", "Game of Thrones", "RM 125", false, new Date().getTime(), 0.0);
@@ -54,7 +54,9 @@ public class Test {
         
         
         studentdb.users.add(student);
+        studentdb.users.add(student2);
         studentdb.update();
+        
         
         bookdb.items.add(book);
         bookdb.items.add(book2);
