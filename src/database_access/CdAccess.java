@@ -1,21 +1,24 @@
 package database_access;
-import java.io.FileWriter;
-import java.sql.Date;
-import java.util.ArrayList;
 
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
-import models.Items.PhysicalItems.*;
+import models.Items.PhysicalItems.Cd;
 import models.Items.PhysicalItems.PhysicalItem;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 
 public class CdAccess {
-
     public ArrayList<PhysicalItem> items = new ArrayList<>();
-    public String path = "src/database/Cd.csv";
+    private String path = "src/database/Cd.csv";
 
     private CdAccess() {
-
     }
 
     private static CdAccess db_instance;
@@ -25,6 +28,58 @@ public class CdAccess {
         }
         return db_instance;
     }
+
+    public void addItem(Cd cd) throws Exception {
+        items.add(cd);
+        update();
+        load();
+    }
+
+    public void enableItem(String itemId) throws Exception {
+        for (PhysicalItem item : items) {
+            if (item.getId() == itemId) {
+                item.setPurchasability(true);
+                update();
+                load();
+                return;
+            }
+        }
+    }
+
+    public void disableItem(String itemId) throws Exception {
+        for (PhysicalItem item : items) {
+            if (item.getId() == itemId) {
+                item.setPurchasability(false);
+                update();
+                load();
+                return;
+            }
+        }
+    }
+
+    public void removeItem(String itemId) throws Exception {
+        for (PhysicalItem item : items) {
+            if (Objects.equals(item.getId(), String.valueOf(itemId))) {
+                items.remove(item);
+                update();
+                load();
+                return;
+            }
+        }
+    }
+
+    public void updateItem(Cd updatedCd) throws Exception {
+        for (int i = 0; i < items.size(); i++) {
+            PhysicalItem currentItem = items.get(i);
+            if (Objects.equals(currentItem.getId(), updatedCd.getId())) {
+                items.set(i, updatedCd);
+                break;
+            }
+        }
+        update();
+        load();
+    }
+
 
     public void load() throws Exception{
         CsvReader reader = new CsvReader( path);
@@ -74,3 +129,4 @@ public class CdAccess {
         }
     }
 }
+

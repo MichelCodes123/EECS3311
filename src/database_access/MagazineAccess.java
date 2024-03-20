@@ -1,23 +1,24 @@
 package database_access;
-import java.io.FileWriter;
-import java.sql.Date;
-import java.util.ArrayList;
-
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
-import models.Items.PhysicalItems.*;
+import models.Items.PhysicalItems.Magazine;
 import models.Items.PhysicalItems.PhysicalItem;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 public class MagazineAccess {
-
     public ArrayList<PhysicalItem> items = new ArrayList<>();
     public String path = "src/database/magazines.csv";
 
     private static MagazineAccess db_instance;
 
     private MagazineAccess() {
-
     }
 
     public static MagazineAccess getInstance() {
@@ -25,6 +26,58 @@ public class MagazineAccess {
             db_instance = new MagazineAccess();
         }
         return db_instance;
+    }
+
+    public void addItem(Magazine magazine) throws Exception {
+        items.add(magazine);
+        update();
+        load();
+    }
+
+    public void enableItem(String itemId) throws Exception {
+        for (PhysicalItem item : items) {
+            if (Objects.equals(item.getId(), itemId)) {
+                item.setPurchasability(true);
+                System.out.println(item.getPurchasability());
+                update();
+                load();
+                return;
+            }
+        }
+    }
+
+    public void disableItem(String itemId) throws Exception {
+        for (PhysicalItem item : items) {
+            if (item.getId() == itemId) {
+                item.setPurchasability(false);
+                update();
+                load();
+                return;
+            }
+        }
+    }
+
+    public void removeItem(String itemId) throws Exception {
+        for (PhysicalItem item : items) {
+            if (item.getId() == itemId) {
+                items.remove(item);
+                update();
+                load();
+                return;
+            }
+        }
+    }
+
+    public void updateItem(Magazine updatedMagazine) throws Exception {
+        for (int i = 0; i < items.size(); i++) {
+            PhysicalItem currentItem = items.get(i);
+            if (Objects.equals(currentItem.getId(), updatedMagazine.getId())) {
+                items.set(i, updatedMagazine);
+                break;
+            }
+        }
+        update();
+        load();
     }
 
     public void load() throws Exception{
