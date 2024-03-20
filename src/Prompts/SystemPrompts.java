@@ -6,5 +6,9 @@ public abstract class SystemPrompts {
     public SystemPrompts(String message) {
         this.message = message;
     }
+    
+    public String getMessage() {
+        return message;
+    }
 
 }
