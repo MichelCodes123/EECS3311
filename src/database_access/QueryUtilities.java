@@ -55,6 +55,16 @@ public class QueryUtilities {
        return null;
     }
 
+    public User getUserByEmail (String email) throws Exception {
+        ArrayList<User> users = allUsers();
+        for (User user : users) {
+            if (user.getEmail().equals(email)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
     public PhysicalItem getPhysicalItem(String id) throws Exception {
         ArrayList<PhysicalItem> items = allPhysicalItems();
 

@@ -5,8 +5,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
 
+import controllers.LoginController;
+import database_access.QueryUtilities;
 import database_access.StudentAccess;
 import models.Items.Item;
+import models.Users.User;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -62,7 +65,7 @@ public class LoginPage {
         panel1.add(logoLabel);
 
 
-        JLabel userLabel = new JLabel("Username");
+        JLabel userLabel = new JLabel("Email");
         userLabel.setOpaque(true); //displays background color
         userLabel.setBackground(Color.white);
         userLabel.setForeground(Color.black);
@@ -71,12 +74,12 @@ public class LoginPage {
 
         panel2.add(userLabel);
 
-        JTextField userNameText = new JTextField();
-        userNameText.setForeground(Color.black);
-        userNameText.setOpaque(true); //displays background color
-        userNameText.setBackground(Color.white);
-        userNameText.setBounds(500, 30, 80, 20);
-        panel2.add(userNameText);
+        JTextField email = new JTextField();
+        email.setForeground(Color.black);
+        email.setOpaque(true); //displays background color
+        email.setBackground(Color.white);
+        email.setBounds(500, 30, 80, 20);
+        panel2.add(email);
 
         JLabel passwordLabel = new JLabel("Password");
         passwordLabel.setOpaque(true); //displays background color
@@ -85,7 +88,7 @@ public class LoginPage {
         passwordLabel.setBounds(400, 70, 80, 20);
         panel2.add(passwordLabel);
 
-        JTextField passwordText = new JTextField();
+        JTextField passwordText = new JPasswordField();
         passwordText.setForeground(Color.black);
         passwordText.setOpaque(true); //displays background color
         passwordText.setBackground(Color.white);
@@ -95,32 +98,30 @@ public class LoginPage {
         JButton userButton = new JButton("Login");
         userButton.setBounds(380, 140, 100, 25);
         panel2.add(userButton);
-         userButton.addActionListener(loginListener);
+        userButton.addActionListener(e -> {
+           String email_address =  email.getText();
+           String password = passwordText.getText();
+           Boolean successful_login = LoginController.logIn(email_address, password);
+
+           if (successful_login) {
+                frame.dispose();
+                UserProfilePage up = new UserProfilePage();
+            }
+           else {
+            JOptionPane.showMessageDialog(null, "Failed to log in");
+           }
+        });
 
         JButton newUser = new JButton("Register");
         newUser.setBounds(490, 140, 100, 25);
         panel2.add(newUser);
-        newUser.addActionListener(registerListener);
+        newUser.addActionListener(e -> {
+            frame.dispose();
+            RegistrationPage registration = new RegistrationPage();
+        });
 
         frame.setVisible(true);
     }
-
-    ActionListener registerListener = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            frame.dispose();
-            RegistrationPage registration = new RegistrationPage();
-        }
-    };
-    ActionListener loginListener = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            
-            frame.dispose();
-            UserProfilePage up = new UserProfilePage();
-           
-        }
-    };
 }
 
 
