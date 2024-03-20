@@ -15,7 +15,6 @@ public class DigitalTBUtilities {
 	}
 
 	public void addAllDigitalTB(User s) {
-
 		if (s instanceof Student) {
 			ArrayList<Course> coo = ((Student) s).getCourses();
 
@@ -23,8 +22,20 @@ public class DigitalTBUtilities {
 				for (Textbook tb : courses.getTextbooks()) {
 					((Student) s).addDigitalTB(DigitalTBUtilities.digitize(tb, courses.getName()));
 				}
+			}
+		}
+	}
+
+	public void removeDigitalTB(String courseName, User s) {
+		if (s instanceof Student) {
+
+			for (DigitalTB d : ((Student) s).getDigital_textbooks()) {
+				if (d.getCourseName().equals(courseName)) {
+					((Student) s).getDigital_textbooks().remove(d);
+				}
 
 			}
+
 		}
 
 	}

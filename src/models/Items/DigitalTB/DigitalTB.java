@@ -15,4 +15,8 @@ public class DigitalTB extends Item {
 		this.courseName = courseName;
 
 	}
+
+	public String getCourseName() {
+		return this.courseName;
+	}
 }
