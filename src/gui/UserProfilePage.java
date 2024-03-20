@@ -5,6 +5,7 @@ import javax.swing.border.Border;
 
 import database_access.CdAccess;
 import database_access.MagazineAccess;
+import database_access.NewsletterAccess;
 import database_access.QueryUtilities;
 import database_access.StudentAccess;
 import models.Items.PhysicalItems.PhysicalItem;
@@ -20,14 +21,15 @@ public class UserProfilePage {
     private JFrame frame;
     private JPanel panel1, panel2, panel3, panel4;
     private JTable table1; //table1 relies on panel2
-    Student student = SessionManager.getCurrentUser();
+    Student loggedInUser = SessionManager.getCurrentUser();
     QueryUtilities queryUtilities = new QueryUtilities();
     StudentAccess studentdb = StudentAccess.getInstance();
     Object[][] bookesRented;
     ArrayList<PhysicalItem> items;
     CdAccess cddb = CdAccess.getInstance();
     MagazineAccess magdb = MagazineAccess.getInstance();
-    
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    Student student = (Student) studentdb.users.get((int) Integer.parseInt(loggedInUser.getId()));
     
    
     
@@ -140,22 +142,11 @@ public class UserProfilePage {
         coursesTaking.setForeground(Color.black);
         coursesTaking.setBounds(350, 35, 300, 20);
         panel3.add(coursesTaking);
-        try {
-            Thread.sleep(1000);
-            System.out.println(queryUtilities.allPhysicalItems().size());
-            System.out.println("Student: " + studentdb.users.get(0).getName());
-            System.out.println("Student Database: "+studentdb.users.size());
-            System.out.println("Student Items: "+ studentdb.users.get(0).getRented_item_list());
-            System.out.println("CD Database: "+cddb.items.size());
-            System.out.println("Magazine Database: "+magdb.items.size());
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
         if(studentdb.users.get(0).getRented_item_list().size() > 0){
             SwingUtilities.invokeLater(()->{
                 try {
-                    Thread.sleep(1000);
-                    System.out.println("Table condition met");
+                    
+                    System.out.println(dateFormat.format(cddb.items.get(0).getDueDate()));
                     items = queryUtilities.getUserAssociatedItems(studentdb.users.get(0));
                     System.out.println("Items: "+items);
                     bookesRented = GuiUtilities.convertItemsToViewArray(items);
@@ -163,6 +154,7 @@ public class UserProfilePage {
                     JScrollPane scrollPane = new JScrollPane(table1);
                     scrollPane.setBounds(30, 35, 940, 200); 
                     panel2.add(scrollPane);
+                   
                     
                 } catch (Exception e) {
                     // TODO Auto-generated catch block

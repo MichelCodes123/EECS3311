@@ -1,6 +1,7 @@
 package gui;
 
 import models.Users.Student;
+import models.Users.User;
 
 public class SessionManager {
     private static Student currentUser;

@@ -46,7 +46,7 @@ public class LoginUtilities {
 
 		UserFactory f = new UserFactory();
 		//Need to properly add ID's with Christinas Code
-		f.CreateUser(type, "5", name, email, password, true, 0.0, true, null);
+		f.CreateUser(type, "5", name, email, password, true, 0.0, true, null, null);
 		success.run();
 	}
 
