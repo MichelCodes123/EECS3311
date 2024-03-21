@@ -46,7 +46,6 @@ public class StudentAccess {
                     new ArrayList<String>(Arrays.asList(reader.get("rented_item_list").split(" "))),
                     new ArrayList<String>(Arrays.asList(reader.get("newsletter_subscriptions").split(" ")))
             );
-            
             ((Student) u).setDigital_textbooks(new ArrayList<String>(Arrays.asList(reader.get("digital_textbooks").split(" "))));
         }
     }
