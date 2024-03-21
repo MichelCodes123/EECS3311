@@ -64,6 +64,7 @@ public class StudentAccess {
             csvOutput.write("is_registered");
             csvOutput.write("rented_item_list");
             csvOutput.write("newsletter_subscriptions");
+            csvOutput.write("digital_textbooks");
             csvOutput.endRecord();
 
             // else assume that the file already has the correct header line
