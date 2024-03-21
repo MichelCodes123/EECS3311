@@ -45,8 +45,8 @@ public class Test {
         Book book = new Book("0", "Game of Thrones", "RM 125", false, new Date().getTime()+ 86400000*2, 0.0);
         Book book2 = new Book("1", "Game of Thrones2", "RM 125", true, new Date().getTime()+ 86400000*2, 0.0);
         Book book3 = new Book("2", "Game of Thrones3", "RM 125", true, new Date().getTime()+ 86400000*2, 0.0);
-        Cd cd = new Cd("3", "Game of Thrones Movie", "RM 125", true, new Date().getTime()+ 86400000*2, 0.0);
-        Magazine mag = new Magazine("4", "Game of Thrones Vogue Magazine", "RM 125", true, new Date().getTime() - 86400000 , 0.0);
+        Cd cd = new Cd("3", "Game of Thrones Movie", "RM 125", true, new Date().getTime()+ 86400000*2, 49.99);
+        Magazine mag = new Magazine("4", "Game of Thrones Vogue Magazine", "RM 125", true, new Date().getTime() - 86400000*3 , 0.0);
         
         Newsletter news = new Newsletter("5", "New York Times", "https://www.nytimes.com/");
         Newsletter news2 = new Newsletter("6", "The Star", "https://www.thestar.com/");
@@ -72,6 +72,7 @@ public class Test {
         cddb.update();
         magdb.update();
         newsdb.update();
+        
         SwingUtilities.invokeLater(() -> {
             try {
                 strat.execute(cd.getId(), student.getId());
@@ -95,6 +96,7 @@ public class Test {
         SwingUtilities.invokeLater(() -> {
             try {
                 newsdb.load();
+                overdue.reviewOverdueItems();
               
             } catch (Exception e2) {
 

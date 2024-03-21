@@ -109,10 +109,19 @@ public class UserProfilePage {
                     numOfItems.setBackground(Color.white);
                     numOfItems.setForeground(Color.black);
                     numOfItems.setBounds(20, 75, 300, 20);
+                    
+                    JLabel overdueCharge = new JLabel("Overdue Charge: " + user.getOverdue_charge());
+                    overdueCharge.setOpaque(true); // displays background color
+                    overdueCharge.setBackground(Color.white);
+                    overdueCharge.setForeground(Color.black);
+                    overdueCharge.setBounds(600, 75, 300, 20);
+                    
 
                     panel1.add(userProfilePage);
                     panel1.add(loggedInAs);
                     panel1.add(numOfItems);
+                    panel1.add(overdueCharge);
+                   
 
                     JButton registerButton = new JButton("Log Out");
                     registerButton.setBounds(750, 35, 200, 27);
@@ -138,10 +147,10 @@ public class UserProfilePage {
                         SwingUtilities.invokeLater(() -> {
                             try {
 
-                                System.out.println(dateFormat.format(cddb.items.get(0).getDueDate()));
+                                
                                 items = queryUtilities.getUserAssociatedItems(user);
-                                System.out.println("Items: " + items);
-                                overdue.reviewOverdueItems();
+                                
+                                
                                 user = queryUtilities.getUser(loggedInUser.getId());
                                 System.out.println("Overdue Charge: " + user.getOverdue_charge());//OVERDUE CHARGE WORKING NEED TO ADD TO GUI 
 
@@ -204,5 +213,6 @@ public class UserProfilePage {
             SubscriptionPage sp = new SubscriptionPage();
         }
     };
+    
 
 }
