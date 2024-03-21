@@ -15,7 +15,7 @@ public class DigitalTBUtilities {
 
 	public static DigitalTB digitize(Textbook b, String courseName) {
 
-		return new DigitalTB(b.getName(), b.getId(), courseName);
+		return new DigitalTB(b.getId(),b.getName(),courseName);
 
 	}
 
@@ -42,16 +42,21 @@ public class DigitalTBUtilities {
 		}
 	}
 
-	public static void removeDigitalTB(String courseName, ArrayList<String> d) {
+	public static void removeDigitalTB(Course c, ArrayList<String> d) {
 		DigitalTBAccess acc = DigitalTBAccess.getInstance();
 		
-		d.remove(courseName);
-		
+		ArrayList<String > stringTbs = new ArrayList<String>();
+		for (Textbook arr: c.getTextbooks()) {
+			stringTbs.add(arr.getName());
+				
+		}
+		d.removeAll(stringTbs);
+				
 		
 		Iterator<Item> b = acc.items.iterator();
 		while (b.hasNext()) {
 			Item t = b.next();
-			if (((DigitalTB) t).getCourseName().equals(courseName)) {
+			if (((DigitalTB) t).getCourseName().equals(c.getName())) {
 				b.remove();
 				
 			}
