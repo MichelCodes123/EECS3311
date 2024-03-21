@@ -134,7 +134,7 @@ public class UserProfilePage {
                     coursesTaking.setForeground(Color.black);
                     coursesTaking.setBounds(350, 35, 300, 20);
                     panel3.add(coursesTaking);
-                    if (studentdb.users.get(0).getRented_item_list().size() > 0) {
+                    if (user.getRented_item_list().size() > 0) {
                         SwingUtilities.invokeLater(() -> {
                             try {
 
