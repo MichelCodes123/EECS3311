@@ -4,23 +4,22 @@ import java.util.ArrayList;
 
 import logic.DigitalTBUtilities;
 import models.Course;
-import models.Items.DigitalTB.DigitalTB;
 
 public class Student extends User {
 
-	private ArrayList<DigitalTB> digital_textbooks;
+	private ArrayList<String> digital_textbooks;
 	private ArrayList<Course> courses;
 
 	public Student(String id, String name, String email, String password, Boolean can_borrow, Double overdue_charge,
 			Boolean is_registered, ArrayList<String> rented_item_list, ArrayList<String> subscribed_newsletters,
-			ArrayList<Course> courses, ArrayList<DigitalTB> digital_textbooks) {
+			ArrayList<Course> courses, ArrayList<String> digital_textbooks) {
 		super(id, name, email, password, can_borrow, overdue_charge, is_registered, rented_item_list,
 				subscribed_newsletters);
 		this.courses = courses;
 		this.digital_textbooks = digital_textbooks;
 	}
 
-	public ArrayList<DigitalTB> getDigital_textbooks() {
+	public ArrayList<String> getDigital_textbooks() {
 		return digital_textbooks;
 	}
 
@@ -28,7 +27,7 @@ public class Student extends User {
 		return courses;
 	}
 
-	public void setDigital_textbooks(ArrayList<DigitalTB> digital_textbooks) {
+	public void setDigital_textbooks(ArrayList<String> digital_textbooks) {
 		this.digital_textbooks = digital_textbooks;
 	}
 
@@ -46,7 +45,7 @@ public class Student extends User {
 		}
 	}
 
-	public void addDigitalTB(DigitalTB b) {
+	public void addDigitalTB(String b) {
 		this.digital_textbooks.add(b);
 	}
 

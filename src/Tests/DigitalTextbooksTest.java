@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import models.Course;
-import models.Items.DigitalTB.DigitalTB;
 import models.Items.PhysicalItems.Textbook;
 import models.Users.Student;
 
@@ -25,7 +24,7 @@ class DigitalTextbooksTest {
 		ArrayList<Course> arr = new ArrayList<Course>();
 
 		Student s = new Student("12-00", "Mitochondria", "charge@gmail.com", "password13", true, 0.0, true, null, null,
-				arr, new ArrayList<DigitalTB>());
+				arr, new ArrayList<String>());
 
 		ArrayList<Textbook> ar = new ArrayList<Textbook>();
 		Textbook a = new Textbook("100-23", "Quantum Mechanics", "UpperLibrary", true, new Date(0).getTime(), 25.29);
@@ -43,7 +42,7 @@ class DigitalTextbooksTest {
 		ArrayList<Course> arr = new ArrayList<Course>();
 
 		Student s = new Student("12-00", "Mitochondria", "charge@gmail.com", "password13", true, 0.0, true, null, null,
-				arr, new ArrayList<DigitalTB>());
+				arr, new ArrayList<String>());
 
 		ArrayList<Textbook> ar1 = new ArrayList<Textbook>();
 		Textbook a = new Textbook("100-23", "Quantum Mechanics", "UpperLibrary", true, new Date(0).getTime(), 25.29);
@@ -65,7 +64,7 @@ class DigitalTextbooksTest {
 		ArrayList<Course> arr = new ArrayList<Course>();
 
 		Student s = new Student("12-00", "Mitochondria", "charge@gmail.com", "password13", true, 0.0, true, null, null,
-				arr, new ArrayList<DigitalTB>());
+				arr, new ArrayList<String>());
 
 		ArrayList<Textbook> ar1 = new ArrayList<Textbook>();
 		Textbook a = new Textbook("100-23", "Quantum Mechanics", "UpperLibrary", true, new Date(0).getTime(), 25.29);

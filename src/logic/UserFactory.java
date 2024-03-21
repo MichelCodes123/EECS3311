@@ -7,7 +7,6 @@ import database_access.NonFacultyStaffAccess;
 import database_access.StudentAccess;
 import database_access.VisitorAccess;
 import models.Course;
-import models.Items.DigitalTB.DigitalTB;
 import models.Users.FacultyMember;
 import models.Users.NonFacultyStaff;
 import models.Users.Student;
@@ -29,7 +28,7 @@ public class UserFactory {
 		// is_registered, rented_item_list);
 		case "Student":
 			StudentAccess.getInstance().users.add(new Student(id, name, email, password, can_borrow, overdue_charge,
-					is_registered, rented_item_list, newsletters, new ArrayList<Course>(), new ArrayList<DigitalTB>()));
+					is_registered, rented_item_list, newsletters, new ArrayList<Course>(), new ArrayList<String>()));
 			break;
 		case "FacultyMember":
 			FacultyMemberAccess.getInstance().users.add(new FacultyMember(id, name, email, password, can_borrow,
