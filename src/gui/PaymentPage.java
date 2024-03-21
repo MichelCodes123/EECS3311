@@ -17,6 +17,7 @@ public class PaymentPage {
     User loggedInUser = SessionManager.getCurrentUser();
     QueryUtilities queryUtilities = new QueryUtilities();
     User user;
+    final String[] PaymentOption = {"Credit", "Debit", "MobileWallet"};
 
     private JFrame frame;
     private JPanel panel1, panel2, panel3, panel4;
@@ -119,6 +120,10 @@ public class PaymentPage {
         backButton.addActionListener(bb);
 
         panel1.add(newsletterSubscriptionPage);
+
+        // JComboBox paymentOption = new JComboBox(PaymentOption);
+        // paymentOption.setBounds(200, 160, 150, 20);
+        // panel2.add(paymentOption);
 
          JLabel name = new JLabel("Name (as shown on Card)");
          name.setOpaque(true); //displays background color

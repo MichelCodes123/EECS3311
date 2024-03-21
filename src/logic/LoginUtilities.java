@@ -1,12 +1,12 @@
 package logic;
 
-import database_access.*;
-import models.Users.User;
-
-import javax.management.Query;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
+
+import database_access.QueryUtilities;
+import models.LibraryItem.ItemIdGenerator;
+import models.Users.User;
 
 public class LoginUtilities {
 
@@ -47,46 +47,6 @@ public class LoginUtilities {
 		UserFactory f = new UserFactory();
 		//Need to properly add ID's with Christinas Code
 		f.CreateUser(type, "5", name, email, password, true, 0.0, true, null, null);
-
-		if (type.equals("Student")){
-			StudentAccess db = StudentAccess.getInstance();
-			try {
-				System.out.println(db.users);
-				db.update();
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		}
-
-		else if (type.equals("FacultyMember")) {
-			FacultyMemberAccess db = FacultyMemberAccess.getInstance();
-			try {
-				db.update();
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		}
-
-		else if (type.equals("NonFacultyStaff")) {
-			NonFacultyStaffAccess db = NonFacultyStaffAccess.getInstance();
-			try {
-				db.update();
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		}
-
-		else {
-			VisitorAccess db = VisitorAccess.getInstance();
-			try {
-				db.update();
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		}
-
-
-
 		success.run();
 	}
 

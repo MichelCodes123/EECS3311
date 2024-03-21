@@ -12,6 +12,7 @@ import database_access.MagazineAccess;
 import database_access.NewsletterAccess;
 import database_access.StudentAccess;
 import gui.LoginPage;
+import models.Course;
 import models.Items.Newsletter;
 import models.Items.PhysicalItems.Book;
 import models.Items.PhysicalItems.Cd;
@@ -37,8 +38,8 @@ public class Test {
         MagazineAccess magdb = MagazineAccess.getInstance();
         ItemStrategy strat = new RentItem();
         NewsletterAccess newsdb = NewsletterAccess.getInstance();
-        Student student = new Student("0", "John", "e", "p", true, 0.0, true, new ArrayList<String>(),new ArrayList<String>());
-        Student student2 = new Student("1", "Joe", "z", "pass", true, 0.0, true, new ArrayList<String>(),new ArrayList<String>());
+        Student student = new Student("0", "John", "e", "p", true, 0.0, true, new ArrayList<String>(),new ArrayList<String>(), new ArrayList<Course>(), new ArrayList<String>());
+        //Student student2 = new Student("1", "Joe", "z", "pass", true, 0.0, true, new ArrayList<String>(),new ArrayList<String>());
         OverdueService overdue = new OverdueService();
 
         Book book = new Book("0", "Game of Thrones", "RM 125", false, new Date().getTime()+ 86400000*2, 0.0);
@@ -56,7 +57,7 @@ public class Test {
         
         
         studentdb.users.add(student);
-        studentdb.users.add(student2);
+        //studentdb.users.add(student2);
 
         studentdb.update();
         
