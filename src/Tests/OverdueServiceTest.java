@@ -14,11 +14,6 @@ import models.Items.PhysicalItems.Book;
 import models.Users.FacultyMember;
 import models.Users.Student;
 import models.Users.User;
-<<<<<<< HEAD
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.TestInstance;
-=======
->>>>>>> ddb73da22a9df503533d5a1d0738eb099812392d
 import services.OverdueService;
 import services.itemstrategy.ItemStrategy;
 import services.itemstrategy.RentItem;
