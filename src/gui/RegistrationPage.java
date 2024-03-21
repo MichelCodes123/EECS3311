@@ -1,5 +1,8 @@
 package gui;
 
+import controllers.LoginController;
+import logic.LoginUtilities;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -10,7 +13,7 @@ public class RegistrationPage {
     private JFrame frame;
     private JPanel panel1, panel2;
     private JComboBox clientCombo;
-    final String[] clientType = {"students", "faculty members", "non-faculty members", "visitors"};
+    final String[] clientType = {"Student", "FacultyMember", "NonFacultyStaff", "Visitor"};
 
 
 
@@ -129,7 +132,20 @@ public class RegistrationPage {
         JButton registerButton = new JButton("Complete Registration");
         registerButton.setBounds(280, 300, 200, 25);
         panel2.add(registerButton);
-        registerButton.addActionListener(loginListener);
+        registerButton.addActionListener(  new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String type = (String) clientCombo.getSelectedItem();
+                String name = userNameText.getText();
+                String password = passwordText.getText();
+                String email = emailText.getText();
+
+                LoginUtilities.verifyRegistration(type, name, email, password,  (error) ->  JOptionPane.showMessageDialog(null, error), () -> {
+                    frame.dispose();
+                    LoginPage lp = new LoginPage();
+                });
+            }
+        });
 
         JButton cancelButton = new JButton("Cancel Registration");
         cancelButton.setBounds(490, 300, 200, 25);
@@ -150,19 +166,4 @@ public class RegistrationPage {
             LoginPage lp = new LoginPage();
         }
     };
-
-    ActionListener loginListener = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            frame.dispose();
-            UserProfilePage up = new UserProfilePage();
-        }
-    };
-
-
-
-
-
-
-
 }
