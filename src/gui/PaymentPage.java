@@ -76,12 +76,12 @@ public class PaymentPage {
         panel4.setLayout(null);
 
         JLabel userLabel = new JLabel(
-                "Total Amount: " + ((this.cd != null) ? this.cd.getDollarAmount() : user.getOverdue_charge()));
+                (String.format("Total Amount with discount: %.2f", this.cd.getDollarAmount()*0.75)));
         
         userLabel.setOpaque(true); // displays background color
         userLabel.setBackground(Color.white);
         userLabel.setForeground(Color.black);
-        userLabel.setBounds(30, 120, 150, 35);
+        userLabel.setBounds(30, 120, 300, 35);
 
         panel2.add(userLabel);
 
