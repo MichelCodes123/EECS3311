@@ -1,12 +1,12 @@
 package logic;
 
-import database_access.QueryUtilities;
-import models.Users.User;
-
-import javax.management.Query;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
+
+import database_access.QueryUtilities;
+import models.LibraryItem.ItemIdGenerator;
+import models.Users.User;
 
 public class LoginUtilities {
 
@@ -46,7 +46,8 @@ public class LoginUtilities {
 
 		UserFactory f = new UserFactory();
 		//Need to properly add ID's with Christinas Code
-		f.CreateUser(type, "5", name, email, password, true, 0.0, true, null, null);
+		ItemIdGenerator ite = ItemIdGenerator.getInstance();
+		f.CreateUser(type, ite.generateId(), name, email, password, true, 0.0, true, null, null);
 		success.run();
 	}
 
