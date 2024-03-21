@@ -47,20 +47,12 @@ public class RentApplicationTest {
 		assertEquals(1, studentdb.users.get(0).getRented_item_list().size());
 		studentdb.update();
 
-<<<<<<< HEAD
-
-        ItemStrategy strat = new RentItem();
-        strat.execute(book.getId(), student.getId());
-        studentdb.load();
-        assertEquals(1, studentdb.users.get(0).getRented_item_list().size());
-        studentdb.update();
-
         QueryUtilities utils = new QueryUtilities();
         ArrayList<User> users = utils.allUsers();
         assertEquals(2, users.size());
     }
     void testRentalService2() throws Exception {
-        Student student = new Student("1","Jimmy", "email", "1234", true, 0.0, true, null, null);
+        Student student = new Student("1","Jimmy", "email", "1234", true, 0.0, true, null, null, null, null);
         FacultyMember prof = new FacultyMember("2","Tommy", "email", "1234", true, 0.0, true, new ArrayList<String>(), null);
         Book book = new Book("0", "Game of Thrones", "RM 125", true, new Date().getTime(), 0.0);
 
@@ -87,10 +79,5 @@ public class RentApplicationTest {
         ArrayList<User> users = utils.allUsers();
         assertEquals(2, users.size());
     }
-=======
-		QueryUtilities utils = new QueryUtilities();
-		ArrayList<User> users = utils.allUsers();
-		assertEquals(2, users.size());
-	}
->>>>>>> ddb73da22a9df503533d5a1d0738eb099812392d
+
 }
