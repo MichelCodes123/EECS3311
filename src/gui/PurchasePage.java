@@ -49,6 +49,14 @@ public class PurchasePage {
             return this;
         }
     }
+    public PhysicalItem getCDByName(String name, ArrayList<PhysicalItem> items) {
+        for (PhysicalItem item : items) {
+            if (item.getName().equals(name)) {
+                return item;
+            }
+        }
+        return null;
+    }
     class ButtonEditor extends DefaultCellEditor {
         protected JButton button;
         private String label;
@@ -64,9 +72,27 @@ public class PurchasePage {
             button.setOpaque(true);
             button.addActionListener(e -> {
                 isPushed = false;
-                PaymentPage pp = new PaymentPage();
-                frame.dispose();
+
+                String cdName = table.getModel().getValueAt(currentRow, 0).toString();
+                PhysicalItem cd = getCDByName(cdName, cddb.items);
                 
+                SwingUtilities.invokeLater(() -> {
+
+
+                    if(cd != null){
+
+                        PaymentPage pp = new PaymentPage(cd);
+                        frame.dispose();
+                        System.out.println("cd from purchase Page: "+cd);
+                    }
+
+                    
+                });
+                
+                
+                
+               
+
                 fireEditingStopped();
             });
         }

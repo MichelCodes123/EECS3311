@@ -1,19 +1,36 @@
 package gui;
 
 import javax.swing.*;
+
+import database_access.QueryUtilities;
+import models.Items.PhysicalItems.Cd;
+import models.Items.PhysicalItems.PhysicalItem;
+import models.Users.User;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+
 public class PaymentPage {
+    User loggedInUser = SessionManager.getCurrentUser();
+    QueryUtilities queryUtilities = new QueryUtilities();
+    User user;
 
     private JFrame frame;
     private JPanel panel1, panel2, panel3, panel4;
 
-     PaymentPage(){
-       // Border border = BorderFactory.createLineBorder(Color.white, 5);
-//        Border border1 = BorderFactory.createLineBorder(Color.black, 5);
+     PaymentPage(PhysicalItem cd){
+        try {
+            user = queryUtilities.getUser(loggedInUser.getId());
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+       
+ 
 
         ImageIcon lms = new ImageIcon("../library/resources/images/pay.jpg");
 
@@ -64,7 +81,7 @@ public class PaymentPage {
 //        panel3.setLayout(null);
         panel4.setLayout(null);
 
-         JLabel userLabel = new JLabel("Total Amount");
+         JLabel userLabel = new JLabel("Total Amount: " + cd.getDollarAmount());
          userLabel.setOpaque(true); //displays background color
          userLabel.setBackground(Color.white);
          userLabel.setForeground(Color.black);
@@ -190,6 +207,7 @@ public class PaymentPage {
     ActionListener cc = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+            user.getOverdue_charge();
             frame.dispose();
            // ItemManagerPage ip = new ItemManagerPage();
         }
