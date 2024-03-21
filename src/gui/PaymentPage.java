@@ -183,7 +183,7 @@ public class PaymentPage {
         @Override
         public void actionPerformed(ActionEvent e) {
             frame.dispose();
-            ItemManagerPage ip = new ItemManagerPage();
+            PurchasePage ip = new PurchasePage();
         }
     };
 

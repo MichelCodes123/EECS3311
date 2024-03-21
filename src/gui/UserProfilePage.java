@@ -141,8 +141,9 @@ public class UserProfilePage {
                                 System.out.println(dateFormat.format(cddb.items.get(0).getDueDate()));
                                 items = queryUtilities.getUserAssociatedItems(user);
                                 System.out.println("Items: " + items);
-
-                                System.out.println("Overdue Charge: " + user.getOverdue_charge());
+                                overdue.reviewOverdueItems();
+                                user = queryUtilities.getUser(loggedInUser.getId());
+                                System.out.println("Overdue Charge: " + user.getOverdue_charge());//OVERDUE CHARGE WORKING NEED TO ADD TO GUI 
 
                                 bookesRented = GuiUtilities.convertItemsToViewArray(items);
                                 table1 = new JTable(bookesRented, GuiUtilities.viewColumn);

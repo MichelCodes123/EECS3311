@@ -24,9 +24,9 @@ import java.net.URL;
 public class SubscriptionPage {
     QueryUtilities queryUtilities = new QueryUtilities();
     StudentAccess studentdb = StudentAccess.getInstance();
-    Student loggedInUser = SessionManager.getCurrentUser();
+    User loggedInUser = SessionManager.getCurrentUser();
     NewsletterAccess newsdb = NewsletterAccess.getInstance();
-    Student student = (Student) studentdb.users.get((int) Integer.parseInt(loggedInUser.getId()));
+    User user;
     NewsletterStrategy sub = new NewsletterSubscription();
     NewsletterStrategy unsub = new NewsletterCancellation();
 
@@ -35,7 +35,12 @@ public class SubscriptionPage {
     private JPanel panel1, panel2, panel3, panel4;
 
     SubscriptionPage() {
-        panel1 = new JPanel();
+        SwingUtilities.invokeLater(() -> {
+            try {
+                User loggedInUser = SessionManager.getCurrentUser();
+                if (loggedInUser != null) {
+                    user = queryUtilities.getUser(loggedInUser.getId());
+                    panel1 = new JPanel();
         panel1.setBackground(Color.white);
         panel1.setBounds(0, 0, 1000, 200);
 
@@ -82,10 +87,7 @@ public class SubscriptionPage {
         panel4.add(logOutButton);
         logOutButton.addActionListener(lb);
 
-        // JButton cancelSub = new JButton("Cancel Subscription");
-        // cancelSub.setBounds(100, 15, 200, 27);
-        // panel4.add(cancelSub);
-        // cancelSub.addActionListener(cb);
+        
 
         JButton backButton = new JButton("Back");
         backButton.setBounds(200, 15, 200, 27);
@@ -128,6 +130,17 @@ public class SubscriptionPage {
        
 
         frame.setVisible(true);
+
+
+
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        
         
     }
     private void initSubscriptionsTable() {
@@ -179,15 +192,15 @@ public class SubscriptionPage {
 
         public ButtonEditor(JCheckBox checkBox) {
             super(checkBox);
+
             button = new JButton();
             button.setOpaque(true);
             button.addActionListener(e -> {
                 isPushed = false;
                 if (currentColumn == 1) {
-                    // Subscribe/Unsubscribe logic
                     handleSubscription(currentRow);
                 } else if (currentColumn == 2) {
-                    // Open newsletter logic
+                    
                     openNewsletter(currentRow);
                 }
                 fireEditingStopped();
@@ -217,13 +230,14 @@ public class SubscriptionPage {
         }
         private void handleSubscription(int row) {
             String name = (String) table.getValueAt(row, 0);
-            // Implement subscription/unsubscription logic here
+            
             String link = newsdb.items.get(row).getLink();
-            if(studentdb.users.get((int) Integer.parseInt(student.getId())).getSubscribed_newsletters().contains(link)){
+            if(user.getSubscribed_newsletters().contains(link)){
                 SwingUtilities.invokeLater(() -> {
                     try {
-                        unsub.execute(link, student.getId());
-                        studentdb.load();
+                        unsub.execute(link, user.getId());
+                        user = queryUtilities.getUser(loggedInUser.getId());
+                        
                         JOptionPane.showMessageDialog(button, "You have unsubscribed to " + name + ".");
                     } catch (Exception e2) {
         
@@ -233,9 +247,11 @@ public class SubscriptionPage {
             } else {
                 SwingUtilities.invokeLater(() -> {
                     try {
-                        sub.execute(link, student.getId());
-                        studentdb.load();
+                        sub.execute(link, user.getId());
+                        user = queryUtilities.getUser(loggedInUser.getId());
+                        
                         JOptionPane.showMessageDialog(button, "You have subscribed to " + name + ".");
+                        
                     } catch (Exception e2) {
         
                         e2.printStackTrace();
@@ -250,15 +266,26 @@ public class SubscriptionPage {
         private void openNewsletter(int row) {
             String name = (String) table.getValueAt(row, 0);
             String link = newsdb.items.get(row).getLink();
-            if(studentdb.users.get((int) Integer.parseInt(student.getId())).getSubscribed_newsletters().contains(link)){
+            
+            SwingUtilities.invokeLater(() -> {
                 try {
-                    Desktop.getDesktop().browse(new URL(link).toURI());
-                } catch (IOException | URISyntaxException e) {
-                    e.printStackTrace();
+                    user = queryUtilities.getUser(loggedInUser.getId());
+                    if(user.getSubscribed_newsletters().contains(link)){
+                        try {
+                            Desktop.getDesktop().browse(new URL(link).toURI());
+                        } catch (IOException | URISyntaxException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(button, "You must be subscribed to " + name + " to view the newsletter.");
+                    }
+                    
+                } catch (Exception e2) {
+    
+                    e2.printStackTrace();
                 }
-            } else {
-                JOptionPane.showMessageDialog(button, "You must be subscribed to " + name + " to view the newsletter.");
-            }
+            });
+            
         }
 
     

@@ -14,6 +14,8 @@ public class GuiUtilities {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public static final String[] rentColumn = {"ID", "Name", "Location", "Dollar Amount", "Due Date", "Purchase"};
     public static final String[] viewColumn = {"Name", "Location", "Due Date", "Status"};
+    
+    public static final String[] cdColumn = {"Name", "Dollar Amount", "Purchase"};
 
     public static Object[][] convertItemsToRentArray(ArrayList<Book> results) {
         Object[][] data = new Object[results.size()][6];
@@ -64,6 +66,19 @@ public class GuiUtilities {
             data[i][0] = item.getName();
             data[i][1] = "Subscribe/Unsubscribe";
             data[i][2] = "Open";
+            
+            
+        }
+        return data;
+    }
+    public static Object[][] convertCD(ArrayList<PhysicalItem> items) {
+        Object[][] data = new Object[items.size()][3];
+        for (int i = 0; i < items.size(); i++) {
+            PhysicalItem item = items.get(i);
+            
+            data[i][0] = item.getName();
+            data[i][1] = item.getDollarAmount();
+            data[i][2] = "Purchase";
             
             
         }

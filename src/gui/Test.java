@@ -28,6 +28,7 @@ public class Test {
        LoginPage lp = new LoginPage();
        //SubscriptionPage sp = new SubscriptionPage();
         // ItemManagerPage ip = new ItemManagerPage();
+     
         
         StudentAccess studentdb = StudentAccess.getInstance();
         BookAccess bookdb = BookAccess.getInstance();
@@ -39,9 +40,9 @@ public class Test {
         Student student2 = new Student("1", "Joe", "z", "pass", true, 0.0, true, new ArrayList<String>(),new ArrayList<String>());
         OverdueService overdue = new OverdueService();
 
-        Book book = new Book("0", "Game of Thrones", "RM 125", false, new Date().getTime(), 0.0);
-        Book book2 = new Book("1", "Game of Thrones2", "RM 125", true, new Date().getTime(), 0.0);
-        Book book3 = new Book("2", "Game of Thrones3", "RM 125", true, new Date().getTime(), 0.0);
+        Book book = new Book("0", "Game of Thrones", "RM 125", false, new Date().getTime()+ 86400000*2, 0.0);
+        Book book2 = new Book("1", "Game of Thrones2", "RM 125", true, new Date().getTime()+ 86400000*2, 0.0);
+        Book book3 = new Book("2", "Game of Thrones3", "RM 125", true, new Date().getTime()+ 86400000*2, 0.0);
         Cd cd = new Cd("3", "Game of Thrones Movie", "RM 125", true, new Date().getTime()+ 86400000*2, 0.0);
         Magazine mag = new Magazine("4", "Game of Thrones Vogue Magazine", "RM 125", true, new Date().getTime() - 86400000 , 0.0);
         
@@ -55,6 +56,7 @@ public class Test {
         
         studentdb.users.add(student);
         studentdb.users.add(student2);
+
         studentdb.update();
         
         
