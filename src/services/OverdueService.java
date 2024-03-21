@@ -15,14 +15,17 @@ public class OverdueService {
         QueryUtilities utils = new QueryUtilities();
         ArrayList<User> all_users = utils.allUsers();
         Date current_date = new Date();
+        long miliPerDay = 24 * 60 * 60 * 1000;
 
         for (User user : all_users) {
             {
                 int user_overdue_count = 0;
                 ArrayList<PhysicalItem> user_items = utils.getUserAssociatedItems(user);
                 for (PhysicalItem item : user_items) {
+                    
                     if (item.getDueDate() < current_date.getTime()) {
-                        applyOverdueFee(user, 0.5);
+                        int daysoverDue = (int) (current_date.getTime() - item.getDueDate())/ (int) miliPerDay;
+                        applyOverdueFee(user, 0.5*daysoverDue);
                         user_overdue_count++;
                     }
                     if (user_overdue_count > 3) {

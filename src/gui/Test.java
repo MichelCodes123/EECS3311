@@ -29,6 +29,7 @@ public class Test {
        //SubscriptionPage sp = new SubscriptionPage();
         // ItemManagerPage ip = new ItemManagerPage();
 
+
         FacultyMemberAccess profdb = FacultyMemberAccess.getInstance();
         StudentAccess studentdb = StudentAccess.getInstance();
         VisitorAccess visitordb = VisitorAccess.getInstance();
@@ -38,7 +39,7 @@ public class Test {
         ItemStrategy strat = new RentItem();
         NewsletterAccess newsdb = NewsletterAccess.getInstance();
         Student student = new Student("0", "John", "e", "p", true, 0.0, true, new ArrayList<String>(),new ArrayList<String>(), new ArrayList<Course>(), new ArrayList<String>());
-        Student student2 = new Student("1", "Joe", "z", "pass", true, 0.0, true, new ArrayList<String>(),new ArrayList<String>(), new ArrayList<Course>(), new ArrayList<String>());
+        Student student2 = new Student("1", "Joe", "z", "pass", true, 0.0, true, new ArrayList<String>(),new ArrayList<String>());
         FacultyMember prof = new FacultyMember("2", "Tom", "m", "pass", true, 0.0, true, new ArrayList<String>(),new ArrayList<String>());
         Visitor admin = new Visitor("-1", "Admin", "admin", "admin", true, 0.0, true, new ArrayList<String>(),new ArrayList<String>());
         OverdueService overdue = new OverdueService();
@@ -56,8 +57,8 @@ public class Test {
         newsdb.items.add(news);
         newsdb.items.add(news2);
         newsdb.items.add(news3);
-        
-        
+
+
         studentdb.users.add(student);
         studentdb.users.add(student2);
         profdb.users.add(prof);
@@ -100,6 +101,7 @@ public class Test {
         SwingUtilities.invokeLater(() -> {
             try {
                 newsdb.load();
+                overdue.reviewOverdueItems();
               
             } catch (Exception e2) {
 

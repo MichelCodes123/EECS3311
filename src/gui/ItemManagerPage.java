@@ -105,6 +105,7 @@ public class ItemManagerPage {
             int modelRow = table.convertRowIndexToModel(viewRow);
 
             selectedBookID = table.getModel().getValueAt(modelRow, 0);
+            Object BookName =table.getModel().getValueAt(modelRow, 1);
             System.out.println("Book ID: " + selectedBookID);
             ItemStrategy rentItem = new RentItem();
 
@@ -117,23 +118,13 @@ public class ItemManagerPage {
 
                             rentItem.execute((String) selectedBookID, user.getId());
                             user = queryUtilities.getUser(loggedinUser.getId());
+                            JOptionPane.showMessageDialog(frame, (String)BookName+ " sucessfully rented!", "Rent Status",
+                    JOptionPane.INFORMATION_MESSAGE);
+                            frame.dispose();
+                            UserProfilePage up = new UserProfilePage();
 
                         }
-                        SwingUtilities.invokeLater(() -> {
-                            try {
-
-                                Thread.sleep(1000);
-                                System.out.println("Name of student" + studentdb.users.get(0).getName());
-                                System.out.println(
-                                        "Rented Itemlist Size " + studentdb.users.get(0).getRented_item_list().size());
-                                System.out.println(
-                                        "Rented Itemlist AFter " + studentdb.users.get(0).getRented_item_list());
-                            } catch (InterruptedException e1) {
-                                // TODO Auto-generated catch block
-                                e1.printStackTrace();
-                            }
-
-                        });
+                       
 
                     } catch (Exception e2) {
                         // TODO Auto-generated catch block
