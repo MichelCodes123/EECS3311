@@ -79,11 +79,12 @@ public class DatabaseTest {
 		assertEquals(1, db.items.size());
 	}
 
-    @Test
-    @DisplayName("FacultyAccess")
-    void testFaculty() throws Exception {
-        FacultyMemberAccess db = FacultyMemberAccess.getInstance();
-        FacultyMember prof = new FacultyMember("id","Name", "location", "password",  true, 0.0, true, new ArrayList<>() , new ArrayList<>());
+	@Test
+	@DisplayName("FacultyAccess")
+	void testFaculty() throws Exception {
+		FacultyMemberAccess db = FacultyMemberAccess.getInstance();
+		FacultyMember prof = new FacultyMember("id", "Name", "location", "password", true, 0.0, true, new ArrayList<>(),
+				new ArrayList<>());
 
 		assertEquals(0, db.users.size());
 
@@ -97,12 +98,12 @@ public class DatabaseTest {
 		assertEquals(1, db.users.size());
 	}
 
-
-    @Test
-    @DisplayName("NonFacultyAccess")
-    void testNonFaculty() throws Exception {
-        NonFacultyStaffAccess db = NonFacultyStaffAccess.getInstance();
-        NonFacultyStaff staff = new NonFacultyStaff("id","Name", "location", "password",  true, 0.0, true, new ArrayList<>(), new ArrayList<>() );
+	@Test
+	@DisplayName("NonFacultyAccess")
+	void testNonFaculty() throws Exception {
+		NonFacultyStaffAccess db = NonFacultyStaffAccess.getInstance();
+		NonFacultyStaff staff = new NonFacultyStaff("id", "Name", "location", "password", true, 0.0, true,
+				new ArrayList<>(), new ArrayList<>());
 
 		assertEquals(0, db.users.size());
 
@@ -116,12 +117,12 @@ public class DatabaseTest {
 		assertEquals(1, db.users.size());
 	}
 
-    @Test
-    @DisplayName("StudentAccess")
-    void testStudent() throws Exception {
-        StudentAccess db = StudentAccess.getInstance();
-        Student student = new Student("id","Name", "location", "password",  true, 0.0, true, new ArrayList<>(), new ArrayList<>() );
-
+	@Test
+	@DisplayName("StudentAccess")
+	void testStudent() throws Exception {
+		StudentAccess db = StudentAccess.getInstance();
+		Student student = new Student("id", "Name", "location", "password", true, 0.0, true, new ArrayList<>(),
+				new ArrayList<>(), null, null);
 
 		assertEquals(0, db.users.size());
 
@@ -135,12 +136,12 @@ public class DatabaseTest {
 		assertEquals(1, db.users.size());
 	}
 
-
-    @Test
-    @DisplayName("VisitorAccess")
-    void testVisitor() throws Exception {
-        VisitorAccess db = VisitorAccess.getInstance();
-        Visitor visitor = new Visitor("id","Name", "location", "password",  true, 0.0, true, new ArrayList<>(), new ArrayList<>() );
+	@Test
+	@DisplayName("VisitorAccess")
+	void testVisitor() throws Exception {
+		VisitorAccess db = VisitorAccess.getInstance();
+		Visitor visitor = new Visitor("id", "Name", "location", "password", true, 0.0, true, new ArrayList<>(),
+				new ArrayList<>());
 
 		assertEquals(0, db.users.size());
 

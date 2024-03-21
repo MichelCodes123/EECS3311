@@ -1,12 +1,20 @@
 package models;
 
+import java.util.ArrayList;
+
 import models.Items.PhysicalItems.Textbook;
 
 public class Course {
 
 	private int code;
 	private String name;
-	private Textbook textbook;
+	private ArrayList<Textbook> textbooks;
+
+	public Course(String name, ArrayList<Textbook> tb) {
+		this.name = name;
+		textbooks = tb;
+
+	}
 
 	public int getCode() {
 		return code;
@@ -24,12 +32,17 @@ public class Course {
 		this.name = name;
 	}
 
-	public Textbook getTextbook() {
-		return textbook;
+	public ArrayList<Textbook> getTextbooks() {
+		return this.textbooks;
 	}
 
-	public void setTextbook(Textbook textbook) {
-		this.textbook = textbook;
+	public void setTextbook(ArrayList<Textbook> textbook) {
+		this.textbooks = textbook;
+	}
+
+	public void addTextbook(Textbook b) {
+		textbooks.add(b);
+
 	}
 
 }

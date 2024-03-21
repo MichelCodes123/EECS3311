@@ -3,10 +3,12 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import logic.UserFactory;
-import models.Users.*;
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
+
+import logic.UserFactory;
+import models.Users.Student;
+import models.Users.User;
 
 
 public class StudentAccess {
@@ -44,6 +46,8 @@ public class StudentAccess {
                     new ArrayList<String>(Arrays.asList(reader.get("rented_item_list").split(" "))),
                     new ArrayList<String>(Arrays.asList(reader.get("newsletter_subscriptions").split(" ")))
             );
+            
+            ((Student) u).setDigital_textbooks(new ArrayList<String>(Arrays.asList(reader.get("digital_textbooks").split(" "))));
         }
     }
 
@@ -60,6 +64,7 @@ public class StudentAccess {
             csvOutput.write("is_registered");
             csvOutput.write("rented_item_list");
             csvOutput.write("newsletter_subscriptions");
+            csvOutput.write("digital_textbooks");
             csvOutput.endRecord();
 
             // else assume that the file already has the correct header line
@@ -88,6 +93,12 @@ public class StudentAccess {
                 submit = builder.toString().trim();
 
                 csvOutput.write(submit);
+                //---- Builder for the digital textbooks
+                builder = new StringBuilder();
+                for (String item : ((Student)u).getDigital_textbooks()) {
+                    builder.append(item).append(" ");
+                }
+                submit = builder.toString().trim();
                 csvOutput.endRecord();
             }
             csvOutput.close();
