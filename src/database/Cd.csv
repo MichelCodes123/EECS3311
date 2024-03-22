@@ -1,10 +1,1 @@
 id,name,location,can_purchase,due_date,dollar_amount
-<<<<<<< HEAD
-<<<<<<< HEAD
-3,Game of Thrones Movie,RM 125,true,1711304626919,0.0
-0,Fast5,Theatre,true,1711307396677,169.99
-=======
-3,Game of Thrones Movie,RM 125,true,1711307181987,0.0
->>>>>>> dc2a64f (ClearDB)
-=======
->>>>>>> d3ef6bb (Save)
