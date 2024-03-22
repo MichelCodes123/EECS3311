@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
-import database_access.*;
-import models.LibraryItem.ItemIdGenerator;
+import database_access.FacultyMemberAccess;
+import database_access.NonFacultyStaffAccess;
+import database_access.QueryUtilities;
+import database_access.StudentAccess;
+import database_access.VisitorAccess;
+import models.LibraryManagementTeam.LibraryManagementTeam;
 import models.Users.User;
 
 public class LoginUtilities {
@@ -42,7 +46,7 @@ public class LoginUtilities {
 		}
 
 		if (type.equals("Student") || type.equals("FacultyMember") || type.equals("NonFacultyStaff")){
-			//Further validation?? By Req 1, bit ambiguous
+			LibraryManagementTeam.validate();
 		}
 
 		UserFactory f = new UserFactory();
