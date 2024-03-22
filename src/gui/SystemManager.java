@@ -85,10 +85,11 @@ public class SystemManager {
                         SwingUtilities.invokeLater(() -> {
 
                             try {
-                                // libraryManager.disableItem(ID, itemType);
+                                libraryManager.disableItem(ID, itemType);
                                 items = queryUtilities.allPhysicalItems();
                                 JOptionPane.showMessageDialog(button, "Item has been disabled");
                                 Boolean item = queryUtilities.getPhysicalItem(ID).getPurchasability();
+                                Thread.sleep(1000);
                                 System.out.println(item);
                                 table1.repaint();
                             } catch (Exception e1) {
@@ -100,8 +101,8 @@ public class SystemManager {
                     } else {
                         SwingUtilities.invokeLater(() -> {
                             try {
-                                // libraryManager.enableItem(ID, itemType);
-                                items = libraryManager.getItems();
+                                libraryManager.enableItem(ID, itemType);
+                                items = queryUtilities.allPhysicalItems();
                                 JOptionPane.showMessageDialog(button, "Item has been enabled");
                                 table1.repaint();
                             } catch (Exception e1) {
@@ -150,6 +151,7 @@ public class SystemManager {
 
         try {
             items = queryUtilities.allPhysicalItems();
+            System.out.println(items.size());
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -265,7 +267,7 @@ public class SystemManager {
         @Override
         public void actionPerformed(ActionEvent e) {
             frame.dispose();
-            ItemManagerPage ip = new ItemManagerPage();
+            
         }
     };
 

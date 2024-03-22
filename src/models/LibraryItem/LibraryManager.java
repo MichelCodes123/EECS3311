@@ -119,6 +119,7 @@ public class LibraryManager {
         for (PhysicalItem item : items) {
             if (item.getId() == itemId && item.getClass().getSimpleName().equals(itemType)) {
                 item.setPurchasability(true);
+                System.out.println("hello");
                 break;
             }
         }

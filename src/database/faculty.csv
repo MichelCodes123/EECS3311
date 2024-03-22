@@ -1,2 +1,2 @@
-id,name,email,password,can_borrow,overdue_charge,is_registered,rented_item_list,newsletter_subscriptions
-2,Tom,m,pass,true,0.0,true,,
+id,name,email,password,can_borrow,overdue_charge,is_registered,rented_item_list,newsletter_subscriptions,textbooks_used,courses
+2,Tom,m,pass,true,0.0,true,0,,5,EECS 2101;

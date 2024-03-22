@@ -29,10 +29,10 @@ import services.itemstrategy.RentItem;
 public class Test {
     public static void main(String[] args) throws Exception{
    //    UserProfilePage up = new UserProfilePage();
-      // LoginPage lp = new LoginPage();
+      LoginPage lp = new LoginPage();
        //SubscriptionPage sp = new SubscriptionPage();
         // ItemManagerPage ip = new ItemManagerPage();
-        SystemManager sp = new SystemManager();
+        //SystemManager sp = new SystemManager();
 
 
         FacultyMemberAccess profdb = FacultyMemberAccess.getInstance();
@@ -48,7 +48,7 @@ public class Test {
         Student student = new Student("0", "John", "e", "p", true, 0.0, true, new ArrayList<String>(),new ArrayList<String>(), new ArrayList<Course>(), new ArrayList<String>());
         Student student2 = new Student("1", "Joe", "z", "pass", true, 0.0, true, new ArrayList<String>(),new ArrayList<String>(), new ArrayList<Course>(), new ArrayList<String>());
         FacultyMember prof = new FacultyMember("2", "Tom", "m", "pass", true, 0.0, true, new ArrayList<String>(),new ArrayList<String>());
-        Visitor admin = new Visitor("-1", "Admin", "admin", "admin", true, 0.0, true, new ArrayList<String>(),new ArrayList<String>());
+        Visitor admin = new Visitor("-1", "Admin", "a", "a", true, 0.0, true, new ArrayList<String>(),new ArrayList<String>());
         OverdueService overdue = new OverdueService();
 
         Book book = new Book("0", "Game of Thrones", "RM 125", false, new Date().getTime()+ 86400000*2, 0.0);
@@ -92,6 +92,7 @@ public class Test {
         lib.addItem(textbook);
         lib.addItem(cd);
         lib.addItem(mag);
+       
         
         // bookdb.items.add(book);
         // bookdb.items.add(book2);
