@@ -132,19 +132,16 @@ public class RegistrationPage {
         JButton registerButton = new JButton("Complete Registration");
         registerButton.setBounds(280, 300, 200, 25);
         panel2.add(registerButton);
-        registerButton.addActionListener(  new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String type = (String) clientCombo.getSelectedItem();
-                String name = userNameText.getText();
-                String password = passwordText.getText();
-                String email = emailText.getText();
+        registerButton.addActionListener(e -> {
+            String type = (String) clientCombo.getSelectedItem();
+            String name = userNameText.getText();
+            String password = passwordText.getText();
+            String email = emailText.getText();
 
-                LoginUtilities.verifyRegistration(type, name, email, password,  (error) ->  JOptionPane.showMessageDialog(null, error), () -> {
-                    frame.dispose();
-                    LoginPage lp = new LoginPage();
-                });
-            }
+            LoginUtilities.verifyRegistration(type, name, email, password,  (error) ->  JOptionPane.showMessageDialog(null, error), () -> {
+                frame.dispose();
+                LoginPage lp = new LoginPage();
+            });
         });
 
         JButton cancelButton = new JButton("Cancel Registration");
