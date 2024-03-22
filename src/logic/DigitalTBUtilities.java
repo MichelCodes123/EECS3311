@@ -36,6 +36,14 @@ public class DigitalTBUtilities {
 				for (Textbook tb : courses.getTextbooks()) {
 
 					DigitalTB newTb = DigitalTBUtilities.digitize(tb, courses.getName());
+					
+					studentdb.users.add(s);
+					try {
+						studentdb.update();
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+					
 //					((Student) s).addDigitalTB(newTb.getName());
 //					int i = 0;
 //
