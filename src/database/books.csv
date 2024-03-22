@@ -1,4 +1,9 @@
 type,id,name,location,can_purchase,due_date,dollar_amount
-class models.Items.PhysicalItems.Book,0,Game of Thrones,RM 125,false,1711231972602,0.0
-class models.Items.PhysicalItems.Book,1,Game of Thrones2,RM 125,true,1711231972602,0.0
-class models.Items.PhysicalItems.Book,2,Game of Thrones3,RM 125,true,1711231972602,0.0
+class models.Items.PhysicalItems.Book,0,Game of Thrones,RM 125,false,1711238586190,0.0
+class models.Items.PhysicalItems.Book,1,Game of Thrones2,RM 125,true,1711238586190,0.0
+class models.Items.PhysicalItems.Book,2,Game of Thrones3,RM 125,true,1711238586190,0.0
+class models.Items.PhysicalItems.Book,5,Data Structures,RM 125,false,1711238586191,0.0
+class models.Items.PhysicalItems.Book,0,Game of Thrones,RM 125,false,1711238599835,0.0
+class models.Items.PhysicalItems.Book,1,Game of Thrones2,RM 125,true,1711238599835,0.0
+class models.Items.PhysicalItems.Book,2,Game of Thrones3,RM 125,true,1711238599835,0.0
+class models.Items.PhysicalItems.Textbook,5,Data Structures,RM 125,false,1711238599836,0.0
