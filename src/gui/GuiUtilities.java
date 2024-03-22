@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import database_access.QueryUtilities;
+import models.Items.PhysicalItems.Textbook;
 
 public class GuiUtilities {
     private static QueryUtilities queryUtilities = new QueryUtilities();
@@ -42,6 +43,28 @@ public class GuiUtilities {
             data[i][2] = dateFormat.format(item.getDueDate());
             data[i][3] = getStatus(item.getDueDate());
             
+        }
+        return data;
+    }
+
+    public static Object[][] convertTextbookToViewArray(ArrayList<Book> items) {
+        Object[][] data = new Object[items.size()][6];
+        for (int i = 0; i < items.size(); i++) {
+            Book item = items.get(i);
+
+            data[i][0] = item.getName();
+            data[i][1] = item.getLocation();
+            data[i][2] = dateFormat.format(item.getDueDate());
+            data[i][3] = getStatus(item.getDueDate());
+
+        }
+        return data;
+    }
+
+    public static Object[][] convertDigitalTBToViewArray(ArrayList<String> items) {
+        Object[][] data = new Object[items.size()][6];
+        for (int i = 0; i < items.size(); i++) {
+            data[i][0] = items.get(i);
         }
         return data;
     }

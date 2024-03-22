@@ -98,6 +98,7 @@ public class StudentAccess {
                     builder.append(item).append(" ");
                 }
                 submit = builder.toString().trim();
+                csvOutput.write(submit);
                 csvOutput.endRecord();
             }
             csvOutput.close();
