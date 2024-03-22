@@ -82,20 +82,12 @@ public class LibraryManager {
             String itemType = removeItemCommand.getItemType();
             String itemId = removeItemCommand.getItemId();
             switch (itemType) {
-                case "Book":
-                    bookAccess.removeItem(itemId);
-                    break;
-                case "Magazine":
-                    magazineAccess.removeItem(itemId);
-                    break;
-                case "Cd":
-                    cdAccess.removeItem(itemId);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Invalid item type");
+                case "Book" -> bookAccess.removeItem(itemId);
+                case "Magazine" -> magazineAccess.removeItem(itemId);
+                case "Cd" -> cdAccess.removeItem(itemId);
+                default -> throw new IllegalArgumentException("Invalid item type");
             }
-        } else if (command instanceof UpdateCommand) {
-            UpdateCommand updateCommand = (UpdateCommand) command;
+        } else if (command instanceof UpdateCommand updateCommand) {
             PhysicalItem updatedItem = updateCommand.getUpdatedItem();
             // Update the item in the appropriate database access class
             if (updatedItem instanceof Book) {
@@ -117,7 +109,7 @@ public class LibraryManager {
     public void enableItem(String itemId, String itemType) throws Exception {
         executeCommand(new EnableItemCommand(itemId, itemType, this));
         for (PhysicalItem item : items) {
-            if (item.getId() == itemId && item.getClass().getSimpleName().equals(itemType)) {
+            if (Objects.equals(item.getId(), itemId) && item.getClass().getSimpleName().equals(itemType)) {
                 item.setPurchasability(true);
                 break;
             }
@@ -126,7 +118,7 @@ public class LibraryManager {
 
     public void disableItem(String itemId, String itemType) throws Exception {
         for (PhysicalItem item : items) {
-            if (item.getId() == itemId && item.getClass().getSimpleName().equals(itemType)) {
+            if (Objects.equals(item.getId(), itemId) && item.getClass().getSimpleName().equals(itemType)) {
                 item.setPurchasability(false);
                 break;
             }
@@ -135,7 +127,7 @@ public class LibraryManager {
     }
 
     public void removeItem(String itemId, String itemType) throws Exception {
-        items.removeIf(item -> item.getId() == itemId && item.getClass().getSimpleName().equals(itemType));
+        items.removeIf(item -> Objects.equals(item.getId(), itemId) && item.getClass().getSimpleName().equals(itemType));
         executeCommand(new RemoveItemCommand(itemId, itemType, this));
     }
 
