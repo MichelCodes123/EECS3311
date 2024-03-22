@@ -13,4 +13,10 @@ public class LibraryManagementTeam implements LibraryManagementTeamObserver {
 	 public String getLastNotification() {
 	    return lastNotification;
 	}
+	
+	public static void validate() {
+	
+		System.out.print("Validated");
+		
+	}
 }
