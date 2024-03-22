@@ -146,7 +146,7 @@ public class AddItem {
         panel2.add(registerButton);
         registerButton.addActionListener(e -> {
             String itemType = (String) clientCombo.getSelectedItem();
-            String itemTitle = title.getText();
+            String itemTitle = titleText.getText();
             String itemLocation = locationText.getText();
             Double price = Double.parseDouble(priceText.getText());
             
