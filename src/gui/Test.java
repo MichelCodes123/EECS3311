@@ -17,6 +17,7 @@ import models.Items.PhysicalItems.Book;
 import models.Items.PhysicalItems.Cd;
 import models.Items.PhysicalItems.Magazine;
 import models.Items.PhysicalItems.Textbook;
+import models.LibraryItem.LibraryManager;
 import models.Users.FacultyMember;
 import models.Users.Student;
 import models.Users.User;
@@ -28,9 +29,11 @@ import services.itemstrategy.RentItem;
 public class Test {
     public static void main(String[] args) throws Exception{
    //    UserProfilePage up = new UserProfilePage();
-       LoginPage lp = new LoginPage();
+      // LoginPage lp = new LoginPage();
        //SubscriptionPage sp = new SubscriptionPage();
         // ItemManagerPage ip = new ItemManagerPage();
+        SystemManager sp = new SystemManager();
+
 
         FacultyMemberAccess profdb = FacultyMemberAccess.getInstance();
         StudentAccess studentdb = StudentAccess.getInstance();
@@ -40,6 +43,8 @@ public class Test {
         MagazineAccess magdb = MagazineAccess.getInstance();
         ItemStrategy strat = new RentItem();
         NewsletterAccess newsdb = NewsletterAccess.getInstance();
+        LibraryManager lib = new LibraryManager("LibraryManager");
+        
         Student student = new Student("0", "John", "e", "p", true, 0.0, true, new ArrayList<String>(),new ArrayList<String>(), new ArrayList<Course>(), new ArrayList<String>());
         Student student2 = new Student("1", "Joe", "z", "pass", true, 0.0, true, new ArrayList<String>(),new ArrayList<String>(), new ArrayList<Course>(), new ArrayList<String>());
         FacultyMember prof = new FacultyMember("2", "Tom", "m", "pass", true, 0.0, true, new ArrayList<String>(),new ArrayList<String>());
@@ -75,24 +80,30 @@ public class Test {
         prof.addCourse(course.getName());
         textbook.addObserver(prof);
         studentdb.users.add(student);
-        studentdb.users.add(student2);
+        //studentdb.users.add(student2);
         profdb.users.add(prof);
         visitordb.users.add(admin);
         studentdb.update();
         profdb.update();
         visitordb.update();
+        lib.addItem(book);
+        lib.addItem(book2);
+        lib.addItem(book3);
+        lib.addItem(textbook);
+        lib.addItem(cd);
+        lib.addItem(mag);
         
-        bookdb.items.add(book);
-        bookdb.items.add(book2);
-        bookdb.items.add(book3);
-        bookdb.items.add(textbook);
-        cddb.items.add(cd);
-        magdb.items.add(mag);
+        // bookdb.items.add(book);
+        // bookdb.items.add(book2);
+        // bookdb.items.add(book3);
+        // bookdb.items.add(textbook);
+        // cddb.items.add(cd);
+        // magdb.items.add(mag);
       
-        bookdb.update();
-        cddb.update();
-        magdb.update();
-        newsdb.update();
+        // bookdb.update();
+        // cddb.update();
+        // magdb.update();
+        // newsdb.update();
         SwingUtilities.invokeLater(() -> {
             try {
                 strat.execute(cd.getId(), student.getId());

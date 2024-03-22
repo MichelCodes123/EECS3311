@@ -6,6 +6,7 @@ import models.Items.PhysicalItems.Book;
 import models.Items.PhysicalItems.PhysicalItem;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import database_access.QueryUtilities;
 import models.Items.PhysicalItems.Textbook;
@@ -15,6 +16,7 @@ public class GuiUtilities {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public static final String[] rentColumn = {"ID", "Name", "Location", "Dollar Amount", "Due Date", "Purchase"};
     public static final String[] viewColumn = {"Name", "Location", "Due Date", "Status"};
+    public static final String[] allColumn = {"ID", "Name", "Location", "Purchasability", "Dollar Amount", "Enable/Disable"};
     
     public static final String[] cdColumn = {"Name", "Dollar Amount", "Purchase"};
 
@@ -102,6 +104,24 @@ public class GuiUtilities {
             data[i][0] = item.getName();
             data[i][1] = item.getDollarAmount();
             data[i][2] = "Purchase";
+            
+            
+        }
+        return data;
+    }
+
+    public static Object[][] convertALL(List<PhysicalItem> items) {
+        Object[][] data = new Object[items.size()][6];
+        for (int i = 0; i < items.size(); i++) {
+            PhysicalItem item = items.get(i);
+            
+            data[i][0] = item.getId();
+            data[i][1] = item.getName();
+            data[i][2] = item.getLocation();
+            data[i][3] = item.getPurchasability();
+            data[i][4] = item.getDollarAmount();
+            data[i][5] = "Enable/Disable";
+
             
             
         }
