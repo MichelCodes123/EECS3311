@@ -137,15 +137,7 @@ public class Test {
                 e2.printStackTrace();
             }
         });
-        SwingUtilities.invokeLater(() -> {
-            try {
-                newsdb.load();
-              
-            } catch (Exception e2) {
-
-                e2.printStackTrace();
-            }
-        });
+    
         
         
 
