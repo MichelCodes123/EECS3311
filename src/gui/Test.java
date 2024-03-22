@@ -55,7 +55,8 @@ public class Test {
         Book book2 = new Book("1", "Game of Thrones2", "RM 125", true, new Date().getTime()+ 86400000*2, 0.0);
         Book book3 = new Book("2", "Game of Thrones3", "RM 125", true, new Date().getTime()+ 86400000*2, 0.0);
         Textbook textbook = new Textbook("5", "DataStructures", "RM 125", false, new Date().getTime()+ 86400000*2, 0.0);
-        Cd cd = new Cd("3", "Game of Thrones Movie", "RM 125", true, new Date().getTime()+ 86400000*2, 0.0);
+        Cd cd = new Cd("3", "Game of Thrones Movie", "RM 125", true, new Date().getTime()+ 86400000, 0.0);
+
         Magazine mag = new Magazine("4", "Game of Thrones Vogue Magazine", "RM 125", true, new Date().getTime() - 86400000 , 0.0);
 
         ArrayList<Textbook> textbooks = new ArrayList<>();

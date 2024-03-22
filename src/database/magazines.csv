@@ -1,6 +1,2 @@
-<<<<<<< HEAD
 id,name,location,can_purchase,due_date,dollar_amount
-
-=======
-id,name,location,can_purchase,due_date,dollar_amount
->>>>>>> c89537e3376754092b38b9c8d3ead8ff180afa9e
+4,Game of Thrones Vogue Magazine,RM 125,true,1711051121295,0.0
