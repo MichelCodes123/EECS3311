@@ -172,7 +172,7 @@ public class ItemManagerPage {
                 JButton requestBook = new JButton("Request Book");
                 requestBook.setBounds(380, 35, 200, 27);
                 panel4.add(requestBook);
-                // openOnlineBookButton.addActionListener(cancelListener);
+                requestBook.addActionListener(rb);
 
                 JButton BuyBook = new JButton("Buy Items");
                 BuyBook.setBounds(80, 35, 200, 27);
@@ -371,6 +371,13 @@ public class ItemManagerPage {
         public void actionPerformed(ActionEvent e) {
             frame.dispose();
             PurchasePage pp = new PurchasePage();
+        }
+    };
+    ActionListener rb = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            frame.dispose();
+            RequestBookPage rbp = new RequestBookPage();
         }
     };
 
