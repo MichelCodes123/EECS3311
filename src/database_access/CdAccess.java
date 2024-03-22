@@ -37,7 +37,7 @@ public class CdAccess {
 
     public void enableItem(String itemId) throws Exception {
         for (PhysicalItem item : items) {
-            if (item.getId() == itemId) {
+            if (Objects.equals(item.getId(), itemId)) {
                 item.setPurchasability(true);
                 update();
                 load();
@@ -48,7 +48,7 @@ public class CdAccess {
 
     public void disableItem(String itemId) throws Exception {
         for (PhysicalItem item : items) {
-            if (item.getId() == itemId) {
+            if (Objects.equals(item.getId(), itemId)) {
                 item.setPurchasability(false);
                 update();
                 load();

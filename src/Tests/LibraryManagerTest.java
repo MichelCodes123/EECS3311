@@ -92,9 +92,9 @@ public class LibraryManagerTest {
         assertTrue(isItemInCsvFile("src/database/Cd.csv", cd2));
 
         // Clean up - remove the added book from the library
-        libraryManager.removeItem(cd.getId(), "Book");
-        libraryManager.removeItem(cd1.getId(), "Book");
-        libraryManager.removeItem(cd2.getId(), "Book");
+        libraryManager.removeItem(cd.getId(), "Cd");
+        libraryManager.removeItem(cd1.getId(), "Cd");
+        libraryManager.removeItem(cd2.getId(), "Cd");
     }
 
     @Test
@@ -161,6 +161,7 @@ public class LibraryManagerTest {
 
         // Verify that the item is enabled in the library
         assertTrue(libraryManager.getItems().get(0).getPurchasability());
+        libraryManager.removeItem(magazine.getId(), "Magazine");
     }
     @Test
     public void disableItemTest() throws Exception {
@@ -178,6 +179,7 @@ public class LibraryManagerTest {
 
         // Verify that the item is disabled in the library
         assertFalse(cd.getPurchasability());
+        libraryManager.removeItem(cd.getId(), "Cd");
     }
     @Test
     public void updateItemTest() throws Exception {
@@ -205,6 +207,7 @@ public class LibraryManagerTest {
         assertEquals("Shelf B", retrievedItem.getLocation());
         assertFalse(retrievedItem.getPurchasability());
         assertEquals(15.99, retrievedItem.getDollarAmount(), 0.001);
+        libraryManager.removeItem(updatedBook.getId(), "Book");
     }
     @Test
     public void readCsvFileTest() throws Exception {
@@ -257,6 +260,9 @@ public class LibraryManagerTest {
         Set<String> itemIds = new HashSet<>();
         for (PhysicalItem item : items) {
             assertTrue(itemIds.add(item.getId()), "Duplicate ID found");
+        }
+        for (int i = 0; i < 10; i++) {
+            libraryManager.removeItem(Integer.toString(i), "Book");
         }
     }
 
