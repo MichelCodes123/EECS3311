@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import database_access.DigitalTBAccess;
+import database_access.StudentAccess;
 import models.Course;
 import models.Items.Item;
 import models.Items.DigitalTB.DigitalTB;
@@ -21,6 +22,12 @@ public class DigitalTBUtilities {
 
 	public static void addAllDigitalTB(User s) {
 		DigitalTBAccess acc = DigitalTBAccess.getInstance();
+		StudentAccess studentdb = StudentAccess.getInstance();
+		try {
+			studentdb.load();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 
 		if (s instanceof Student) {
 			ArrayList<Course> coo = ((Student) s).getCourses();
@@ -30,6 +37,19 @@ public class DigitalTBUtilities {
 
 					DigitalTB newTb = DigitalTBUtilities.digitize(tb, courses.getName());
 					((Student) s).addDigitalTB(newTb.getName());
+					int i = 0;
+
+					for (User student : studentdb.users) {
+						if (student.getId().equals(s.getId())) {
+							studentdb.users.set(i, s);
+							try {
+								studentdb.update();
+							} catch (Exception e) {
+								throw new RuntimeException(e);
+							}
+						}
+						i++;
+					}
 					acc.items.add(newTb);
 				}
 			}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import logic.UserFactory;
+import models.Items.PhysicalItems.Textbook;
 import models.Users.*;
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
@@ -45,6 +46,8 @@ public class FacultyMemberAccess {
                     new ArrayList<String>(Arrays.asList(reader.get("rented_item_list").split(" "))),
                     new ArrayList<String>(Arrays.asList(reader.get("newsletter_subscriptions").split(" ")))
             );
+            ((FacultyMember) u).setPreviousTextbooksUsed(new ArrayList<String>(Arrays.asList(reader.get("textbooks_used").split(" "))));
+            ((FacultyMember) u).setTeachingCourses(new ArrayList<String>(Arrays.asList(reader.get("courses").split(";"))));
         }
     }
 
@@ -61,6 +64,8 @@ public class FacultyMemberAccess {
             csvOutput.write("is_registered");
             csvOutput.write("rented_item_list");
             csvOutput.write("newsletter_subscriptions");
+            csvOutput.write("textbooks_used");
+            csvOutput.write("courses");
             csvOutput.endRecord();
 
             // else assume that the file already has the correct header line
@@ -89,6 +94,24 @@ public class FacultyMemberAccess {
                 submit = builder.toString().trim();
 
                 csvOutput.write(submit);
+
+                builder = new StringBuilder();
+                for (String item : ((FacultyMember) u).getPreviousTextbooksUsed()) {
+                    builder.append(item).append(" ");
+                }
+                submit = builder.toString().trim();
+
+                csvOutput.write(submit);
+
+
+                builder = new StringBuilder();
+                for (String item : ((FacultyMember) u).getTeachingCourses()) {
+                    builder.append(item).append(";");
+                }
+
+                csvOutput.write(builder.toString().trim());
+
+
                 csvOutput.endRecord();
             }
             csvOutput.close();

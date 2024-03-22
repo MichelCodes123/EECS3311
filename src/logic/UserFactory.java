@@ -32,9 +32,10 @@ public class UserFactory {
 			StudentAccess.getInstance().users.add(student);
 			return student;
 		case "FacultyMember":
-			FacultyMemberAccess.getInstance().users.add(new FacultyMember(id, name, email, password, can_borrow,
-					overdue_charge, is_registered, rented_item_list, newsletters));
-			break;
+			FacultyMember prof = new FacultyMember(id, name, email, password, can_borrow,
+					overdue_charge, is_registered, rented_item_list, newsletters);
+			FacultyMemberAccess.getInstance().users.add(prof);
+			return prof;
 		case "NonFacultyStaff":
 			NonFacultyStaffAccess.getInstance().users.add(new NonFacultyStaff(id, name, email, password, can_borrow,
 					overdue_charge, is_registered, rented_item_list, newsletters));

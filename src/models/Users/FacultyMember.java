@@ -9,8 +9,8 @@ import models.Items.PhysicalItems.Textbook;
 import models.TextbookObserver.TextbookObserver;
 
 public class FacultyMember extends User implements TextbookObserver {
-	private List<Course> teachingCourses;
-	private List<Textbook> previousTextbooksUsed;
+	private List<String> teachingCourses;
+	private List<String> previousTextbooksUsed;
 	private String lastNotification;
 
 	public FacultyMember(String id, String name, String email, String password, Boolean can_borrow,
@@ -23,19 +23,27 @@ public class FacultyMember extends User implements TextbookObserver {
 
 	}
 
-	public List<Course> getTeachingCourses() {
+	public void setTeachingCourses(List<String> teachingCourses) {
+		this.teachingCourses = teachingCourses;
+	}
+
+	public void setPreviousTextbooksUsed(List<String> previousTextbooksUsed) {
+		this.previousTextbooksUsed = previousTextbooksUsed;
+	}
+
+	public List<String> getTeachingCourses() {
 		return teachingCourses;
 	}
 
-	public void addCourse(Course course) {
+	public void addCourse(String course) {
 		teachingCourses.add(course);
 	}
 
-	public List<Textbook> getPreviousTextbooksUsed() {
+	public List<String> getPreviousTextbooksUsed() {
 		return previousTextbooksUsed;
 	}
 
-	public void addTextbookUsed(Textbook textbook) {
+	public void addTextbookUsed(String textbook) {
 		previousTextbooksUsed.add(textbook);
 	}
 

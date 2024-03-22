@@ -8,7 +8,12 @@ import database_access.MagazineAccess;
 import database_access.NewsletterAccess;
 import database_access.QueryUtilities;
 import database_access.StudentAccess;
+import models.FacultyObserver.FacultyObserver;
+import models.Items.Item;
+import models.Items.PhysicalItems.Book;
 import models.Items.PhysicalItems.PhysicalItem;
+import models.Items.PhysicalItems.Textbook;
+import models.Users.FacultyMember;
 import models.Users.Student;
 import models.Users.User;
 import services.OverdueService;
@@ -19,11 +24,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserProfilePage {
     private JFrame frame;
     private JPanel panel1, panel2, panel3, panel4;
     private JTable table1; // table1 relies on panel2
+    private JTable table2;
+    private JTable table3;
 
     QueryUtilities queryUtilities = new QueryUtilities();
     StudentAccess studentdb = StudentAccess.getInstance();
@@ -137,17 +145,15 @@ public class UserProfilePage {
                     ItemsTitle.setBounds(350, 15, 300, 20);
                     panel2.add(ItemsTitle);
 
-                    JLabel coursesTaking = new JLabel("Courses Currently Taking/Teaching");
-                    coursesTaking.setFont(new Font("Arial", Font.BOLD, 15));
+                    JLabel textbooks_obtained = new JLabel("Textbooks");
+                    textbooks_obtained.setFont(new Font("Arial", Font.BOLD, 15));
 
-                    coursesTaking.setForeground(Color.black);
-                    coursesTaking.setBounds(350, 35, 300, 20);
-                    panel3.add(coursesTaking);
+                    textbooks_obtained.setForeground(Color.black);
+                    textbooks_obtained.setBounds(350, 35, 300, 20);
+                    panel3.add(textbooks_obtained);
                     if (user.getRented_item_list().size() > 0) {
                         SwingUtilities.invokeLater(() -> {
                             try {
-
-                                
                                 items = queryUtilities.getUserAssociatedItems(user);
                                 
                                 
@@ -164,6 +170,61 @@ public class UserProfilePage {
                                 // TODO Auto-generated catch block
                                 e.printStackTrace();
                             }
+
+                        });
+                    }
+
+
+                    if (user instanceof FacultyMember) {
+                        SwingUtilities.invokeLater(() -> {
+                            try {
+                                ArrayList<String> textbook_names = (ArrayList<String>) ((FacultyMember) user).getPreviousTextbooksUsed();
+                                System.out.println(textbook_names);
+                                ArrayList<Book> textbooks = new ArrayList<>();
+                                if (textbook_names.size() > 0) {
+                                    for (String name : textbook_names) {
+                                        Book book = queryUtilities.getTextbook(name);
+                                        if (name != null) {
+                                            textbooks.add(book);
+                                        }
+                                    }
+                                    bookesRented = GuiUtilities.convertTextbookToViewArray(textbooks);
+                                    table2 = new JTable(bookesRented, GuiUtilities.viewColumn);
+                                    JScrollPane scrollPane = new JScrollPane(table2);
+                                    scrollPane.setBounds(30, 55, 940, 50);
+                                    panel3.add(scrollPane);
+
+
+                                    JLabel courses = new JLabel("Courses");
+                                    courses.setFont(new Font("Arial", Font.BOLD, 15));
+
+                                    courses.setForeground(Color.black);
+                                    courses.setBounds(350, 110, 300, 20);
+                                    panel3.add(courses);
+
+
+                                    ArrayList<String> prof_courses = (ArrayList<String>) ((FacultyMember) user).getTeachingCourses();
+                                        bookesRented = GuiUtilities.convertDigitalTBToViewArray(prof_courses);
+                                        table3 = new JTable(bookesRented, GuiUtilities.viewColumn);
+                                        JScrollPane scrollPane1 = new JScrollPane(table3);
+                                        scrollPane1.setBounds(30, 140, 940, 50);
+                                        panel3.add(scrollPane1);
+                                }
+                            } catch (Exception e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+
+                        });
+                    }
+
+                    else if (user instanceof Student) {
+                        SwingUtilities.invokeLater(() -> {
+                                    Object[][] textbooks = GuiUtilities.convertDigitalTBToViewArray(((Student) user).getDigital_textbooks());
+                                    table2 = new JTable(textbooks, GuiUtilities.viewColumn);
+                                    JScrollPane scrollPane = new JScrollPane(table2);
+                                    scrollPane.setBounds(30, 55, 940, 200);
+                                    panel3.add(scrollPane);
 
                         });
                     }

@@ -2,7 +2,9 @@ package database_access;
 import models.Items.Item;
 import models.Items.PhysicalItems.Book;
 import models.Items.PhysicalItems.PhysicalItem;
+import models.Items.PhysicalItems.Textbook;
 import models.Users.*;
+import org.w3c.dom.Text;
 import services.OverdueService;
 import services.itemstrategy.ItemStrategy;
 import services.itemstrategy.RentItem;
@@ -103,6 +105,17 @@ public class QueryUtilities {
 
         }
         return near_overdue_items;
+    }
+
+    public Book getTextbook(String id) throws Exception {
+        ArrayList<PhysicalItem> items = allPhysicalItems();
+
+        for (Item item : items) {
+            if (item instanceof Book && item.getId().equals(id)) {
+                return (Book) item;
+            }
+        }
+        return null;
     }
 
     private void loadUsers() throws Exception{

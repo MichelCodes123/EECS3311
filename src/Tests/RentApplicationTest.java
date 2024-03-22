@@ -47,6 +47,7 @@ public class RentApplicationTest {
 		assertEquals(1, studentdb.users.get(0).getRented_item_list().size());
 		studentdb.update();
 
+
         QueryUtilities utils = new QueryUtilities();
         ArrayList<User> users = utils.allUsers();
         assertEquals(2, users.size());
@@ -79,5 +80,4 @@ public class RentApplicationTest {
         ArrayList<User> users = utils.allUsers();
         assertEquals(2, users.size());
     }
-
 }
