@@ -19,6 +19,7 @@ public class Student extends User {
 		this.digital_textbooks = digital_textbooks;
 	}
 
+
 	public ArrayList<String> getDigital_textbooks() {
 		return digital_textbooks;
 	}
