@@ -27,6 +27,7 @@ public class LibraryManager {
     }
 
     public List<PhysicalItem> getItems() {
+        
         return items;
     }
 
@@ -82,12 +83,20 @@ public class LibraryManager {
             String itemType = removeItemCommand.getItemType();
             String itemId = removeItemCommand.getItemId();
             switch (itemType) {
-                case "Book" -> bookAccess.removeItem(itemId);
-                case "Magazine" -> magazineAccess.removeItem(itemId);
-                case "Cd" -> cdAccess.removeItem(itemId);
-                default -> throw new IllegalArgumentException("Invalid item type");
+                case "Book":
+                    bookAccess.removeItem(itemId);
+                    break;
+                case "Magazine":
+                    magazineAccess.removeItem(itemId);
+                    break;
+                case "Cd":
+                    cdAccess.removeItem(itemId);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid item type");
             }
-        } else if (command instanceof UpdateCommand updateCommand) {
+        } else if (command instanceof UpdateCommand) {
+            UpdateCommand updateCommand = (UpdateCommand) command;
             PhysicalItem updatedItem = updateCommand.getUpdatedItem();
             // Update the item in the appropriate database access class
             if (updatedItem instanceof Book) {
@@ -107,11 +116,15 @@ public class LibraryManager {
     }
 
     public void enableItem(String itemId, String itemType) throws Exception {
+        
         executeCommand(new EnableItemCommand(itemId, itemType, this));
+      System.out.println(items.size());
+       
         for (PhysicalItem item : items) {
-            if (Objects.equals(item.getId(), itemId) && item.getClass().getSimpleName().equals(itemType)) {
+            
+            if (item.getId().equals(itemId) && item.getClass().getSimpleName().equals(itemType)) {
                 item.setPurchasability(true);
-                System.out.println("hello");
+                
                 break;
             }
         }

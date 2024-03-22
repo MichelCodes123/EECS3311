@@ -86,12 +86,11 @@ public class SystemManager {
 
                             try {
                                 libraryManager.disableItem(ID, itemType);
-                                items = queryUtilities.allPhysicalItems();
+                                updateTableModel();
                                 JOptionPane.showMessageDialog(button, "Item has been disabled");
-                                Boolean item = queryUtilities.getPhysicalItem(ID).getPurchasability();
-                                Thread.sleep(1000);
-                                System.out.println(item);
-                                table1.repaint();
+                                
+                                
+                             
                             } catch (Exception e1) {
                                 // TODO Auto-generated catch block
                                 e1.printStackTrace();
@@ -102,9 +101,9 @@ public class SystemManager {
                         SwingUtilities.invokeLater(() -> {
                             try {
                                 libraryManager.enableItem(ID, itemType);
-                                items = queryUtilities.allPhysicalItems();
+                                
                                 JOptionPane.showMessageDialog(button, "Item has been enabled");
-                                table1.repaint();
+                                updateTableModel();
                             } catch (Exception e1) {
                                 // TODO Auto-generated catch block
                                 e1.printStackTrace();
@@ -121,6 +120,25 @@ public class SystemManager {
 
             fireEditingStopped();
 
+        }
+        private void updateTableModel() {
+            
+            Object[][] updatedData;
+            try {
+                updatedData = GuiUtilities.convertALL(queryUtilities.allPhysicalItems());
+                DefaultTableModel model = (DefaultTableModel) table1.getModel();
+                model.setDataVector(updatedData, GuiUtilities.allColumn); 
+                table1.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer());
+                table1.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor(new JCheckBox()));
+                table1.repaint();
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            
+           
+            
+           
         }
 
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
@@ -151,7 +169,7 @@ public class SystemManager {
 
         try {
             items = queryUtilities.allPhysicalItems();
-            System.out.println(items.size());
+            System.out.println("SYSMANAGE SIZE: "+ items.size());
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -247,7 +265,7 @@ public class SystemManager {
         scrollPane.setBounds(30, 35, 940, 400);
         panel2.add(scrollPane);
 
-        JButton rentItems = new JButton("Back");
+        JButton rentItems = new JButton("Add Item");
         rentItems.setBounds(200, 35, 200, 27);
         panel4.add(rentItems);
         rentItems.addActionListener(itemmanager);
@@ -267,6 +285,7 @@ public class SystemManager {
         @Override
         public void actionPerformed(ActionEvent e) {
             frame.dispose();
+            AddItem ai = new AddItem();
             
         }
     };
