@@ -117,7 +117,7 @@ public class UserProfilePage {
                     numOfItems.setBackground(Color.white);
                     numOfItems.setForeground(Color.black);
                     numOfItems.setBounds(20, 75, 300, 20);
-                    
+                    System.out.println("Overdue Charge: " + user.getName());//OVERDUE CHARGE WORKING NEED TO ADD TO GUI
                     JLabel overdueCharge = new JLabel("Overdue Charge: " + user.getOverdue_charge());
                     overdueCharge.setOpaque(true); // displays background color
                     overdueCharge.setBackground(Color.white);
@@ -256,6 +256,7 @@ public class UserProfilePage {
         @Override
         public void actionPerformed(ActionEvent e) {
             frame.dispose();
+            SessionManager.logout();
             LoginPage lp = new LoginPage();
         }
     };

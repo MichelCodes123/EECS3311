@@ -80,7 +80,7 @@ public class Test {
         prof.addCourse(course.getName());
         textbook.addObserver(prof);
         studentdb.users.add(student);
-        //studentdb.users.add(student2);
+        studentdb.users.add(student2);
         profdb.users.add(prof);
         visitordb.users.add(admin);
         studentdb.update();
@@ -92,20 +92,13 @@ public class Test {
         lib.addItem(textbook);
         lib.addItem(cd);
         lib.addItem(mag);
+
+        
         
        
-        System.out.println("lib items FROM TEST.JAVA: " + lib.getItems().size());
-        // bookdb.items.add(book);
-        // bookdb.items.add(book2);
-        // bookdb.items.add(book3);
-        // bookdb.items.add(textbook);
-        // cddb.items.add(cd);
-        // magdb.items.add(mag);
       
-        // bookdb.update();
-        // cddb.update();
-        // magdb.update();
-        // newsdb.update();
+
+        
         SwingUtilities.invokeLater(() -> {
             try {
                 strat.execute(cd.getId(), student.getId());
@@ -137,7 +130,19 @@ public class Test {
                 e2.printStackTrace();
             }
         });
-    
+        
+        SwingUtilities.invokeLater(()->{
+
+            try {
+                overdue.reviewOverdueItems();
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+
+        });
+            
         
         
 

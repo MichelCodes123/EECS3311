@@ -252,6 +252,7 @@ public class PurchasePage {
         @Override
         public void actionPerformed(ActionEvent e) {
             frame.dispose();
+            SessionManager.logout();
             LoginPage lp = new LoginPage();
         }
     };
