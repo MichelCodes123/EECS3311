@@ -1,6 +1,10 @@
 package services;
 import database_access.*;
+import models.Items.PhysicalItems.Book;
+import models.Items.PhysicalItems.Cd;
+import models.Items.PhysicalItems.Magazine;
 import models.Items.PhysicalItems.PhysicalItem;
+import models.LibraryItem.LibraryManager;
 import models.Users.*;
 import models.Items.*;
 
@@ -33,7 +37,16 @@ public class OverdueService {
                     }
 
                     if (current_date.getTime() > item.getDueDate() + (15*24*3600*1000) ) {
-                        //TODO: remove item
+                        LibraryManager libraryManager = new LibraryManager("src/database_access");
+                        if (item instanceof Book) {
+                            libraryManager.removeItem(item.getId(), "Book");
+                        }
+                        else if (item instanceof Cd) {
+                            libraryManager.removeItem(item.getId(), "Cd");
+                        }
+                        else if (item instanceof Magazine) {
+                            libraryManager.removeItem(item.getId(), "Magazine");
+                        }
                     }
 
                 }
