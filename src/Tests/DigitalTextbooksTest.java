@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.sql.Date;
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import models.Course;
@@ -14,10 +13,12 @@ import models.Users.Student;
 
 class DigitalTextbooksTest {
 
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
+	
+	
+	@Test
+	void verifyDigitize() {
+		
 	}
-
 	@Test
 	void addDigitalTB() {
 

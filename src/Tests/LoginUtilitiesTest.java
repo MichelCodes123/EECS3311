@@ -38,5 +38,38 @@ class LoginUtilitiesTest {
 				(error) -> assertEquals("Cannot have empty fields!", error), () -> {
 				});
 	}
+	
+	@Test 
+	void uniqueEmail(){
+		
+	}
+	
+	@Test
+	void duplicateEmail() {
+		
+	}
+	
+	@Test
+	void verifyStudentAdded() {
+		
+	}
+	@Test
+	void verifyVisitorAdded() {
+		
+	}
+	@Test
+	void verifyFacultyAdded() {
+		
+	}
+	@Test
+	void verifyNonFacultyAdded() {
+		
+	}
+	
+	
+	
+	
+	
+	
 
 }
