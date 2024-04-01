@@ -1,12 +1,23 @@
 package Tests;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import logic.UserFactory;
 
 class UserFactoryTest {
 
+	UserFactory u; 
+	
+	@BeforeAll
+	void init() {
+		u = new UserFactory();
+	}
 
 	@Test
 	void verifyStudentCreated() {
+		
+		UserFactory u = new UserFactory();
 		
 	}
 	@Test
