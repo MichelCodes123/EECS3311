@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.sql.Date;
 import java.util.ArrayList;
 
+import database_access.BookAccess;
+import database_access.StudentAccess;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +21,7 @@ class DigitalTextbooksTest {
 	}
 
 	@Test
-	void addDigitalTB() {
+	void addDigitalTB() throws Exception {
 
 		ArrayList<Course> arr = new ArrayList<Course>();
 
@@ -35,10 +37,17 @@ class DigitalTextbooksTest {
 
 		assertEquals(1, s.getDigital_textbooks().size());
 
+		StudentAccess sdb = StudentAccess.getInstance();
+		sdb.users = new ArrayList<>();
+		sdb.update();
+
+		BookAccess bdb = BookAccess.getInstance();
+		bdb.items = new ArrayList<>();
+		bdb.update();
 	}
 
 	@Test
-	void diffCourses() {
+	void diffCourses() throws Exception {
 		ArrayList<Course> arr = new ArrayList<Course>();
 
 		Student s = new Student("12-00", "Mitochondria", "charge@gmail.com", "password13", true, 0.0, true, null, null,
@@ -56,10 +65,18 @@ class DigitalTextbooksTest {
 		s.setCourses(arr);
 		assertEquals(2, s.getDigital_textbooks().size());
 
+		StudentAccess sdb = StudentAccess.getInstance();
+		sdb.users = new ArrayList<>();
+		sdb.update();
+
+		BookAccess bdb = BookAccess.getInstance();
+		bdb.items = new ArrayList<>();
+		bdb.update();
+
 	}
 
 	@Test
-	void removeCourseClearDTB() {
+	void removeCourseClearDTB() throws Exception {
 
 		ArrayList<Course> arr = new ArrayList<Course>();
 
@@ -81,6 +98,14 @@ class DigitalTextbooksTest {
 		s.removeCourse(a2);
 
 		assertEquals(1, s.getDigital_textbooks().size());
+
+		StudentAccess sdb = StudentAccess.getInstance();
+		sdb.users = new ArrayList<>();
+		sdb.update();
+
+		BookAccess bdb = BookAccess.getInstance();
+		bdb.items = new ArrayList<>();
+		bdb.update();
 
 	}
 

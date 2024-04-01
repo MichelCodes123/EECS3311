@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
 
 import models.Request;
+import org.junit.jupiter.api.Test;
 import services.RequestBook;
 import services.RequestService;
 
@@ -14,7 +15,7 @@ class RequestBookTest {
 	static void setUpBeforeClass() throws Exception {
 	}
 
-	// @Test
+	@Test
 	void testNumRequests() {
 
 		RequestBook.execute("120-11", "1", "Course");
@@ -26,7 +27,7 @@ class RequestBookTest {
 
 	}
 
-	// @Test
+	@Test
 	void testProperOrdering() {
 
 		// RequestBook.execute("120-11", "2", "Self-improvement");

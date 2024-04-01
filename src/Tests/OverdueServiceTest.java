@@ -2,10 +2,8 @@ package Tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.After;
+import org.junit.jupiter.api.*;
 
 import database_access.BookAccess;
 import database_access.FacultyMemberAccess;
@@ -14,9 +12,12 @@ import models.Items.PhysicalItems.Book;
 import models.Users.FacultyMember;
 import models.Users.Student;
 import models.Users.User;
+import org.junit.jupiter.api.TestInstance;
 import services.OverdueService;
 import services.itemstrategy.ItemStrategy;
 import services.itemstrategy.RentItem;
+
+import java.util.ArrayList;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class OverdueServiceTest {
@@ -29,7 +30,7 @@ public class OverdueServiceTest {
 
 	@BeforeEach
 	void setup() throws Exception {
-		student = new Student("1", "Jimmy", "email", "1234", true, 0.0, true, null, null, null, null);
+		student = new Student("1", "Jimmy", "email", "1234", true, 0.0, true, null, null, null, new ArrayList<>());
 		prof = new FacultyMember("2", "Tommy", "email", "1234", true, 0.0, true, null, null);
 
 		StudentAccess studentdb = StudentAccess.getInstance();
@@ -49,6 +50,21 @@ public class OverdueServiceTest {
 		bookdb.items.add(book2);
 		bookdb.items.add(book3);
 		bookdb.items.add(book4);
+		bookdb.update();
+	}
+
+	@AfterEach
+	void teardown() throws Exception {
+		StudentAccess studentdb = StudentAccess.getInstance();
+		studentdb.users = new ArrayList<>();
+		studentdb.update();
+
+		FacultyMemberAccess profdb = FacultyMemberAccess.getInstance();
+		profdb.users = new ArrayList<>();
+		profdb.update();
+
+		BookAccess bookdb = BookAccess.getInstance();
+		bookdb.items = new ArrayList<>();
 		bookdb.update();
 	}
 

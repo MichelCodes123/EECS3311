@@ -28,5 +28,8 @@ public class SearchTest {
 
         ArrayList<Book> results = SearchingService.search("The Last Wish");
         assertEquals(2, results.size());
+
+        bookdb.items = new ArrayList<>();
+        bookdb.update();
     }
 }

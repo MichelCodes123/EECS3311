@@ -13,12 +13,14 @@ import services.newsletterstrategy.NewsletterCancellation;
 import services.newsletterstrategy.NewsletterStrategy;
 import services.newsletterstrategy.NewsletterSubscription;
 
+import java.util.ArrayList;
+
 public class NewsletterSubscriptionTest {
 
 	@Test
 	@DisplayName("Newsletter Subscription")
 	void subscribe() throws Exception {
-		Student student = new Student("1", "Jimmy", "email", "1234", true, 0.0, true, null, null, null, null);
+		Student student = new Student("1", "Jimmy", "email", "1234", true, 0.0, true, null, null, null, new ArrayList<>());
 		Newsletter newsletter = new Newsletter("0", "NY Times", "mylink");
 
 		StudentAccess studentdb = StudentAccess.getInstance();
@@ -34,12 +36,18 @@ public class NewsletterSubscriptionTest {
 		studentdb.load();
 
 		assertEquals(1, studentdb.users.get(0).getSubscribed_newsletters().size());
+
+		studentdb.users = new ArrayList<>();
+		newsdb.items = new ArrayList<>();
+
+		studentdb.update();
+		newsdb.update();
 	}
 
 	@Test
 	@DisplayName("Newsletter Cancellation")
 	void cancel() throws Exception {
-		Student student = new Student("1", "Jimmy", "email", "1234", true, 0.0, true, null, null, null, null);
+		Student student = new Student("1", "Jimmy", "email", "1234", true, 0.0, true, null, null, null,  new ArrayList<>());
 		Newsletter newsletter = new Newsletter("0", "NY Times", "mylink");
 
 		StudentAccess studentdb = StudentAccess.getInstance();
@@ -61,6 +69,12 @@ public class NewsletterSubscriptionTest {
 		studentdb.load();
 
 		assertEquals(0, studentdb.users.get(0).getSubscribed_newsletters().size());
+
+		studentdb.users = new ArrayList<>();
+		newsdb.items = new ArrayList<>();
+
+		studentdb.update();
+		newsdb.update();
 
 	}
 }

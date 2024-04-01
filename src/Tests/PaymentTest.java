@@ -28,5 +28,8 @@ public class PaymentTest {
         profdb.update();
         profdb.load();
         assertEquals(0.0, profdb.users.get(0).getOverdue_charge());
+
+        profdb.users = new ArrayList<>();
+        profdb.update();
     }
 }

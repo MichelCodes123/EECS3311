@@ -41,6 +41,9 @@ public class DatabaseTest {
 
 		db.load();
 		assertEquals(1, db.items.size());
+
+		db.items = new ArrayList<>();
+		db.update();
 	}
 
 	@Test
@@ -59,6 +62,9 @@ public class DatabaseTest {
 
 		db.load();
 		assertEquals(1, db.items.size());
+
+		db.items = new ArrayList<>();
+		db.update();
 	}
 
 	@Test
@@ -77,6 +83,9 @@ public class DatabaseTest {
 
 		db.load();
 		assertEquals(1, db.items.size());
+
+		db.items = new ArrayList<>();
+		db.update();
 	}
 
 	@Test
@@ -96,6 +105,9 @@ public class DatabaseTest {
 
 		db.load();
 		assertEquals(1, db.users.size());
+
+		db.users = new ArrayList<>();
+		db.update();
 	}
 
 	@Test
@@ -115,6 +127,9 @@ public class DatabaseTest {
 
 		db.load();
 		assertEquals(1, db.users.size());
+
+		db.users = new ArrayList<>();
+		db.update();
 	}
 
 	@Test
@@ -122,7 +137,7 @@ public class DatabaseTest {
 	void testStudent() throws Exception {
 		StudentAccess db = StudentAccess.getInstance();
 		Student student = new Student("id", "Name", "location", "password", true, 0.0, true, new ArrayList<>(),
-				new ArrayList<>(), null, null);
+				new ArrayList<>(), null, new ArrayList<>());
 
 		assertEquals(0, db.users.size());
 
@@ -134,6 +149,9 @@ public class DatabaseTest {
 
 		db.load();
 		assertEquals(1, db.users.size());
+
+		db.users = new ArrayList<>();
+		db.update();
 	}
 
 	@Test
@@ -153,5 +171,8 @@ public class DatabaseTest {
 
 		db.load();
 		assertEquals(1, db.users.size());
+
+		db.users = new ArrayList<>();
+		db.update();
 	}
 }
