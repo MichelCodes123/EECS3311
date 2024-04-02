@@ -30,6 +30,7 @@ public class OverdueServiceTest {
 	Book book3;
 	Book book4;
 	Book book5;
+	Book book6;
 	Cd cd;
 	Magazine magazine;
 
@@ -63,6 +64,7 @@ public class OverdueServiceTest {
 
 
 		book5 = new Book("4", "Game of Thrones", "RM 125", true, new Date().getTime() - 1900000000, 0.0);
+		book6 = new Book("7", "Game of Thrones", "RM 125", true, new Date().getTime() + 1900000000, 0.0);
 		cd = new Cd("5", "Game of Thrones", "RM 125", true, new Date().getTime() - 1900000000, 0.0);
 		magazine = new Magazine("6", "Game of Thrones", "RM 125", true, new Date().getTime() - 1900000000, 0.0);
 
@@ -73,6 +75,7 @@ public class OverdueServiceTest {
 		bookdb.items.add(book3);
 		bookdb.items.add(book4);
 		bookdb.items.add(book5);
+		bookdb.items.add(book6);
 		bookdb.update();
 
 
@@ -247,7 +250,7 @@ public class OverdueServiceTest {
 		QueryUtilities utils = new QueryUtilities();
 		ArrayList<PhysicalItem> items = utils.allPhysicalItems();
 
-		assertEquals(7, items.size());
+		assertEquals(8, items.size());
 
 
 		ItemStrategy strat = new RentItem();
@@ -265,7 +268,52 @@ public class OverdueServiceTest {
 		service.reviewOverdueItems();
 
 		items = utils.allPhysicalItems();
-		assertEquals(4, items.size());
+		assertEquals(5, items.size());
+	}
+
+	@Test
+	@DisplayName("Overdue fee is not applied to items which are not overdue")
+	void noFeeForNonOverdueItems() throws Exception {
+		ItemStrategy strat = new RentItem();
+		strat.execute(book.getId(), prof.getId());
+		strat.execute(book6.getId(), prof.getId());
+
+		FacultyMemberAccess db = FacultyMemberAccess.getInstance();
+		db.load();
+		prof = db.users.get(0);
+
+		assertEquals(2, prof.getRented_item_list().size());
+		assertEquals(0, prof.getOverdue_charge());
+
+		OverdueService service = new OverdueService();
+		service.reviewOverdueItems();
+
+		db.load();
+		prof = db.users.get(0);
+		assertEquals(0.5, prof.getOverdue_charge());
+	}
+
+
+	@Test
+	@DisplayName("User is not locked if they have fewer than 4 overdue items")
+	void notLocked() throws Exception {
+		ItemStrategy strat = new RentItem();
+		strat.execute(book.getId(), prof.getId());
+		strat.execute(book5.getId(), prof.getId());
+		strat.execute(cd.getId(), prof.getId());
+
+		FacultyMemberAccess db = FacultyMemberAccess.getInstance();
+		db.load();
+		prof = db.users.get(0);
+
+		assertEquals(3, prof.getRented_item_list().size());
+
+		OverdueService service = new OverdueService();
+		service.reviewOverdueItems();
+
+		db.load();
+		prof = db.users.get(0);
+		assertEquals(true, prof.getCan_borrow());
 	}
 
 }

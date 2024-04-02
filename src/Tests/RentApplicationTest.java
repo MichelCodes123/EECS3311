@@ -348,6 +348,35 @@ public class RentApplicationTest {
     }
 
     @Test
+    @DisplayName("NullUser")
+    void testNullUser() throws Exception {
+
+        NonFacultyStaff staff = new NonFacultyStaff("1", "Jimmy", "email", "1234", true, 0.0, true, new ArrayList<>(),null);
+        Book book = new Book("1", "Game of Thrones", "RM 125", true, new Date().getTime(), 0.0);
+
+        NonFacultyStaffAccess staffdb = NonFacultyStaffAccess.getInstance();
+        staffdb.users.add(staff);
+        staffdb.update();
+
+
+        BookAccess bookdb = BookAccess.getInstance();
+        bookdb.items.add(book);
+        bookdb.update();
+
+        ItemStrategy strat = new RentItem();
+
+        assertThrows(NullPointerException.class, () -> {
+            strat.execute(book.getId(), "I love Cheesy Poofs");
+        });
+
+        staffdb.users = new ArrayList<>();
+        bookdb.items = new ArrayList<>();
+
+        staffdb.update();
+        bookdb.update();
+    }
+
+    @Test
     @DisplayName("ErrorThrowing")
     void testCapacityErrorEdge() throws Exception {
 
