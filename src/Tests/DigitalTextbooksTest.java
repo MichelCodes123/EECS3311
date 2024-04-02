@@ -1,13 +1,21 @@
 package Tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Date;
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import database_access.DigitalTBAccess;
+import database_access.VisitorAccess;
+import logic.DigitalTBUtilities;
 import models.Course;
+import models.Items.Item;
+import models.Items.DigitalTB.DigitalTB;
 import models.Items.PhysicalItems.Textbook;
 import models.Users.Student;
 
@@ -15,10 +23,25 @@ class DigitalTextbooksTest {
 
 	
 	
-	@Test
-	void verifyDigitize() {
+	@BeforeEach
+	public void init() {
+		
+		DigitalTBAccess.getInstance().items.clear();
+		try {
+			VisitorAccess.getInstance().update();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
+	
+	@AfterEach
+	public void ok() {
+		init();
+	}
+	
+
 	@Test
 	void addDigitalTB() {
 
@@ -34,7 +57,13 @@ class DigitalTextbooksTest {
 		arr.add(new Course("EECS2311", ar));
 		s.setCourses(arr);
 
-		assertEquals(1, s.getDigital_textbooks().size());
+		try {
+			DigitalTBAccess.getInstance().load();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertEquals(1, DigitalTBAccess.getInstance().items.size());
 
 	}
 
@@ -55,7 +84,14 @@ class DigitalTextbooksTest {
 		arr.add(new Course("PHYS2211", ar2));
 
 		s.setCourses(arr);
-		assertEquals(2, s.getDigital_textbooks().size());
+		
+		try {
+			DigitalTBAccess.getInstance().load();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertEquals(2, DigitalTBAccess.getInstance().items.size());
 
 	}
 
@@ -79,10 +115,31 @@ class DigitalTextbooksTest {
 		arr.add(a2);
 
 		s.setCourses(arr);
+		
 		s.removeCourse(a2);
 
-		assertEquals(1, s.getDigital_textbooks().size());
+		try {
+			DigitalTBAccess.getInstance().load();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertEquals(1, DigitalTBAccess.getInstance().items.size());
 
 	}
+	
+	@Test 
+	void testDigitize() {
+		
+		Textbook a = new Textbook("100-23", "Quantum Mechanics", "UpperLibrary", true, new Date(0).getTime(), 25.29);
+		Item b = DigitalTBUtilities.digitize(a, "EECS2311");
+		
+		assertTrue(b instanceof DigitalTB);
+		
+		
+		
+	}
+	
+	
 
 }

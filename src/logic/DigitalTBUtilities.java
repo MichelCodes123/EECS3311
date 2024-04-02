@@ -37,6 +37,7 @@ public class DigitalTBUtilities {
 
 					DigitalTB newTb = DigitalTBUtilities.digitize(tb, courses.getName());
 					
+					
 					studentdb.users.add(s);
 					try {
 						studentdb.update();
@@ -45,6 +46,7 @@ public class DigitalTBUtilities {
 					}
 					acc.items.add(newTb);
 				}
+				
 			}
 		}
 		try {
@@ -63,9 +65,15 @@ public class DigitalTBUtilities {
 			stringTbs.add(arr.getName());
 				
 		}
+		//acc.items.removeAll(stringTbs);
 		d.removeAll(stringTbs);
 				
-		
+		try {
+			acc.load();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Iterator<Item> b = acc.items.iterator();
 		while (b.hasNext()) {
 			Item t = b.next();
@@ -82,8 +90,6 @@ public class DigitalTBUtilities {
 			e.printStackTrace();
 		}
 		
-
-
 	}
 
 }
