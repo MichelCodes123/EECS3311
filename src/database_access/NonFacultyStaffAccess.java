@@ -3,10 +3,11 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import logic.UserFactory;
-import models.Users.*;
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
+
+import logic.UserFactory;
+import models.Users.User;
 
 
 public class NonFacultyStaffAccess {
