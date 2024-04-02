@@ -15,6 +15,11 @@ import models.Users.User;
 public class DigitalTBUtilities {
 
 	public static DigitalTB digitize(Textbook b, String courseName) {
+		
+		if (b == null || courseName.equals("")) {
+			return null;
+		}
+		
 
 		return new DigitalTB(b.getId(),b.getName(),courseName);
 
@@ -36,8 +41,7 @@ public class DigitalTBUtilities {
 				for (Textbook tb : courses.getTextbooks()) {
 
 					DigitalTB newTb = DigitalTBUtilities.digitize(tb, courses.getName());
-					
-					
+					((Student) s).addDigitalTB(newTb.getName());
 					studentdb.users.add(s);
 					try {
 						studentdb.update();

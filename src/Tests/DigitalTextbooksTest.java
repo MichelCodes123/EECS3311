@@ -1,5 +1,6 @@
 package Tests;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -115,7 +116,6 @@ class DigitalTextbooksTest {
 		arr.add(a2);
 
 		s.setCourses(arr);
-		
 		s.removeCourse(a2);
 
 		try {
@@ -133,12 +133,76 @@ class DigitalTextbooksTest {
 		
 		Textbook a = new Textbook("100-23", "Quantum Mechanics", "UpperLibrary", true, new Date(0).getTime(), 25.29);
 		Item b = DigitalTBUtilities.digitize(a, "EECS2311");
-		
 		assertTrue(b instanceof DigitalTB);
 		
+	}
+	
+	@Test 
+	void testDigitizeName() {
 		
+		Textbook a = new Textbook("100-23", "Quantum Mechanics", "UpperLibrary", true, new Date(0).getTime(), 25.29);
+		Item b = DigitalTBUtilities.digitize(a, "EECS2311");
+		assertEquals(b.getName(), "Quantum Mechanics");
 		
 	}
+	@Test 
+	void testDigitizeId(){
+		
+		Textbook a = new Textbook("100-23", "Quantum Mechanics", "UpperLibrary", true, new Date(0).getTime(), 25.29);
+		Item b = DigitalTBUtilities.digitize(a, "EECS2311");
+		assertEquals(b.getId(), "100-23");
+		
+	}
+	@Test 
+	void testDigitizeCourseName(){
+		
+		Textbook a = new Textbook("100-23", "Quantum Mechanics", "UpperLibrary", true, new Date(0).getTime(), 25.29);
+		Item b = DigitalTBUtilities.digitize(a, "EECS2311");
+		assertEquals(((DigitalTB) b).getCourseName(), "EECS2311");
+		
+	}
+	
+	@Test
+	void courseNoTB() {
+		ArrayList<Course> arr = new ArrayList<Course>();
+
+		Student s = new Student("12-00", "Mitochondria", "charge@gmail.com", "password13", true, 0.0, true, null, null,
+				arr, new ArrayList<String>());
+		
+		arr.add(new Course("EECS2311"));
+		
+		s.setCourses(arr);
+	
+		try {
+			DigitalTBAccess.getInstance().load();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertEquals(0, DigitalTBAccess.getInstance().items.size());
+
+		
+	}
+	
+	@Test
+	void testNullTB() {
+		
+		Textbook a = new Textbook("100-23", "Quantum Mechanics", "UpperLibrary", true, new Date(0).getTime(), 25.29);
+		Item b = DigitalTBUtilities.digitize(null, "EECS2311");
+		assertNull(b);
+		
+	}
+	
+	@Test
+	void testBlankCourseName() {
+		
+		Textbook a = new Textbook("100-23", "Quantum Mechanics", "UpperLibrary", true, new Date(0).getTime(), 25.29);
+		Item b = DigitalTBUtilities.digitize(a, "");
+		assertNull(b);
+		
+	}
+	
+	
 	
 	
 
