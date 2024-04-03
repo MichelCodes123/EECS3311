@@ -2,6 +2,7 @@ package Tests;
 
 import static org.junit.Assert.assertTrue;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,6 +19,7 @@ public class EnableItemCommandTest {
     public void setUp() {
         libraryManager = new LibraryManager("path");
     }
+    
 
     @Test
     public void testEnableExistingBook() throws Exception {
@@ -31,7 +33,10 @@ public class EnableItemCommandTest {
 
         // Assert
         assertTrue(book.getPurchasability());
+         // Clean up - remove the added book
+         libraryManager.removeItem("1", "Book");
     }
+    
     @Test
     public void testEnableNonexistentBook() throws Exception {
         // Arrange
@@ -43,8 +48,10 @@ public class EnableItemCommandTest {
 
         // Assert: Should not throw an exception, and no item should be enabled since none exist
         assertTrue(libraryManager.getItems().isEmpty()); // Ensure the list remains empty
+         // Clean up - remove the added book
+         libraryManager.removeItem("2", "Book");
     }
-
+    
 
     
 
@@ -60,6 +67,8 @@ public class EnableItemCommandTest {
 
         // Assert
         assertTrue(magazine.getPurchasability());
+        // Clean up - remove the added magazine
+         libraryManager.removeItem(magazine.getId(), "Magazine") ;
     }
 
     @Test
@@ -73,6 +82,9 @@ public class EnableItemCommandTest {
 
         // Assert: Should not throw an exception, and no item should be enabled since none exist
         assertTrue(libraryManager.getItems().isEmpty()); // Ensure the list remains empty
+        // Clean up - remove the added magazine
+        libraryManager.removeItem("2", "Magazine");
+
     }
 
     @Test
@@ -87,6 +99,8 @@ public class EnableItemCommandTest {
 
         // Assert
         assertTrue(cd.getPurchasability());
+         // Clean up - remove the added CD
+         libraryManager.removeItem("1", "Cd");
     }
 
     @Test
@@ -137,6 +151,8 @@ public class EnableItemCommandTest {
         command.execute(libraryManager.getItems(), "path", libraryManager);
         // No exception is expected, so the test passes if it reaches this point
         assertTrue(true);
+        // Clean up - remove the added magazine
+        libraryManager.removeItem("1", "Magazine");
     }
 
 
@@ -153,6 +169,10 @@ public class EnableItemCommandTest {
         command.execute(libraryManager.getItems(), "path", libraryManager);
 
         assertTrue(book.getPurchasability());
+         // Clean up - remove the added items
+        libraryManager.removeItem("1", "Book");
+        libraryManager.removeItem("1", "Magazine");
+    
     }
 
     @Test
@@ -168,6 +188,9 @@ public class EnableItemCommandTest {
         command.execute(libraryManager.getItems(), "path", libraryManager);
 
         assertTrue(book1.getPurchasability());
+         // Clean up - remove the added books
+         libraryManager.removeItem("1", "Book");
+         libraryManager.removeItem("2", "Book");
     }
     
     
