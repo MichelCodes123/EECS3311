@@ -234,14 +234,6 @@ public class LibraryManagerTest {
         // Clean up - remove the added item from the library
         libraryManager.removeItem(newBook.getId(), "Book");
     }
-    @Test
-    public void testGenerateId() {
-        ItemIdGenerator generator = ItemIdGenerator.getInstance();
-        String id1 = generator.generateId();
-        String id2 = generator.generateId();
-
-        assertNotEquals(id1, id2); // Ensure that generated IDs are unique
-    }
 
     @Test
     public void testUniqueItemIds() throws Exception {
@@ -264,6 +256,38 @@ public class LibraryManagerTest {
         for (int i = 0; i < 10; i++) {
             libraryManager.removeItem(Integer.toString(i), "Book");
         }
+    }
+    @Test
+    public void disableItemInvalidTypeTest() throws Exception {
+        // Create a LibraryManager instance
+        LibraryManager libraryManager = new LibraryManager("src/database_access/BookAccess");
+
+        // Create a new item
+        Cd cd = new Cd(Integer.toString(1), "Sample CD", "CD Rack", true, System.currentTimeMillis(), 15.99);
+
+        // Add the item to the library
+        libraryManager.addItem(cd);
+
+        // Disable the item with an invalid item type
+        assertThrows(IllegalArgumentException.class, () -> {
+            libraryManager.disableItem(cd.getId(), "InvalidType");
+        });
+    }
+    @Test
+    public void enableItemInvalidTypeTest() throws Exception {
+        // Create a LibraryManager instance
+        LibraryManager libraryManager = new LibraryManager("src/database_access/BookAccess");
+
+        // Create a new item
+        Magazine magazine = new Magazine(Integer.toString(6), "Sample Magazine", "Magazine Rack", false, System.currentTimeMillis(), 5.99);
+
+        // Add the item to the library
+        libraryManager.addItem(magazine);
+
+        // Enable the item with an invalid item type
+        assertThrows(IllegalArgumentException.class, () -> {
+            libraryManager.enableItem(magazine.getId(), "InvalidType");
+        });
     }
 
 

@@ -44,20 +44,20 @@ public class DigitalTBUtilities {
 						throw new RuntimeException(e);
 					}
 					
-//					((Student) s).addDigitalTB(newTb.getName());
-//					int i = 0;
-//
-//					for (User student : studentdb.users) {
-//						if (student.getId().equals(s.getId())) {
-//							studentdb.users.set(i, s);
-//							try {
-//								studentdb.update();
-//							} catch (Exception e) {
-//								throw new RuntimeException(e);
-//							}
-//						}
-//						i++;
-//					}
+					((Student) s).addDigitalTB(newTb.getName());
+					int i = 0;
+
+					for (User student : studentdb.users) {
+						if (student.getId().equals(s.getId())) {
+							studentdb.users.set(i, s);
+							try {
+								studentdb.update();
+							} catch (Exception e) {
+								throw new RuntimeException(e);
+							}
+						}
+						i++;
+					}
 					acc.items.add(newTb);
 				}
 			}

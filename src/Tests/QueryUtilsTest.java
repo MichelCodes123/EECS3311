@@ -273,6 +273,12 @@ public class QueryUtilsTest {
         ArrayList<PhysicalItem> expiring_items = utils.getExpiringItems(prof.getId());
         assertEquals(3, expiring_items.size());
 
+        profdb.users = new ArrayList<>();
+        db.items = new ArrayList<>();
+
+        db.update();
+        profdb.update();
+
     }
     @Test
     void getExpiringItemsTest2() throws Exception {
