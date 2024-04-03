@@ -26,7 +26,6 @@ public class FacultyMemberAccessTest {
     private QueryUtilities queryUtilities = new QueryUtilities();
     @Before
     public void setUp() {
-        
         facultyMemberAccess = FacultyMemberAccess.getInstance();
         facultyMemberAccess.users.clear(); // Clear the list to ensure a clean state for each test
         

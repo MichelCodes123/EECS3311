@@ -65,6 +65,7 @@ public class MagazineAccessTest {
         magazineAccess.addItem(Magazine);
         magazineAccess.enableItem(Magazine.getId());
         assertEquals(1, magazineAccess.items.size());
+        Magazine = (Magazine) magazineAccess.items.get(0);
         assertTrue(Magazine.getPurchasability(),"Magazine should be enabled.");
     }
 
@@ -73,6 +74,7 @@ public class MagazineAccessTest {
         Magazine Magazine = new Magazine("0", "Test Magazine", "Location", true, new Date().getTime(), 10.0);
         magazineAccess.addItem(Magazine);
         magazineAccess.disableItem(Magazine.getId());
+        Magazine = (Magazine) magazineAccess.items.get(0);
         assertFalse(Magazine.getPurchasability(), "Magazine should be disabled.");
     }
 

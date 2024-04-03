@@ -55,7 +55,6 @@ public class StudentAccessTest {
   
     @Test
     public void testLoad() throws Exception {
-       
         studentdb.load();
         assertEquals(0, studentdb.users.size());
         

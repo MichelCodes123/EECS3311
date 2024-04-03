@@ -65,6 +65,7 @@ class CdAccessTest {
         cdAccess.addItem(Cd);
         cdAccess.enableItem(Cd.getId());
         assertEquals(1, cdAccess.items.size());
+        Cd = (Cd) cdAccess.items.get(0);
         assertTrue(Cd.getPurchasability(),"Cd should be enabled.");
     }
 
@@ -73,6 +74,7 @@ class CdAccessTest {
         Cd Cd = new Cd("0", "Test Cd", "Location", true, new Date().getTime(), 10.0);
         cdAccess.addItem(Cd);
         cdAccess.disableItem(Cd.getId());
+        Cd = (Cd) cdAccess.items.get(0);
         assertFalse(Cd.getPurchasability(), "Cd should be disabled.");
     }
 

@@ -65,6 +65,7 @@ class BookAccessTest {
         bookAccess.addItem(book);
         bookAccess.enableItem(book.getId());
         assertEquals(1, bookAccess.items.size());
+        book = (Book) bookAccess.items.get(0);
         assertTrue(book.getPurchasability(),"Book should be enabled.");
     }
 
@@ -73,6 +74,7 @@ class BookAccessTest {
         Book book = new Book("0", "Test Book", "Location", true, new Date().getTime(), 10.0);
         bookAccess.addItem(book);
         bookAccess.disableItem(book.getId());
+        book = (Book) bookAccess.items.get(0);
         assertFalse(book.getPurchasability(), "Book should be disabled.");
     }
 
