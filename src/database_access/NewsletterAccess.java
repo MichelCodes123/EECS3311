@@ -23,6 +23,7 @@ public class NewsletterAccess {
         }
         return db_instance;
     }
+    
 
     public void load() throws Exception{
         CsvReader reader = new CsvReader( path);

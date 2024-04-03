@@ -33,6 +33,7 @@ public class BookAccess{
     }
 
     public void addItem(Book book) throws Exception {
+        if(book == null) throw new Exception("Book is null");
         items.add(book);
         update();
         load();
@@ -51,7 +52,7 @@ public class BookAccess{
 
     public void disableItem(String itemId) throws Exception {
         for (PhysicalItem item : items) {
-            if (Objects.equals(item.getId(), itemId)) {
+            if (item.getId().equals(itemId)) {
                 item.setPurchasability(false);
                 update();
                 load();
@@ -61,6 +62,7 @@ public class BookAccess{
     }
 
     public void removeItem(String itemId) throws Exception {
+        if(itemId == null) throw new Exception("Item id is null");
         for (PhysicalItem item : items) {
             if (Objects.equals(item.getId(), itemId)){
                 items.remove(item);
