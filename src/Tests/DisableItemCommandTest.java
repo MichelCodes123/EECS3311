@@ -36,6 +36,7 @@ public class DisableItemCommandTest {
         command.execute(libraryManager.getItems(), "path", libraryManager);
 
         assertFalse(book.getPurchasability()); // Verify book is disabled
+        libraryManager.removeItem("1", "Book");
     }
 
 
@@ -50,6 +51,7 @@ public class DisableItemCommandTest {
         command.execute(libraryManager.getItems(), "path", libraryManager);
 
         assertFalse(cd.getPurchasability()); // Verify CD is disabled
+        libraryManager.removeItem("3", "Cd");
     }
 
     @Test
@@ -66,6 +68,7 @@ public class DisableItemCommandTest {
         } catch (IllegalArgumentException e) {
             assertEquals(itemsBefore.size(), items.size());
         }
+        libraryManager.removeItem("4", "Book");
     }
 
  
@@ -94,6 +97,7 @@ public class DisableItemCommandTest {
 
         // Verify that the magazine item is disabled
         assertFalse("Purchasability of the magazine is not set to false after disabling", libraryManager.getItems().get(0).getPurchasability());
+        libraryManager.removeItem("1", "Magazine");
     }
     @Test(expected = IllegalArgumentException.class)
     public void testDisableItemWithInvalidType() throws Exception {
@@ -104,6 +108,7 @@ public class DisableItemCommandTest {
         // Attempt to disable the magazine item with an invalid type
         DisableItemCommand disableCommand = new DisableItemCommand("1", "InvalidType", libraryManager);
         disableCommand.execute(libraryManager.getItems(), "path", libraryManager);
+        libraryManager.removeItem("1", "Magazine");
     }
    
   
@@ -131,6 +136,9 @@ public class DisableItemCommandTest {
         assertFalse("Purchasability of the book is not set to false after disabling", libraryManager.getItems().get(0).getPurchasability());
         assertFalse("Purchasability of the magazine is not set to false after disabling", libraryManager.getItems().get(1).getPurchasability());
         assertFalse("Purchasability of the CD is not set to false after disabling", libraryManager.getItems().get(2).getPurchasability());
+        libraryManager.removeItem("B001", "Book");
+        libraryManager.removeItem("M001", "Magazine");
+        libraryManager.removeItem("C001", "Cd");
     }
     @Test
     public void testDisableAlreadyDisabledItem() throws Exception {
@@ -145,6 +153,7 @@ public class DisableItemCommandTest {
 
         // Verify that the magazine item remains disabled
         assertFalse("Purchasability of the magazine is not set to false after disabling again", libraryManager.getItems().get(0).getPurchasability());
+        libraryManager.removeItem("1", "Magazine");
     }
     @Test
     public void testDisableAlreadyDisabledBookItem() throws Exception {
@@ -156,6 +165,7 @@ public class DisableItemCommandTest {
         command.execute(libraryManager.getItems(), "path", libraryManager);
 
         assertFalse(book.getPurchasability()); // Verify book remains disabled
+        libraryManager.removeItem("8", "Book");
     }
     @Test
     public void testDisableAlreadyDisabledCdItem() throws Exception {
@@ -167,6 +177,7 @@ public class DisableItemCommandTest {
         command.execute(libraryManager.getItems(), "path", libraryManager);
 
         assertFalse(cd.getPurchasability()); // Verify CD remains disabled
+        libraryManager.removeItem("10", "Cd");
     }
     
 }
