@@ -36,6 +36,8 @@ public class UpdateCommandTest {
 
         // Verify that the book is updated in the library
         assertTrue(libraryManager.getItems().contains(updatedBook));
+        libraryManager.removeItem(book.getId(), "Book");
+       
     }
 
    
@@ -59,6 +61,8 @@ public class UpdateCommandTest {
 
         // Verify that the CD is updated in the library
         assertTrue(libraryManager.getItems().contains(updatedCd));
+        libraryManager.removeItem(cd.getId(), "Cd");
+       
     }
 
    
@@ -82,6 +86,8 @@ public class UpdateCommandTest {
 
         // Verify that the magazine is updated in the library
         assertTrue(libraryManager.getItems().contains(updatedMagazine));
+        libraryManager.removeItem(magazine.getId(), "Magazine");
+       
     }
 
    
@@ -130,6 +136,9 @@ public class UpdateCommandTest {
         assertTrue(libraryManager.getItems().contains(updatedBook));
         assertFalse(libraryManager.getItems().contains(book1));
         assertTrue(libraryManager.getItems().contains(book2));
+        libraryManager.removeItem(book1.getId(), "Book");
+        libraryManager.removeItem(book2.getId(), "Book");
+     
     }
 
     
@@ -172,6 +181,8 @@ public class UpdateCommandTest {
 
         // Verify that the book is updated in the library
         assertTrue(libraryManager.getItems().contains(updatedBook));
+        libraryManager.removeItem(updatedBook.getId(), "Book");
+      
     }
 
    
@@ -195,6 +206,7 @@ public class UpdateCommandTest {
 
         // Verify that the book is updated in the library
         assertTrue(libraryManager.getItems().contains(updatedBook));
+        libraryManager.removeItem(updatedBook.getId(), "Book");
     }
 
     
@@ -223,6 +235,8 @@ public class UpdateCommandTest {
         // Verify that the book is updated in the library
         assertTrue(libraryManager.getItems().contains(updatedBook));
         assertTrue(libraryManager.getItems().contains(cd)); // Ensure other item type remains unaffected
+        libraryManager.removeItem(updatedBook.getId(), "Book");
+        libraryManager.removeItem(cd.getId(), "Cd");
     }
 
 
@@ -249,6 +263,9 @@ public class UpdateCommandTest {
         // Verify that only the specified book is updated in the library
         assertTrue(libraryManager.getItems().contains(updatedBook));
         assertTrue(libraryManager.getItems().contains(book1)); // Ensure other items are still present
+        libraryManager.removeItem(updatedBook.getId(), "Book");
+        libraryManager.removeItem(book1.getId(), "Book");
+        libraryManager.removeItem(book2.getId(), "Book");
     }
     
 }

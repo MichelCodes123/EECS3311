@@ -237,9 +237,10 @@ public class LibraryManagerTest {
 
     @Test
     public void testUniqueItemIds() throws Exception {
-        // Create a LibraryManager instance
-        LibraryManager libraryManager = new LibraryManager("src/database_access");
+    // Create a LibraryManager instance
+    LibraryManager libraryManager = new LibraryManager("src/database_access");
 
+    try {
         // Add multiple items to the library
         for (int i = 0; i < 10; i++) {
             libraryManager.addItem(new Book( Integer.toString(i), "Book", "Shelf", true, System.currentTimeMillis(), 10.99));
@@ -253,18 +254,23 @@ public class LibraryManagerTest {
         for (PhysicalItem item : items) {
             assertTrue(itemIds.add(item.getId()), "Duplicate ID found");
         }
+    } finally {
+        // Clean up - remove the added items from the library
         for (int i = 0; i < 10; i++) {
             libraryManager.removeItem(Integer.toString(i), "Book");
         }
+     }
     }
+
     @Test
     public void disableItemInvalidTypeTest() throws Exception {
-        // Create a LibraryManager instance
-        LibraryManager libraryManager = new LibraryManager("src/database_access/BookAccess");
+    // Create a LibraryManager instance
+    LibraryManager libraryManager = new LibraryManager("src/database_access/BookAccess");
 
-        // Create a new item
-        Cd cd = new Cd(Integer.toString(1), "Sample CD", "CD Rack", true, System.currentTimeMillis(), 15.99);
+    // Create a new item
+    Cd cd = new Cd(Integer.toString(1), "Sample CD", "CD Rack", true, System.currentTimeMillis(), 15.99);
 
+    try {
         // Add the item to the library
         libraryManager.addItem(cd);
 
@@ -272,15 +278,21 @@ public class LibraryManagerTest {
         assertThrows(IllegalArgumentException.class, () -> {
             libraryManager.disableItem(cd.getId(), "InvalidType");
         });
+    } finally {
+        // Clean up - remove the added item from the library
+        libraryManager.removeItem(cd.getId(), "Cd");
     }
+    }
+
     @Test
     public void enableItemInvalidTypeTest() throws Exception {
-        // Create a LibraryManager instance
-        LibraryManager libraryManager = new LibraryManager("src/database_access/BookAccess");
+    // Create a LibraryManager instance
+    LibraryManager libraryManager = new LibraryManager("src/database_access/BookAccess");
 
-        // Create a new item
-        Magazine magazine = new Magazine(Integer.toString(6), "Sample Magazine", "Magazine Rack", false, System.currentTimeMillis(), 5.99);
+    // Create a new item
+    Magazine magazine = new Magazine(Integer.toString(6), "Sample Magazine", "Magazine Rack", false, System.currentTimeMillis(), 5.99);
 
+    try {
         // Add the item to the library
         libraryManager.addItem(magazine);
 
@@ -288,7 +300,12 @@ public class LibraryManagerTest {
         assertThrows(IllegalArgumentException.class, () -> {
             libraryManager.enableItem(magazine.getId(), "InvalidType");
         });
+    } finally {
+        // Clean up - remove the added item from the library
+        libraryManager.removeItem(magazine.getId(), "Magazine");
+     }
     }
+
 
 
 }
