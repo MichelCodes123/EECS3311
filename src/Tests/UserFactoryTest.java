@@ -104,6 +104,8 @@ class UserFactoryTest {
 		User usr = u.CreateUser("FacultyMember", "1011", "Johnny", "j@gmail.com", "pass", true, 0.0, true, null, null);
 		assertEquals("Johnny", usr.getName());
 	}
+	
+
 	@Test
 	void verifyCorrectFieldVisitor() {
 		

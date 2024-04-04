@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import database_access.DigitalTBAccess;
-import database_access.VisitorAccess;
 import logic.DigitalTBUtilities;
 import models.Course;
 import models.Items.Item;
@@ -23,13 +22,18 @@ import models.Users.Student;
 class DigitalTextbooksTest {
 
 	
-	
 	@BeforeEach
 	public void init() {
-		
+
+		try {
+			DigitalTBAccess.getInstance().load();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		DigitalTBAccess.getInstance().items.clear();
 		try {
-			VisitorAccess.getInstance().update();
+			DigitalTBAccess.getInstance().update();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
