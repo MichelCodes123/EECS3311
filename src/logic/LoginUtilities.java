@@ -116,8 +116,6 @@ public class LoginUtilities {
 		catch (Exception e){
 
 		}
-
-
 		return false;
 	}
 

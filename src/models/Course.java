@@ -16,6 +16,11 @@ public class Course {
 
 	}
 
+	public Course(String string) {
+		this.name = string;
+		textbooks = new ArrayList<Textbook>();
+	}
+
 	public int getCode() {
 		return code;
 	}

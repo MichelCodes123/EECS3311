@@ -15,6 +15,11 @@ import models.Users.User;
 public class DigitalTBUtilities {
 
 	public static DigitalTB digitize(Textbook b, String courseName) {
+		
+		if (b == null || courseName.equals("")) {
+			return null;
+		}
+		
 
 		return new DigitalTB(b.getId(),b.getName(),courseName);
 
@@ -36,7 +41,7 @@ public class DigitalTBUtilities {
 				for (Textbook tb : courses.getTextbooks()) {
 
 					DigitalTB newTb = DigitalTBUtilities.digitize(tb, courses.getName());
-					
+					((Student) s).addDigitalTB(newTb.getName());
 					studentdb.users.add(s);
 					try {
 						studentdb.update();
@@ -58,8 +63,10 @@ public class DigitalTBUtilities {
 						}
 						i++;
 					}
+
 					acc.items.add(newTb);
 				}
+				
 			}
 		}
 		try {
@@ -78,9 +85,15 @@ public class DigitalTBUtilities {
 			stringTbs.add(arr.getName());
 				
 		}
+		//acc.items.removeAll(stringTbs);
 		d.removeAll(stringTbs);
 				
-		
+		try {
+			acc.load();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Iterator<Item> b = acc.items.iterator();
 		while (b.hasNext()) {
 			Item t = b.next();
@@ -97,8 +110,6 @@ public class DigitalTBUtilities {
 			e.printStackTrace();
 		}
 		
-
-
 	}
 
 }
