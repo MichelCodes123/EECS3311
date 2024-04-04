@@ -49,7 +49,7 @@ public class QueryUtilsTest {
         visitordb = VisitorAccess.getInstance();
         staffdb = NonFacultyStaffAccess.getInstance();
         bookdb = BookAccess.getInstance();
-        cddb = CdAccess.getInstance(); 
+        cddb = CdAccess.getInstance();
         magdb = MagazineAccess.getInstance();
 
         profdb.users.clear();
@@ -61,15 +61,17 @@ public class QueryUtilsTest {
         magdb.items.clear();
 
     }
+
     @AfterEach
-    void tearDown() {
-        profdb.users.clear();
-        studentdb.users.clear();
-        visitordb.users.clear();
-        staffdb.users.clear();
-        bookdb.items.clear();
-        cddb.items.clear();
-        magdb.items.clear();
+    void tearDown() throws Exception {
+        profdb.update();
+        studentdb.update();
+        visitordb.update();
+        staffdb.update();
+        bookdb.update();
+        cddb.update();
+        magdb.update();
+
     }
 
     @Test
@@ -102,15 +104,17 @@ public class QueryUtilsTest {
         assertEquals(5, utils.allUsers().size());
 
     }
+
     @Test
-    void getAllItemsTest() throws Exception{
+    void getAllItemsTest() throws Exception {
         QueryUtilities utils = new QueryUtilities();
 
         Book book = new Book("0", "Game of Thrones", "RM 125", false, new Date().getTime(), 0.0);
         Book book2 = new Book("1", "Game of Thrones2", "RM 125", true, new Date().getTime() + 86400000 * 2, 0.0);
         Book book3 = new Book("2", "Game of Thrones3", "RM 125", true, new Date().getTime() + 86400000 * 2, 0.0);
         Cd cd = new Cd("3", "Game of Thrones Movie", "RM 125", true, new Date().getTime() + 86400000, 0.0);
-        Magazine mag = new Magazine("4", "Game of Thrones Vogue Magazine", "RM 125", true, new Date().getTime() - 86400000, 0.0);
+        Magazine mag = new Magazine("4", "Game of Thrones Vogue Magazine", "RM 125", true,
+                new Date().getTime() - 86400000, 0.0);
 
         bookdb.items.add(book);
         bookdb.items.add(book2);
@@ -125,6 +129,7 @@ public class QueryUtilsTest {
         assertNotNull(utils.allPhysicalItems());
         assertEquals(5, utils.allPhysicalItems().size());
     }
+
     @Test
     void getUserTest() throws Exception {
         QueryUtilities utils = new QueryUtilities();
@@ -146,6 +151,7 @@ public class QueryUtilsTest {
 
         assertEquals(prof.getId(), utils.getUser("2").getId());
     }
+
     @Test
     void getUserbyEmailTest() throws Exception {
         QueryUtilities utils = new QueryUtilities();
@@ -166,15 +172,17 @@ public class QueryUtilsTest {
         assertEquals(student.getEmail(), utils.getUserByEmail("e").getEmail());
         assertEquals(prof.getEmail(), utils.getUserByEmail("m").getEmail());
     }
+
     @Test
-    void getPhysicalItemTest() throws Exception{
+    void getPhysicalItemTest() throws Exception {
         QueryUtilities utils = new QueryUtilities();
 
         Book book = new Book("0", "Game of Thrones", "RM 125", false, new Date().getTime(), 0.0);
         Book book2 = new Book("1", "Game of Thrones2", "RM 125", true, new Date().getTime() + 86400000 * 2, 0.0);
         Book book3 = new Book("2", "Game of Thrones3", "RM 125", true, new Date().getTime() + 86400000 * 2, 0.0);
         Cd cd = new Cd("3", "Game of Thrones Movie", "RM 125", true, new Date().getTime() + 86400000, 0.0);
-        Magazine mag = new Magazine("4", "Game of Thrones Vogue Magazine", "RM 125", true, new Date().getTime() - 86400000, 0.0);
+        Magazine mag = new Magazine("4", "Game of Thrones Vogue Magazine", "RM 125", true,
+                new Date().getTime() - 86400000, 0.0);
 
         bookdb.items.add(book);
         bookdb.items.add(book2);
@@ -198,43 +206,35 @@ public class QueryUtilsTest {
         assertEquals(cd.getId(), utils.getPhysicalItem("3").getId());
         assertEquals(mag.getId(), utils.getPhysicalItem("4").getId());
     }
-    @Test
-    void getUserAssociatedItemsTest() throws Exception{
-        QueryUtilities utils = new QueryUtilities();
 
-       
-        
+    @Test
+    void getUserAssociatedItemsTest() throws Exception {
+        QueryUtilities utils = new QueryUtilities();
 
         Book book = new Book("0", "Game of Thrones", "RM 125", false, new Date().getTime(), 0.0);
         Book book2 = new Book("1", "Game of Thrones2", "RM 125", true, new Date().getTime() + 86400000 * 2, 0.0);
         Book book3 = new Book("2", "Game of Thrones3", "RM 125", true, new Date().getTime() + 86400000 * 2, 0.0);
-        
-        
-       
 
         bookdb.items.add(book);
         bookdb.items.add(book2);
         bookdb.items.add(book3);
-   
-        
-     
+
         ArrayList<String> items = new ArrayList<>();
         items.add(book.getId());
         items.add(book2.getId());
         items.add(book3.getId());
         Student student = new Student("0", "John", "e", "p", true, 0.0, true, items,
-        new ArrayList<String>(), new ArrayList<Course>(), new ArrayList<String>());
+                new ArrayList<String>(), new ArrayList<Course>(), new ArrayList<String>());
 
         studentdb.users.add(student);
 
         assertNotNull(items);
         assertEquals(3, items.size());
-        
+
         studentdb.update();
         studentdb.load();
+        student = (Student) studentdb.users.get(0);
         assertEquals(items.size(), student.getRented_item_list().size());
-        
-
 
         assertNotNull(utils.getUserAssociatedItems(student));
         assertEquals(3, utils.getUserAssociatedItems(student).size());
@@ -246,9 +246,9 @@ public class QueryUtilsTest {
         Long current_date = new Date().getTime();
 
         Book book = new Book("id", "Name", "location", true, current_date + (long) 1000000000, 0.0);
-        Book book2 = new Book("id2", "Name1", "location", true, (long) (24 * 60 * 60 * 1000), 0.0);
-        Book book3 = new Book("id3", "Name2", "location", true, (long) (24 * 60 * 60 * 1000), 0.0);
-        Book book4 = new Book("id4", "Name3", "location", true, (long) (24 * 60 * 60 * 1000), 0.0);
+        Book book2 = new Book("id2", "Name1", "location", true, current_date, 0.0);
+        Book book3 = new Book("id3", "Name2", "location", true, current_date, 0.0);
+        Book book4 = new Book("id4", "Name3", "location", true, current_date, 0.0);
         FacultyMember prof = new FacultyMember("id", "Name", "location", "password", true, 0.0, true, new ArrayList<>(),
                 new ArrayList<>());
 
@@ -280,18 +280,19 @@ public class QueryUtilsTest {
         profdb.update();
 
     }
+
     @Test
     void getExpiringItemsTest2() throws Exception {
         BookAccess db = BookAccess.getInstance();
         Long current_date = new Date().getTime();
 
         Book book = new Book("id", "Name", "location", true, current_date + (long) 1000000000, 0.0);
-      
+
         FacultyMember prof = new FacultyMember("id", "Name", "location", "password", true, 0.0, true, new ArrayList<>(),
                 new ArrayList<>());
 
         db.items.add(book);
-      
+
         db.update();
 
         FacultyMemberAccess profdb = FacultyMemberAccess.getInstance();
@@ -300,21 +301,19 @@ public class QueryUtilsTest {
 
         QueryUtilities utils = new QueryUtilities();
         ItemStrategy strat = new RentItem();
-       
 
-       
         strat.execute(book.getId(), prof.getId());
-        
 
         ArrayList<PhysicalItem> expiring_items = utils.getExpiringItems(prof.getId());
         assertEquals(0, expiring_items.size());
 
     }
 
-    @Test 
-    void getTextbookTest() throws Exception{
+    @Test
+    void getTextbookTest() throws Exception {
         QueryUtilities utils = new QueryUtilities();
-        Textbook textbook = new Textbook("5", "DataStructures", "RM 125", false, new Date().getTime()+ 86400000*2, 0.0);
+        Textbook textbook = new Textbook("5", "DataStructures", "RM 125", false, new Date().getTime() + 86400000 * 2,
+                0.0);
         Book book = new Book("0", "Game of Thrones", "RM 125", false, new Date().getTime(), 0.0);
         bookdb.items.add(book);
         bookdb.items.add(textbook);
@@ -322,24 +321,23 @@ public class QueryUtilsTest {
         bookdb.load();
         assertNotNull(bookdb.items);
         assertEquals(2, bookdb.items.size());
-       
+
         assertEquals(textbook.getId(), utils.getTextbook("5").getId());
     }
+
     @Test
-    void getTextbookTes2t() throws Exception{
+    void getTextbookTes2t() throws Exception {
         QueryUtilities utils = new QueryUtilities();
-        
+
         Book book = new Book("0", "Game of Thrones", "RM 125", false, new Date().getTime(), 0.0);
         bookdb.items.add(book);
-       
+
         bookdb.update();
         bookdb.load();
         assertNotNull(bookdb.items);
         assertEquals(1, bookdb.items.size());
-       
+
         assertNull(utils.getTextbook("5"));
     }
-
-   
 
 }
