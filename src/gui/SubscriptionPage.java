@@ -114,7 +114,7 @@ public class SubscriptionPage {
             try {
                 SwingUtilities.invokeLater(() -> {
                     
-                    System.out.println("News Size: " + newsdb.items.size());
+                    
                     
                     if(newsdb.items.size() > 0){
                         initSubscriptionsTable();

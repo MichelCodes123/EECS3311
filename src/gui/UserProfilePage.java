@@ -47,6 +47,7 @@ public class UserProfilePage {
         SwingUtilities.invokeLater(() -> {
             try {
                 User loggedInUser = SessionManager.getCurrentUser();
+                System.out.println(loggedInUser);
                 if (loggedInUser != null) {
                     user = queryUtilities.getUser(loggedInUser.getId());
                     panel1 = new JPanel();
@@ -117,7 +118,7 @@ public class UserProfilePage {
                     numOfItems.setBackground(Color.white);
                     numOfItems.setForeground(Color.black);
                     numOfItems.setBounds(20, 75, 300, 20);
-                    System.out.println("Overdue Charge: " + user.getName());//OVERDUE CHARGE WORKING NEED TO ADD TO GUI
+                   
                     JLabel overdueCharge = new JLabel("Overdue Charge: " + user.getOverdue_charge());
                     overdueCharge.setOpaque(true); // displays background color
                     overdueCharge.setBackground(Color.white);
@@ -158,7 +159,7 @@ public class UserProfilePage {
                                 
                                 
                                 user = queryUtilities.getUser(loggedInUser.getId());
-                                System.out.println("Overdue Charge: " + user.getOverdue_charge());//OVERDUE CHARGE WORKING NEED TO ADD TO GUI 
+                               
 
                                 bookesRented = GuiUtilities.convertItemsToViewArray(items);
                                 table1 = new JTable(bookesRented, GuiUtilities.viewColumn);

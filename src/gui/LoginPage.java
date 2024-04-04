@@ -105,6 +105,7 @@ public class LoginPage {
                 SwingUtilities.invokeLater(() -> {
                     try {
                         User user = queryUtilities.getUserByEmail(email_address);
+                        System.out.println("SAME USER" + email_address.equals(user.getEmail()));
                         SessionManager.login(user);
                         frame.dispose();
 

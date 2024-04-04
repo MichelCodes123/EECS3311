@@ -30,6 +30,7 @@ public class CdAccess {
     }
 
     public void addItem(Cd cd) throws Exception {
+        if(cd == null) throw new Exception("Cd is null");
         items.add(cd);
         update();
         load();
@@ -58,6 +59,7 @@ public class CdAccess {
     }
 
     public void removeItem(String itemId) throws Exception {
+        if(itemId == null) throw new Exception("Item id is null");
         for (PhysicalItem item : items) {
             if (Objects.equals(item.getId(), String.valueOf(itemId))) {
                 items.remove(item);
