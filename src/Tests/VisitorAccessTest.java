@@ -1,16 +1,14 @@
 package Tests;
 
 
-import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
-
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 
 import java.util.ArrayList;
 
-import org.junit.Before;
 
 import database_access.VisitorAccess;
 import database_access.QueryUtilities;
@@ -25,7 +23,7 @@ import models.Users.Visitor;
 public class VisitorAccessTest {
     private VisitorAccess visitordb;
     private QueryUtilities queryUtilities = new QueryUtilities();
-    @Before
+    @BeforeEach
     public void setUp() {
         
         visitordb = VisitorAccess.getInstance();
@@ -33,14 +31,11 @@ public class VisitorAccessTest {
         
     }
     @AfterEach
-    public void tearDown() {
+    public void tearDown() throws Exception {
         visitordb.users.clear(); // Clear the list to ensure a clean state for each test
-        try {
-            visitordb.update();
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+       
+        visitordb.update();
+        
     }
     @Test
     public void testSingletonInstance() {

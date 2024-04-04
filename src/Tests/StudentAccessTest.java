@@ -1,50 +1,38 @@
 package Tests;
 
-import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-
 import java.util.ArrayList;
-import java.util.Date;
-
-import org.junit.After;
-import org.junit.Before;
-
-
 import database_access.QueryUtilities;
 import database_access.StudentAccess;
 import models.Course;
-
-
 import models.Users.Student;
-
-
-
-
-
 
 public class StudentAccessTest {
     private StudentAccess studentdb;
     private QueryUtilities queryUtilities = new QueryUtilities();
-    @Before
+
+    @BeforeEach
     public void setUp() {
-        
         studentdb = StudentAccess.getInstance();
-        studentdb.users.clear(); // Clear the list to ensure a clean state for each test
+        studentdb.users.clear(); 
+    }
+
+    @AfterEach
+    public void tearDown() throws Exception {
         
+        studentdb.users.clear(); 
+        studentdb.update(); 
     }
-    @After
-    public void tearDown() {
-        studentdb.users.clear(); // Clear the list to ensure a clean state for each test
-    }
+
     @Test
     public void testSingletonInstance() {
         StudentAccess instance1 = StudentAccess.getInstance();
         StudentAccess instance2 = StudentAccess.getInstance();
-        assertSame( instance1, instance2);
+        assertSame(instance1, instance2);
     }
     @Test
     public void testAddUser()  {
