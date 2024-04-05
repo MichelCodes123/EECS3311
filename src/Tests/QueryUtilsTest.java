@@ -3,6 +3,14 @@ package Tests;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import database_access.BookAccess;
 import database_access.CdAccess;
 import database_access.FacultyMemberAccess;
@@ -21,16 +29,8 @@ import models.Users.FacultyMember;
 import models.Users.NonFacultyStaff;
 import models.Users.Student;
 import models.Users.Visitor;
-
-import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import services.itemstrategy.ItemStrategy;
 import services.itemstrategy.RentItem;
-
-import java.util.ArrayList;
-import java.util.Date;
 
 public class QueryUtilsTest {
     private FacultyMemberAccess profdb;
@@ -64,6 +64,10 @@ public class QueryUtilsTest {
 
     @AfterEach
     void tearDown() throws Exception {
+    	
+        studentdb.users.clear();
+      
+        
         profdb.update();
         studentdb.update();
         visitordb.update();

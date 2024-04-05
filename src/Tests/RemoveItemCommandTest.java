@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import database_access.BookAccess;
+import database_access.MagazineAccess;
 import models.Items.PhysicalItems.Book;
 import models.Items.PhysicalItems.Cd;
 import models.Items.PhysicalItems.Magazine;
@@ -17,6 +19,7 @@ import models.LibraryItem.LibraryManager;
 import models.LibraryItem.RemoveItemCommand;
 
 public class RemoveItemCommandTest {
+
 
     @Test
     public void executeRemovesBookFromList() throws Exception {
@@ -34,8 +37,19 @@ public class RemoveItemCommandTest {
         List<PhysicalItem> items = new ArrayList<>();
         removeBookCommand.execute(items, "", libraryManager);
 
+        
         // Verify that the book is removed from the list
         assertFalse(items.contains(book));
+        
+        BookAccess b = BookAccess.getInstance();
+		b.load();
+		b.items.clear();
+		b.update();
+		
+		MagazineAccess m = MagazineAccess.getInstance();
+		m.load();
+		m.items.clear();
+		m.update();
     }
 
     @Test
@@ -56,26 +70,56 @@ public class RemoveItemCommandTest {
 
         // Verify that the CD is removed from the list
         assertFalse(items.contains(cd));
+        
+        BookAccess b = BookAccess.getInstance();
+		b.load();
+		b.items.clear();
+		b.update();
+		
+		MagazineAccess m = MagazineAccess.getInstance();
+		m.load();
+		m.items.clear();
+		m.update();
     }
 
     
 
     @Test
-    public void getItemIdReturnsCorrectId() {
+    public void getItemIdReturnsCorrectId() throws Exception {
         // Create a RemoveItemCommand instance
         RemoveItemCommand removeItemCommand = new RemoveItemCommand("1", "Book", null);
 
         // Verify that getItemId returns the correct ID
         assertEquals("1", removeItemCommand.getItemId());
+        
+        BookAccess b = BookAccess.getInstance();
+		b.load();
+		b.items.clear();
+		b.update();
+		
+		MagazineAccess m = MagazineAccess.getInstance();
+		m.load();
+		m.items.clear();
+		m.update();
     }
 
     @Test
-    public void getItemTypeReturnsCorrectType() {
+    public void getItemTypeReturnsCorrectType() throws Exception {
         // Create a RemoveItemCommand instance
         RemoveItemCommand removeItemCommand = new RemoveItemCommand("1", "Book", null);
 
         // Verify that getItemType returns the correct type
         assertEquals("Book", removeItemCommand.getItemType());
+        
+        BookAccess b = BookAccess.getInstance();
+		b.load();
+		b.items.clear();
+		b.update();
+		
+		MagazineAccess m = MagazineAccess.getInstance();
+		m.load();
+		m.items.clear();
+		m.update();
     }
 
     @Test
@@ -96,24 +140,53 @@ public class RemoveItemCommandTest {
 
         // Verify that the magazine is removed from the list
         assertFalse(items.contains(magazine));
+        BookAccess b = BookAccess.getInstance();
+		b.load();
+		b.items.clear();
+		b.update();
+		
+		MagazineAccess m = MagazineAccess.getInstance();
+		m.load();
+		m.items.clear();
+		m.update();
     }
 
     @Test
-    public void getItemIdReturnsCorrectIdForCd() {
+    public void getItemIdReturnsCorrectIdForCd() throws Exception {
         // Create a RemoveItemCommand instance for a CD
         RemoveItemCommand removeItemCommand = new RemoveItemCommand("1", "Cd", null);
 
         // Verify that getItemId returns the correct ID
         assertEquals("1", removeItemCommand.getItemId());
+        
+        BookAccess b = BookAccess.getInstance();
+		b.load();
+		b.items.clear();
+		b.update();
+		
+		MagazineAccess m = MagazineAccess.getInstance();
+		m.load();
+		m.items.clear();
+		m.update();
     }
 
     @Test
-    public void getItemTypeReturnsCorrectTypeForMagazine() {
+    public void getItemTypeReturnsCorrectTypeForMagazine() throws Exception {
         // Create a RemoveItemCommand instance for a magazine
         RemoveItemCommand removeItemCommand = new RemoveItemCommand("1", "Magazine", null);
 
         // Verify that getItemType returns the correct type
         assertEquals("Magazine", removeItemCommand.getItemType());
+        
+        BookAccess b = BookAccess.getInstance();
+		b.load();
+		b.items.clear();
+		b.update();
+		
+		MagazineAccess m = MagazineAccess.getInstance();
+		m.load();
+		m.items.clear();
+		m.update();
     }
     @Test
     public void executeDoesNotRemoveItemIfListIsEmpty() throws Exception {
@@ -131,6 +204,16 @@ public class RemoveItemCommandTest {
 
         // Verify that the list remains empty
         assertTrue(items.isEmpty());
+        
+        BookAccess b = BookAccess.getInstance();
+		b.load();
+		b.items.clear();
+		b.update();
+		
+		MagazineAccess m = MagazineAccess.getInstance();
+		m.load();
+		m.items.clear();
+		m.update();
     }
     
     @Test
@@ -153,6 +236,16 @@ public class RemoveItemCommandTest {
         // Verify that only the specified book is removed from the library
         assertFalse(libraryManager.getItems().contains(book1));
         assertTrue(libraryManager.getItems().contains(book2));
+        
+        BookAccess b = BookAccess.getInstance();
+		b.load();
+		b.items.clear();
+		b.update();
+		
+		MagazineAccess m = MagazineAccess.getInstance();
+		m.load();
+		m.items.clear();
+		m.update();
     }
     @Test
     public void executeRemovesItemFromLibraryWithMultipleItemsOfDifferentTypes() throws Exception {
@@ -177,6 +270,16 @@ public class RemoveItemCommandTest {
         assertTrue(libraryManager.getItems().contains(book));
         assertFalse(libraryManager.getItems().contains(cd));
         assertTrue(libraryManager.getItems().contains(magazine));
+        
+        BookAccess b = BookAccess.getInstance();
+		b.load();
+		b.items.clear();
+		b.update();
+		
+		MagazineAccess m = MagazineAccess.getInstance();
+		m.load();
+		m.items.clear();
+		m.update();
     }
     
 }

@@ -27,6 +27,11 @@ public class CourseTest {
     }
 
     @Test
+    public void testConstructor2() {
+    	Course c = new Course("Intro to Chem");
+    	assertEquals("Intro to Chem", c.getName());
+    }
+    @Test
     public void testGetCode() {
         course.setCode(123);
         assertEquals(123, course.getCode());

@@ -3,20 +3,24 @@ package Tests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import database_access.*;
-import models.Users.FacultyMember;
-import models.Users.NonFacultyStaff;
-import models.Users.Visitor;
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import database_access.FacultyMemberAccess;
+import database_access.NewsletterAccess;
+import database_access.NonFacultyStaffAccess;
+import database_access.StudentAccess;
+import database_access.VisitorAccess;
 import models.Items.Newsletter;
+import models.Users.FacultyMember;
+import models.Users.NonFacultyStaff;
 import models.Users.Student;
+import models.Users.Visitor;
 import services.newsletterstrategy.NewsletterCancellation;
 import services.newsletterstrategy.NewsletterStrategy;
 import services.newsletterstrategy.NewsletterSubscription;
-
-import java.util.ArrayList;
 
 public class NewsletterSubscriptionTest {
 
@@ -264,7 +268,7 @@ public class NewsletterSubscriptionTest {
 
 
 	@Test
-	void noUserFound() throws Exception {
+	void noUserFoundSubscription() throws Exception {
 		FacultyMember staff = new FacultyMember("1", "Jimmy", "email", "1234", true, 0.0, true, null, null);
 		Newsletter newsletter = new Newsletter("0", "NY Times", "mylink");
 
@@ -277,6 +281,31 @@ public class NewsletterSubscriptionTest {
 		newsdb.update();
 
 		NewsletterStrategy strat = new NewsletterSubscription();
+		assertThrows(Exception.class, () -> {
+			strat.execute(newsletter.getLink(), "xyz");
+		});
+
+		userdb.users = new ArrayList<>();
+		newsdb.items = new ArrayList<>();
+
+		userdb.update();
+		newsdb.update();
+	}
+
+	@Test
+	void noUserFoundCancellation() throws Exception {
+		FacultyMember staff = new FacultyMember("1", "Jimmy", "email", "1234", true, 0.0, true, null, null);
+		Newsletter newsletter = new Newsletter("0", "NY Times", "mylink");
+
+		FacultyMemberAccess userdb = FacultyMemberAccess.getInstance();
+		userdb.users.add(staff);
+		userdb.update();
+
+		NewsletterAccess newsdb = NewsletterAccess.getInstance();
+		newsdb.items.add(newsletter);
+		newsdb.update();
+
+		NewsletterStrategy strat = new NewsletterCancellation();
 		assertThrows(Exception.class, () -> {
 			strat.execute(newsletter.getLink(), "xyz");
 		});

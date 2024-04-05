@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import models.Users.NonFacultyStaff;
 import models.Users.User;
 
@@ -23,6 +24,17 @@ public class UserTest {
     @Test
     public void testGetId() {
         assertEquals("1", user.getId());
+    }
+    @Test
+    public void setCanBorrow() {
+    	user.setCan_borrow(false);
+    	assertEquals(false, user.getCan_borrow());
+    }
+    @Test
+    public void increase() {
+    	user.increaseOverdue_charge(0.5);
+    	
+    	assertEquals(0, Double.compare(0.5, user.getOverdue_charge()));
     }
 
     @Test
