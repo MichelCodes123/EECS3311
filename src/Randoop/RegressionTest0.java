@@ -1,6 +1,11 @@
+package Randoop;
+
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+
+import controllers.LoginController;
+import models.Payments.Debit;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RegressionTest0 {
@@ -11,14 +16,14 @@ public class RegressionTest0 {
     public void test001() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "RegressionTest0.test001");
-        models.Payments.Debit debit0 = new models.Payments.Debit();
+        Debit debit0 = new models.Payments.Debit();
     }
 
     @Test
     public void test002() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "RegressionTest0.test002");
-        controllers.LoginController loginController0 = new controllers.LoginController();
+        LoginController loginController0 = new controllers.LoginController();
     }
 
     @Test
