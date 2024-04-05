@@ -7,7 +7,7 @@ database_access.FacultyMemberAccess
 database_access.MagazineAccess
 database_access.NewsletterAccess
 database_access.NonFacultyStaffAccess
-database_access.QueryUtilitiesAccess
+database_access.QueryUtilities
 database_access.StudentAccess
 database_access.VisitorAccess
 logic.DigitalTBUtilities
@@ -47,7 +47,6 @@ models.Request
 Prompts.SystemNotifications
 Prompts.SystemPrompts
 Prompts.SystemWarnings
-services.itemstrategy
 services.itemstrategy.ItemStrategy
 services.itemstrategy.RentItem
 services.newsletterstrategy.NewsletterCancellation

@@ -227,7 +227,6 @@ class DigitalTextbooksTest {
 		
 	}
 
-	}
 	@Test
     public void testGetId() {
         DigitalTB digitalTB = new DigitalTB("1", "DigitalTB 1", "Course A");
