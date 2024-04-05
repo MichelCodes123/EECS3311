@@ -51,12 +51,18 @@ public class DigitalTBUtilities {
 					
 					((Student) s).addDigitalTB(newTb.getName());
 					int i = 0;
-
+					try {
+						studentdb.load();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					for (User student : studentdb.users) {
 						if (student.getId().equals(s.getId())) {
 							studentdb.users.set(i, s);
 							try {
 								studentdb.update();
+								break;
 							} catch (Exception e) {
 								throw new RuntimeException(e);
 							}
