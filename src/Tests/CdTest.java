@@ -63,9 +63,10 @@ public class CdTest {
     @Test
     public void testSetDueDate() {
         Cd cd = new Cd("1", "CD 1", "Music Store", true, System.currentTimeMillis(), 15.0);
-        Date newDueDate = new Date(System.currentTimeMillis() + 100000);
+        long var = System.currentTimeMillis() + 100000;
+        Date newDueDate = new Date(var);
         cd.setDueDate(newDueDate);
-        assertEquals((Long) (System.currentTimeMillis() + 100000), cd.getDueDate());
+        assertEquals((Long) (var), cd.getDueDate());
     }
 
     @Test
