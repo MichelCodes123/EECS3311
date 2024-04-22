@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import logic.DigitalTBUtilities;
 import models.Course;
+import models.Items.DigitalTB.DigitalTB;
 
 public class Student extends User {
 
@@ -19,6 +20,7 @@ public class Student extends User {
 		this.digital_textbooks = digital_textbooks;
 	}
 
+
 	public ArrayList<String> getDigital_textbooks() {
 		return digital_textbooks;
 	}
@@ -31,6 +33,10 @@ public class Student extends User {
 		this.digital_textbooks = digital_textbooks;
 	}
 
+	public void addDTB(DigitalTB b) {
+		digital_textbooks.add(b.getName());
+		
+	}
 	public void setCourses(ArrayList<Course> courses) {
 		this.courses = courses;
 		DigitalTBUtilities.addAllDigitalTB(this);

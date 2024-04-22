@@ -27,6 +27,7 @@ public class LibraryManager {
     }
 
     public List<PhysicalItem> getItems() {
+        
         return items;
     }
 
@@ -115,10 +116,15 @@ public class LibraryManager {
     }
 
     public void enableItem(String itemId, String itemType) throws Exception {
+        
         executeCommand(new EnableItemCommand(itemId, itemType, this));
+      System.out.println(items.size());
+       
         for (PhysicalItem item : items) {
-            if (item.getId() == itemId && item.getClass().getSimpleName().equals(itemType)) {
+            
+            if (item.getId().equals(itemId) && item.getClass().getSimpleName().equals(itemType)) {
                 item.setPurchasability(true);
+                
                 break;
             }
         }
@@ -126,7 +132,7 @@ public class LibraryManager {
 
     public void disableItem(String itemId, String itemType) throws Exception {
         for (PhysicalItem item : items) {
-            if (item.getId() == itemId && item.getClass().getSimpleName().equals(itemType)) {
+            if (Objects.equals(item.getId(), itemId) && item.getClass().getSimpleName().equals(itemType)) {
                 item.setPurchasability(false);
                 break;
             }
@@ -135,7 +141,7 @@ public class LibraryManager {
     }
 
     public void removeItem(String itemId, String itemType) throws Exception {
-        items.removeIf(item -> item.getId() == itemId && item.getClass().getSimpleName().equals(itemType));
+        items.removeIf(item -> Objects.equals(item.getId(), itemId) && item.getClass().getSimpleName().equals(itemType));
         executeCommand(new RemoveItemCommand(itemId, itemType, this));
     }
 

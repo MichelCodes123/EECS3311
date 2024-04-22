@@ -1,6 +1,10 @@
 package services;
 import database_access.*;
+import models.Items.PhysicalItems.Book;
+import models.Items.PhysicalItems.Cd;
+import models.Items.PhysicalItems.Magazine;
 import models.Items.PhysicalItems.PhysicalItem;
+import models.LibraryItem.LibraryManager;
 import models.Users.*;
 import models.Items.*;
 
@@ -15,14 +19,17 @@ public class OverdueService {
         QueryUtilities utils = new QueryUtilities();
         ArrayList<User> all_users = utils.allUsers();
         Date current_date = new Date();
+        long miliPerDay = 24 * 60 * 60 * 1000;
 
         for (User user : all_users) {
             {
                 int user_overdue_count = 0;
                 ArrayList<PhysicalItem> user_items = utils.getUserAssociatedItems(user);
                 for (PhysicalItem item : user_items) {
+                    
                     if (item.getDueDate() < current_date.getTime()) {
-                        applyOverdueFee(user, 0.5);
+                        int daysoverDue = (int) (current_date.getTime() - item.getDueDate())/ (int) miliPerDay;
+                        applyOverdueFee(user, 0.5*daysoverDue);
                         user_overdue_count++;
                     }
                     if (user_overdue_count > 3) {
@@ -30,7 +37,16 @@ public class OverdueService {
                     }
 
                     if (current_date.getTime() > item.getDueDate() + (15*24*3600*1000) ) {
-                        //TODO: remove item
+                        LibraryManager libraryManager = new LibraryManager("src/database_access");
+                        if (item instanceof Book) {
+                            libraryManager.removeItem(item.getId(), "Book");
+                        }
+                        else if (item instanceof Cd) {
+                            libraryManager.removeItem(item.getId(), "Cd");
+                        }
+                        else if (item instanceof Magazine) {
+                            libraryManager.removeItem(item.getId(), "Magazine");
+                        }
                     }
 
                 }

@@ -33,6 +33,7 @@ public class BookAccess{
     }
 
     public void addItem(Book book) throws Exception {
+        if(book == null) throw new Exception("Book is null");
         items.add(book);
         update();
         load();
@@ -40,7 +41,7 @@ public class BookAccess{
 
     public void enableItem(String itemId) throws Exception {
         for (PhysicalItem item : items) {
-            if (item.getId() == itemId) {
+            if (Objects.equals(item.getId(), itemId)) {
                 item.setPurchasability(true);
                 update();
                 load();
@@ -51,7 +52,7 @@ public class BookAccess{
 
     public void disableItem(String itemId) throws Exception {
         for (PhysicalItem item : items) {
-            if (item.getId() == itemId) {
+            if (item.getId().equals(itemId)) {
                 item.setPurchasability(false);
                 update();
                 load();
@@ -61,8 +62,9 @@ public class BookAccess{
     }
 
     public void removeItem(String itemId) throws Exception {
+        if(itemId == null) throw new Exception("Item id is null");
         for (PhysicalItem item : items) {
-            if (item.getId() == itemId){
+            if (Objects.equals(item.getId(), itemId)){
                 items.remove(item);
                 update();
                 load();
@@ -74,7 +76,7 @@ public class BookAccess{
     public void updateItem(Book updatedBook) throws Exception {
         for (int i = 0; i < items.size(); i++) {
             PhysicalItem currentItem = items.get(i);
-            if (currentItem.getId() == updatedBook.getId()) {
+            if (Objects.equals(currentItem.getId(), updatedBook.getId())) {
                 items.set(i, updatedBook);
                 break;
             }

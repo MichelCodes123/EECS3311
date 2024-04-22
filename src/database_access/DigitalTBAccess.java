@@ -39,7 +39,7 @@ public class DigitalTBAccess {
 			items.add(item);
 		}
 	}
-
+	
 	public void update() throws Exception {
 		try {
 			CsvWriter csvOutput = new CsvWriter(new FileWriter(path, false), ',');

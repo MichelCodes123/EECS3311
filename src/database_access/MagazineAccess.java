@@ -29,6 +29,7 @@ public class MagazineAccess {
     }
 
     public void addItem(Magazine magazine) throws Exception {
+        if(magazine == null) throw new Exception("Magazine is null");
         items.add(magazine);
         update();
         load();
@@ -48,7 +49,7 @@ public class MagazineAccess {
 
     public void disableItem(String itemId) throws Exception {
         for (PhysicalItem item : items) {
-            if (item.getId() == itemId) {
+            if (Objects.equals(item.getId(), itemId)) {
                 item.setPurchasability(false);
                 update();
                 load();
@@ -58,8 +59,9 @@ public class MagazineAccess {
     }
 
     public void removeItem(String itemId) throws Exception {
+        if(itemId == null) throw new Exception("Id is null");
         for (PhysicalItem item : items) {
-            if (item.getId() == itemId) {
+            if (Objects.equals(item.getId(), itemId)) {
                 items.remove(item);
                 update();
                 load();

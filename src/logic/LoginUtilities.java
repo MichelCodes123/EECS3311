@@ -4,15 +4,20 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
+import database_access.FacultyMemberAccess;
+import database_access.NonFacultyStaffAccess;
 import database_access.QueryUtilities;
-import models.LibraryItem.ItemIdGenerator;
+import database_access.StudentAccess;
+import database_access.VisitorAccess;
+import models.LibraryManagementTeam.LibraryManagementTeam;
 import models.Users.User;
 
 public class LoginUtilities {
 
+	static int id = 0;
 	/**
 	 * Verifies that the user has entered a strong password.
-	 * 
+	 *
 	 * @param
 	 * @return
 	 */
@@ -41,13 +46,53 @@ public class LoginUtilities {
 		}
 
 		if (type.equals("Student") || type.equals("FacultyMember") || type.equals("NonFacultyStaff")){
-			//Further validation?? By Req 1, bit ambiguous
+			LibraryManagementTeam.validate();
 		}
 
 		UserFactory f = new UserFactory();
 		//Need to properly add ID's with Christinas Code
-		ItemIdGenerator ite = ItemIdGenerator.getInstance();
-		f.CreateUser(type, ite.generateId(), name, email, password, true, 0.0, true, null, null);
+		f.CreateUser(type, Integer.toString(id++) , name, email, password, true, 0.0, true, null, null);
+
+
+		if (type.equals("Student")){
+			StudentAccess db = StudentAccess.getInstance();
+			try {
+				System.out.println(db.users);
+				db.update();
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+
+		else if (type.equals("FacultyMember")) {
+			FacultyMemberAccess db = FacultyMemberAccess.getInstance();
+			try {
+				db.update();
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+
+		else if (type.equals("NonFacultyStaff")) {
+			NonFacultyStaffAccess db = NonFacultyStaffAccess.getInstance();
+			try {
+				db.update();
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+
+		else {
+			VisitorAccess db = VisitorAccess.getInstance();
+			try {
+				db.update();
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+
+
+
 		success.run();
 	}
 
@@ -71,8 +116,6 @@ public class LoginUtilities {
 		catch (Exception e){
 
 		}
-
-
 		return false;
 	}
 
